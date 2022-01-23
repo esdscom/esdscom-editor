@@ -3,7 +3,7 @@
 namespace eSDSCom.Editor.Tests;
 public class BaseTestData : IClassFixture<DatabaseFixture>
 {
-   public static readonly string TestConnectionString = @"Server=DBSERVER\SQLSRVR;Database=AuthorDBTest;User ID=sa;Password=Gollum17";
+   public static readonly string TestConnectionString = @"Server=localhost;Database=AuthorDBTest;Trusted_Connection=True";
 
     public BaseTestData()
     {

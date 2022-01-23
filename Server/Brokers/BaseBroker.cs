@@ -1,7 +1,4 @@
-﻿using System.Data.SqlTypes;
-using System.Xml;
-
-namespace eSDSCom.Editor.Server.Brokers
+﻿namespace eSDSCom.Editor.Server.Brokers
 {
     public class BaseBroker
     {
@@ -10,7 +7,7 @@ namespace eSDSCom.Editor.Server.Brokers
         public BaseBroker()
         {
             //TODO: get from keyvault
-            ConnectionString = @"Server=DBSERVER\SQLSRVR;Database=AuthorDB;User ID=author;Password=author1";
+            ConnectionString = @"Server=localhost;Database=AuthorDB;Trusted_Connection=True";
         }
 
         internal static Substance GetSubstanceFromReader(SqlDataReader reader)
