@@ -1,0 +1,19 @@
+﻿ <div class="col border border-success text-success">      
+    @comments
+    @occurs
+</div>
+
+@code 
+{
+    [Parameter] public string Comments {get; set;}    
+    [Parameter] public string Occurs {get; set;}
+
+    private MarkupString comments;  
+    private MarkupString occurs; 
+
+    protected override void OnInitialized()
+    {
+        comments = (MarkupString) Comments;
+        occurs = (MarkupString) Occurs;
+    }
+}

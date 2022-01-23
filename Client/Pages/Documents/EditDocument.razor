@@ -1,0 +1,163 @@
+﻿@page "/Documents/EditDocument/{IsNew:bool}"
+
+@inject AppData appData
+@inject AppSettings appSettings
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm Model="datasheet" OnValidSubmit="HandleValidSubmit" role="form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container-fluid">
+
+        <PageHeader Title="Add a new Datasheet"/>       
+
+      @*  <div class="form-group">
+            <label for="ddLanguage">Language</label>
+            <InputSelect id="ddLanguage" class="form-control col-sm-2" @bind-Value="@languageName">
+                @foreach (string langName in languageList)
+                {
+                    <option value="@langName">@langName</option>
+                }
+            </InputSelect>
+        </div>*@
+
+        <div class="form-group">
+            <label for="isName">Document Name</label>
+            <InputText id="isName" class="form-control" @bind-Value="@datasheet.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="ddMaterialType">Material Type</label>
+            <InputSelect class="form-control col-sm-1" id="ddMaterialType" @bind-Value="@materialType" width="50">
+                @foreach (string materialTypeName in materialTypeList)
+                {
+                    <option value="@materialTypeName">@materialTypeName</option>
+                }
+            </InputSelect>
+        </div>
+
+        <RegionCheckboxGroup DatasheetRegions="@datasheet.Regions" OnRegionsSelected="RegionSelectionHandler"/>
+
+         <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler"/>
+
+        <div class="form-group">
+            <label for="comments">Comments:</label>
+            <InputTextArea id="comments" class="form-control" @bind-Value="@datasheet.Comments" rows="5" cols="30"/>
+        </div>
+
+        <div class="row">          
+            <div class="col-3">
+                <button type="submit" class="btn btn-success"><Tooltip Text="@tt1">Save</Tooltip></button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" @onclick="GoToSections">Edit Sections</button>
+            </div>         
+        </div>
+
+    </div>
+</EditForm>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public bool IsNew { get; set; }
+
+    Datasheet datasheet;
+    DataManager dMgr;
+   
+    string materialType = "Mixture";
+
+    string tt1 = "Save Changes and proceed to edit this Document.";
+
+
+    List<string> materialTypeList = new()
+        {
+            "Mixture",
+            "Substance"
+        };
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        dMgr = new(api);
+
+        if (IsNew)
+        {
+            datasheet = new()
+            {
+                Id = Guid.NewGuid(),
+                OrganizationId = AppState.User.OrganizationId,
+                UserId = AppState.User.Id,
+                UserName = AppState.User.Name,
+                DatasheetString = appData.StarterDocument.OuterXml,
+                Status = 1,
+                Regions = Utils.GetRegions()
+            };
+
+            AppState.StatusBarMessage = "Adding a new Datasheet";
+        }
+        else
+        {
+            datasheet = AppState.ActiveDatasheet;
+
+            if (!string.IsNullOrEmpty(datasheet.RegionsString))
+            {
+                List<string> selectedRegions = datasheet.RegionsString.Split(",").ToList();
+                foreach (Region region in datasheet.Regions)
+                {
+                    region.IsSelected = selectedRegions.Any(r => r == region.Suffix);                    
+                }
+            }
+
+            AppState.StatusBarMessage = $"Editing the Datasheet {datasheet.Name}";
+        }
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        if (IsNew)
+        {
+            AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(datasheet);
+
+            DatasheetFeedItem dsfi = new()
+            { 
+                DatasheetId = AppState.ActiveDatasheet.Id,
+                DatasheetFeedId = AppState.ActiveDatasheetFeed.Id,
+                UserId = AppState.User.Id
+            };
+            await dMgr.AddDatasheetFeedItemAsync(dsfi);
+
+            //refresh the collection
+            AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.ActiveDatasheet.OrganizationId, AppState.ActiveDatasheetFeed.Id);
+
+            AppState.StatusBarMessage = $"Added Datasheet and linked to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
+            nav.NavigateTo("/Documents/ListDocumentsInSet");
+        }
+        else
+        {
+            AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
+            AppState.StatusBarMessage = "Updated Datasheet";
+            nav.NavigateTo("/Documents/ListDocuments");
+        }
+    }
+
+    private void GoToSections()
+    {
+        nav.NavigateTo("/Documents/Sections/SectionHome");
+    }   
+
+    private void StatusSelectionHandler(int status)
+    {
+        datasheet.Status = status;   
+    }
+
+    private void RegionSelectionHandler(List<Region> regions)
+    {
+        datasheet.Regions = regions;   
+    }
+}

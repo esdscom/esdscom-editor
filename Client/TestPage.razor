@@ -1,0 +1,175 @@
+﻿@page "/Test"
+
+@inject AppData appData
+@inject AppSettings appSettings
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container-fluid">
+
+        @RenderNodes(activeNode) 
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</EditForm>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    public string NodeName { get; set; }
+
+    public EditContext CurrentEditContext { get; set; }
+
+    private XmlNode activeNode ;
+    private DataManager dMgr;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();  
+
+        dMgr = new(api);
+
+        //------------------------------------------------------------------------------------------------
+
+        string testNode = "HazardIdentification";  // "IdentificationSubstPrep";
+        NodeName = testNode;
+
+        //------------------------------------------------------------------------------------------------
+
+        XmlDocument xDoc = new();
+        xDoc.LoadXml(AppState.ActiveDatasheet.DatasheetString);
+
+        activeNode = xDoc.DocumentElement.SelectSingleNode(NodeName);
+
+        CurrentEditContext = new EditContext(activeNode);
+
+       // AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
+
+    }
+
+    private RenderFragment RenderNodes(XmlNode activeNode)
+    {
+        RenderFragment currentFrag = b =>
+        {
+            XmlNodeList nodes = null;
+
+            if (activeNode.HasChildNodes)
+            {
+                nodes = activeNode.ChildNodes;
+            }
+
+            int keyIndex = 1;
+
+            foreach (XmlNode node in nodes)
+            {
+                BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+                b.OpenElement(10, "div");
+                b.AddContent(20,node.Name);
+                    b.OpenElement(30,"hr");
+                    b.CloseElement();
+                b.SetKey($"{node.Name}{keyIndex++}");
+                b.CloseElement();
+
+                if (entity is not null)
+                {
+                    if (entity.Type is not null)
+                    {
+                        if (entity.Type.EndsWith("Enum"))
+                        {
+                            b.OpenComponent<SelectDataPointComponent>(40);
+                            b.AddAttribute(50, "Node", node);
+                            b.AddAttribute(60, "Entity", entity); 
+                           b.SetKey($"{node.Name}{keyIndex++}");
+                            b.CloseComponent();
+                        }
+                        else if (entity.Type.StartsWith("string"))
+                        {
+                            b.OpenComponent<TextDataPointComponent>(70);
+                            b.AddAttribute(80, "Node", node);
+                            b.AddAttribute(90, "Entity", entity);
+                            b.SetKey($"{node.Name}{keyIndex++}");
+                            b.CloseComponent();
+                        }
+                        else if (entity.Type.ToLower() == "date")
+                        {
+                            b.OpenComponent<DateDataPointComponent>(100);
+                            b.AddAttribute(110, "Node", node);
+                            b.AddAttribute(120, "Entity", entity);
+                            b.SetKey($"{node.Name}{keyIndex++}");
+                            b.CloseComponent();
+                        }
+                        else if (entity.Type.ToLower() == "phrase")
+                        {
+                            b.OpenComponent<PhraseCatalogueComponent>(130);
+                            b.AddAttribute(140, "Node", node);
+                            b.AddAttribute(150, "Entity", entity);
+                            b.SetKey(node.Name);
+                            b.CloseComponent();                        
+                        }
+                         else if (entity.Type.ToLower() == "xs:float")
+                        {
+                            b.OpenComponent<NumberFloatDataPointComponent>(171);
+                            b.AddAttribute(172, "Node", node);
+                            b.AddAttribute(173, "Entity", entity);
+                            b.SetKey($"{node.Name}{keyIndex++}");
+                            b.CloseComponent();
+                        }
+                        else if (entity.Type.ToLower() == "xs:integer")
+                        {
+                            b.OpenComponent<NumberIntDataPointComponent>(174);
+                            b.AddAttribute(175, "Node", node);
+                            b.AddAttribute(176, "Entity", entity);
+                            b.SetKey($"{node.Name}{keyIndex++}");
+                            b.CloseComponent();
+                        }
+                        else if (node.HasChildNodes)  //this must be last in the chain so all other conditions can be evaluated
+                        {
+                            b.OpenElement(160, "div");
+                            b.AddContent(170,RenderNodes(node));
+                            b.CloseElement();
+                        }                                               
+                    }
+                    else if (node.HasChildNodes)
+                    {
+                        b.OpenElement(180, "div");
+                        b.AddContent(190,RenderNodes(node));
+                        b.CloseElement();
+                    }
+                    else
+                    {
+                        b.OpenElement(200, "div");
+                        b.AddContent(210, $"BaseEntity Type Property is null: {node.Name}");
+                        b.CloseElement();
+                    }
+                }
+                else
+                {
+                    b.OpenElement(220, "div");
+                    b.AddContent(230, "BaseEntity  is null");
+                    b.CloseElement();
+                }
+            }
+
+            
+        };
+
+        return currentFrag;
+
+    }
+
+    private async Task SaveAsync()
+    {
+        AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(AppState.ActiveDatasheet);
+        AppState.StatusBarMessage = "Document Saved";
+        nav.NavigateTo("/Documents/Sections/SectionHome");
+    }
+}

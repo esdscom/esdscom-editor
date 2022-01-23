@@ -1,0 +1,169 @@
+﻿@inject AppData appData
+@inject AppSettings appSettings
+
+@using Syncfusion.Blazor.Popups
+
+
+
+<div id="target">
+
+    <SfDialog Target="#target" Width="500px" ShowCloseIcon="true" @bind-Visible="Visibility">
+        <DialogTemplates>
+            <Header> @Entity.DisplayName </Header>
+            <Content>
+                <span>This is the Phrase Selector</span>
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <button type="button" class="btn btn-info" @onclick="DisplayPhraseSelector">Select</button>
+        </div>
+        <div class="col-10">
+            <span class="font-weight-bold">@Entity.DisplayName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <span>Phrase Codes: @strPhraseCodeNode</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <span>Text: @strFullTextNode</span>
+        </div>
+    </div>
+
+
+    @*    <span>Phrase Id: @strPhraseIdAttr</span>
+        <span>Phrase Cat Id: @strPhraseCatalogueIdAttr</span>
+
+        <span>Merge Phrase(s):</span>
+        <span>Phrase Id: @strMergePhraseIdAttr</span>
+        <span>Delimiter: @strDelimiterNode</span>
+        <span>Phrase Cat Id: @strMergePhraseCatalogueIdAttr</span>
+        <span>Phrase No: @strMergePhraseNoAttr</span>
+        <span>List Item No:@strMergeListItemNoAttr</span>*@
+
+</div>
+
+
+<style>
+    #target {
+        min-height: 800px;
+        height: 100%;
+        position: relative;
+    }
+</style>
+
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public XmlNode Node { get; set; }
+
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private ResizeDirection[] dialogResizeDirections { get; set; } = new ResizeDirection[] { ResizeDirection.All };
+
+    private string comments;
+    private string occurs;
+    private string displayname;
+
+    private bool bHideHelp = true;
+    private bool Visibility = false;
+
+    private XmlNode PhraseCodeNode;
+    private XmlNode FullTextNode;
+    private XmlNode MergePhraseNode;
+    private XmlNode NewLineNode;
+    private XmlAttribute PhraseIdAttr;
+    private XmlAttribute PhraseCatalogueIdAttr;
+
+    private XmlNode MergeTextNode;
+    private XmlNode DelimiterNode;
+
+    private XmlAttribute MergePhraseIdAttr;
+    private XmlAttribute MergePhraseCatalogueIdAttr;
+    private XmlAttribute MergePhraseNoAttr;
+    private XmlAttribute MergeListItemNoAttr;
+
+    private string strPhraseCodeNode;
+    private string strFullTextNode;
+   // private string strMergePhraseNode;
+   // private string strNewLineNode;
+    private string strPhraseIdAttr;
+    private string strPhraseCatalogueIdAttr;
+
+ //   private string strMergeTextNode;
+    private string strDelimiterNode;
+
+    private string strMergePhraseIdAttr;
+    private string strMergePhraseCatalogueIdAttr;
+    private string strMergePhraseNoAttr;
+    private string strMergeListItemNoAttr;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+
+        Console.WriteLine(displayname);
+
+        if (Node.HasChildNodes)
+        {
+            PhraseCodeNode = Node.SelectSingleNode("PhraseCode");
+            FullTextNode = Node.SelectSingleNode("FullText");
+            PhraseIdAttr = ((XmlElement)Node).GetAttributeNode("PhraseId");
+            PhraseCatalogueIdAttr = ((XmlElement)Node).GetAttributeNode("PhraseCatalogueId");
+            NewLineNode = Node.SelectSingleNode("NewLine");
+
+            MergePhraseNode = Node.SelectSingleNode("MergePhrase");
+            MergeTextNode = MergePhraseNode.SelectSingleNode("MergeText");
+            DelimiterNode = MergePhraseNode.SelectSingleNode("Delimiter");
+            MergePhraseIdAttr = ((XmlElement)MergePhraseNode).GetAttributeNode("PhraseId");
+            MergePhraseCatalogueIdAttr = ((XmlElement)MergePhraseNode).GetAttributeNode("PhraseCatalogueId");
+            MergePhraseNoAttr = ((XmlElement)MergePhraseNode).GetAttributeNode("MergePhraseNo");
+            MergeListItemNoAttr = ((XmlElement)MergePhraseNode).GetAttributeNode("ListItemNo");
+
+            strPhraseCodeNode = PhraseCodeNode.InnerText;
+            strFullTextNode = FullTextNode.InnerText;
+            strPhraseIdAttr = PhraseIdAttr.Value;
+            strPhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion; // PhraseCatalogueIdAttr.Value;
+
+            strDelimiterNode = DelimiterNode.InnerText;
+            strMergePhraseIdAttr = MergePhraseIdAttr.Value;
+            strMergePhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion; // MergePhraseCatalogueIdAttr.Value;
+            strMergePhraseNoAttr = MergePhraseNoAttr.Value;
+            strMergeListItemNoAttr = MergeListItemNoAttr.Value;
+        }
+
+    }
+
+    private void DisplayPhraseSelector()
+    {
+        Visibility = true;
+
+    }
+
+    private void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+}

@@ -1,0 +1,15 @@
+﻿
+    <div class="row">
+        <div class="form-group">
+            <label>Created on: @CreatedDate , Last updated on: @UpdatedDate</label>
+        </div>
+    </div>
+
+
+@code 
+{
+    [Parameter] public DateTime CreatedDate { get; set; }
+
+    [Parameter] public DateTime UpdatedDate { get; set; }
+
+}

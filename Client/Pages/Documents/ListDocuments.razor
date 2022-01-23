@@ -1,0 +1,122 @@
+﻿@page "/Documents/ListDocuments"
+@page "/Documents/ListDocumentsInSet"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Buttons
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+@*
+    TODO: add filter for this user only*@
+
+<PageHeader Title="@pageTitle"/>
+
+<div class="content-wrapper">
+
+    @if (ShowAdd)
+    {
+        <div class="row">
+            <div class="col">
+                <SfButton CssClass="btn btn-primary" OnClick="@AddDatasheetToSet">Add new Datasheet</SfButton>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <SfGrid DataSource="@docList" AllowPaging="true">
+            <GridPageSettings PageSize="10"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(Datasheet.Id) HeaderText="ID" Visible="false" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(Datasheet.Name) HeaderText="Name" Width="300"></GridColumn>
+                <GridColumn HeaderText="Status" Width="300">
+                    <Template Context="docContext">
+                        @{
+                            Datasheet doc = (docContext as Datasheet);
+                            <p>@Utils.GetStatusText(doc.Status)</p>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(Datasheet.UserName) HeaderText="Author" Width="300"></GridColumn>
+                <GridColumn Field=@nameof(Datasheet.CreatedDate) HeaderText="Created Date" Width="120"></GridColumn>
+                <GridColumn HeaderText="Actions" TextAlign="TextAlign.Center" Width="200">
+                    <Template Context="docContext">
+                        @{
+                            Datasheet doc = (docContext as Datasheet);
+                            <div class="row">
+                                <div class="col-4">
+                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Edit</SfButton>
+                                </div>
+                                <div class="col-4">
+                                    <SfButton CssClass="e-link" OnClick="@(() => CopyDoc(doc.Id))">Copy</SfButton>
+                                </div>
+                            </div>
+                        }
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    List<Datasheet> docList = new();
+    DataManager dMgr;
+    string pageTitle = string.Empty;
+    bool ShowAdd = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        dMgr = new(api);
+
+        AppState.StatusBarMessage = "Fetching Datasheets ...";
+
+        if (nav.Uri.Contains("ListDocumentsInSet"))
+        {       
+            AppState.BackToURL = "/Documents/ListDocumentSets";
+            AppState.BackToURLText = "Back to Document set list";
+
+            foreach (var item in AppState.ActiveDatasheetFeed.DatasheetItems)
+            {
+                docList.Add(item.Datasheet);
+            }
+            
+            pageTitle = $"Documents for my organization in Document set {AppState.ActiveDatasheetFeed.Name}";
+            ShowAdd = true;
+        }
+        else
+        {
+            AppState.BackToURL = string.Empty;
+            AppState.BackToURLText = string.Empty;
+
+            docList = await dMgr.GetDatasheetListForOrganizationAsync(AppState.User.OrganizationId);
+            pageTitle = "Datasheets for my organization";
+            ShowAdd = false;
+        }
+
+        AppState.StatusBarMessage = $"Total Datasheets available: {docList.Count}";
+    }
+
+    private void EditDoc(Guid dsId)
+    {
+        AppState.BackToURL = "/Documents/ListDocuments";
+        AppState.BackToURLText = "Back to Datasheet list";
+       // AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == dsId);       
+        nav.NavigateTo("/Documents/EditDocument/false");
+    }
+
+    private void CopyDoc(Guid docId)
+    {
+        nav.NavigateTo($"/Documents/DocumentCopy");
+    }
+
+    private void AddDatasheetToSet()
+    {       
+        AppState.BackToURL = "/Documents/ListDocumentsInSet";
+        AppState.BackToURLText = "Back to Linked Datasheet list";
+        nav.NavigateTo($"/Documents/EditDocument/true");
+    }
+}

@@ -1,0 +1,21 @@
+﻿<div class="form-group">
+    <label for="ddSetStatus">Status</label>
+    <InputSelect class="form-control form-control-inline" id="ddSetStatus" @bind-Value="@Status" @oninput="@((e) => ChangedSelection(e))">
+        <option value="1">Draft </option>
+        <option value="2">Published </option>
+        <option value="3">Archived </option>
+    </InputSelect>
+</div>
+
+
+@code
+{
+    [Parameter] public EventCallback<int> OnStatusSelected { get; set; }
+
+    [Parameter] public int Status { get; set; }
+
+    private async Task ChangedSelection(ChangeEventArgs args)
+    {
+        await OnStatusSelected.InvokeAsync(int.Parse(args.Value.ToString()));
+    }
+}

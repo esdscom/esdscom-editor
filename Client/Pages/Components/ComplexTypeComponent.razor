@@ -1,0 +1,71 @@
+﻿@inject AppData appData
+
+<h5>@Node.LocalName</h5>
+
+@foreach (XmlNode node in nodes)
+{
+    BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+    if (entity is not null)
+    {
+        if (entity.Type is not null)
+        {
+            if (entity.Type.EndsWith("Enum"))
+            {
+                <SelectDataPointComponent Node="@node" Entity="@entity" />
+            }
+            else if (entity.Type.StartsWith("string"))
+            {
+                <TextDataPointComponent Node="@node" Entity="@entity" />
+            }
+            else if (entity.Type.ToLower() == "xs:date")
+            {
+                <DateDataPointComponent Node="@node" Entity="@entity" />
+            }
+            else if (node.HasChildNodes)
+            {
+                <ComplexTypeComponent Node="@node" Entity="@entity"/>
+            }
+            <hr />
+        }
+        else if (node.HasChildNodes)
+        {
+            <span>Null entity type but has children: Complex type: @node.Name</span>
+            <br />
+            <hr />
+        }
+        else
+        {
+            <span>BaseEntity Type Property is null: @node.Name</span>
+            <hr />
+        }
+    }
+    else
+    {
+        <span> BaseEntity is null: @node.Name </span>
+        <br />
+        <hr />
+    }
+}
+
+
+@code
+{
+    [Parameter] public XmlNode Node { get; set; }
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private XmlNodeList nodes;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized(); 
+
+        if (Node.HasChildNodes)
+        {
+            nodes = Node.ChildNodes;
+        }
+    }
+   
+}
+

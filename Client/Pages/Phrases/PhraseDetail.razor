@@ -1,0 +1,59 @@
+﻿<form>   
+
+    <div class="form-group">
+        <label>English:</label>
+        <label>@SelectedPhrase.English</label>
+    </div>
+
+    <div class="form-group">
+        <label>German:</label>        
+        <label>@SelectedPhrase.German</label>
+    </div>
+
+    <div class="form-group box">
+
+        <label class="font-weight-bold">Additional Information:</label>
+
+         <div class="form-group">
+            <label>Structure Code:</label>            
+            <label>@SelectedPhrase.StrucCode</label> 
+        </div>
+
+        <div class="form-group">
+            <label>Info:</label>            
+            <label>@SelectedPhrase.Info</label>
+        </div>
+
+        <div class="form-group">
+            <label>Orig Code:</label>            
+           <label>@SelectedPhrase.OrigCode</label>              
+        </div>
+
+        <div class="form-group">
+            <label>Origin:</label>           
+            <label>@SelectedPhrase.Origin</label> 
+        </div>
+
+         <div class="form-group">
+            <label>Region:</label>            
+            <label>@SelectedPhrase.Region</label> 
+        </div>
+
+         <div class="form-group">
+            <label>Source:</label>           
+            <label>@SelectedPhrase.Source</label> 
+        </div>
+
+        <div class="form-group">
+            <label>XPath:</label>            
+            <label>@SelectedPhrase.XPath</label> 
+        </div>
+        
+    </div>  
+
+</form>
+
+@code
+{
+    [Parameter] public Phrase SelectedPhrase { get; set; }
+}

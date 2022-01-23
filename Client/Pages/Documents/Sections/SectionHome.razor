@@ -1,0 +1,54 @@
+﻿@page "/Documents/Sections/SectionHome"
+
+
+@inject NavigationManager nav
+@inject AppData appData
+
+
+@if (IsLoading)
+{
+    <p>Please wait while your data is set up....</p>
+}
+else
+{
+    <PageHeader Title="Document Sections" />
+
+    <div class="card-columns">
+        @foreach (XmlNode node in datasheetNodes.ChildNodes)
+        {
+            <SectionCard Node="@node" />
+        }
+    </div>
+}
+
+@code
+{
+
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    private bool IsLoading = true;
+    private XmlNode datasheetNodes;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        try
+        {
+            XmlDocument xDoc = appData.StarterDocument;
+            datasheetNodes = xDoc.DocumentElement.SelectSingleNode("Datasheet");
+
+            //should never be here without these attributes being complete and current
+            //AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
+
+            IsLoading = false;
+
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.StackTrace);
+        }
+
+    }
+
+}

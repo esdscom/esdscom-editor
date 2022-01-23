@@ -1,0 +1,84 @@
+﻿<h4>@Substance.Name</h4>
+
+<form>
+
+    <div class="form-group">
+        <a href="@Substance.ViewLink" target="_blank">Factsheet</a>
+    </div>
+
+    <div class="form-group row">
+        <label for="ecnumber" class="col-sm-4 col-form-label">EC Number:</label>
+        <div class="col-sm-8">
+            <input id="ecnumber" class="form-control" type="text" placeholder="@Substance.ECNumber" readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="casnumber" class="col-sm-4 col-form-label">CAS Number:</label>
+        <div class="col-sm-8">
+            <input id="casnumber" class="form-control" type="text" placeholder="@Substance.CASNumber" readonly>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">Registration</label>
+
+        <div class="form-group row">
+            <label for="regstatus" class="col-sm-4 col-form-label">Status:</label>
+            <div class="col-sm-8">
+                <input id="regstatus" class="form-control" type="text" placeholder="@Substance.RegistrationStatus" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="regtype" class="col-sm-4 col-form-label">Type:</label>
+            <div class="col-sm-8">
+                <input id="regtype" class="form-control" type="text" placeholder="@Substance.RegistrationType" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="subtype" class="col-sm-4 col-form-label">Submission Type:</label>
+            <div class="col-sm-8">
+                <input id="subtype" class="form-control" type="text" placeholder="@Substance.SubmissionType" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold">Tonnage</label>
+        <div class="form-group row">
+            <label for="tonband" class="col-sm-4 col-form-label">Band:</label>
+            <div class="col-sm-8">
+                <input id="tonband" class="form-control" type="text" placeholder="@Substance.TonnageBand" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="tonmin" class="col-sm-4 col-form-label">Minimum:</label>
+            <div class="col-sm-8">
+                <input id="tonmin" class="form-control" type="text" placeholder="@Substance.TonnageBandMin" readonly>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="tonmax" class="col-sm-4 col-form-label">Maximum:</label>
+            <div class="col-sm-8">
+                <input id="tonmax" class="form-control" type="text" placeholder="@Substance.TonnageBandMax" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label>Last Updated:</label>
+        <label>@Substance.LastUpdated</label>
+    </div>
+
+</form>
+
+@code
+{
+    [Parameter] public Substance Substance { get; set; }
+}

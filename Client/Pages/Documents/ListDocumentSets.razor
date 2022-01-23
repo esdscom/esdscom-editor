@@ -1,0 +1,107 @@
+﻿@page "/Documents/ListDocumentSets"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Buttons
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+
+@*
+        TODO: add filter for this user only
+*@
+        
+        <PageHeader Title = "Document sets for my organization"/>
+
+        <div class="content-wrapper">
+            
+             <div class="row">
+                 <div class="col">
+                     <SfButton CssClass="btn btn-primary" OnClick="@AddDocSet">Add new Document set</SfButton>
+                 </div>
+             </div>
+
+            <div class="row">
+                <SfGrid DataSource="@docSetList" AllowPaging="true" >
+                    <GridPageSettings PageSize="10"></GridPageSettings>
+                    <GridColumns>
+                        <GridColumn Field=@nameof(DatasheetFeed.Id) HeaderText="ID" Visible="false"></GridColumn>                    
+                        <GridColumn Field=@nameof(DatasheetFeed.Name) HeaderText="Name" Width="250"></GridColumn>
+                        <GridColumn HeaderText="Status" Width="50" TextAlign="TextAlign.Center">
+                             <Template Context="docContext">
+                                 @{
+                                     DatasheetFeed docSet = (docContext as DatasheetFeed);
+                                     <p> @Utils.GetStatusText(docSet.Status) </p>
+                                 }
+                            </Template>
+                        </GridColumn>
+                         <GridColumn Field=@nameof(DatasheetFeed.DatasheetCount) HeaderText="Links" Width="50" TextAlign="TextAlign.Center"></GridColumn>
+                        <GridColumn Field=@nameof(DatasheetFeed.CreatedDate) HeaderText="Created Date"  Width="75" TextAlign="TextAlign.Center"></GridColumn>  
+                        <GridColumn Field=@nameof(DatasheetFeed.UpdatedDate) HeaderText="Updated Date"  Width="75" TextAlign="TextAlign.Center"></GridColumn> 
+                        <GridColumn Field=@nameof(DatasheetFeed.UserName) HeaderText="Updated By"  Width="100" TextAlign="TextAlign.Center"></GridColumn> 
+                        <GridColumn HeaderText="Actions" TextAlign="TextAlign.Center" Width="200">
+							<Template Context="docSetContext">
+								@{
+                                    DatasheetFeed docSet = (docSetContext as DatasheetFeed);
+									<SfButton CssClass="e-link" OnClick="@(async () => await ViewDocSet(docSet.Id))">Edit</SfButton>
+                                    <SfButton CssClass="e-link" OnClick="@(async () => await ViewLinks(docSet.Id))">Linked Datasheets</SfButton>
+								}											
+							</Template>
+						</GridColumn>
+                    </GridColumns>
+                </SfGrid>
+            </div>
+        </div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    private List<DatasheetFeed> docSetList = new();
+    private DataManager dMgr;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AppState.BackToURL = string.Empty;
+        AppState.BackToURLText = string.Empty;
+        dMgr = new(api);
+
+        AppState.StatusBarMessage = "Fetching Document sets ...";
+
+        docSetList = await dMgr.GetDatasheetFeedListForOrganizationAsync(AppState.User.OrganizationId);
+
+        AppState.StatusBarMessage = $"Total Document sets available: {docSetList.Count}";
+
+    }
+
+    private void AddDocSet()
+    {   
+        AppState.BackToURL = "/Documents/ListDocumentSets";
+        AppState.BackToURLText = "Back to Document set list";
+        nav.NavigateTo($"/Documents/EditDocumentSet/true");
+    }
+
+    private async Task ViewDocSet(Guid dsSetId)
+    {
+        AppState.BackToURL = "/Documents/ListDocumentSets";
+        AppState.BackToURLText = "Back to Document set list";
+        AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.User.OrganizationId, dsSetId);
+        nav.NavigateTo($"/Documents/EditDocumentSet/false");
+    }
+
+    private async Task ViewLinks(Guid dsSetId)
+    {
+        AppState.BackToURL = "/Documents/ListDocumentSets";
+        AppState.BackToURLText = "Back to Document set list";
+        AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.User.OrganizationId, dsSetId);
+        nav.NavigateTo($"/Documents/ListDocumentsInSet");
+    }
+
+    private void CopyDocSet(Guid dsSetId)
+    {
+        AppState.BackToURL = "/Documents/ListDocumentSets";
+        AppState.BackToURLText = "Back to Document set list";
+        nav.NavigateTo($"/Documents/DocumentSetCopy");
+    }
+    
+}

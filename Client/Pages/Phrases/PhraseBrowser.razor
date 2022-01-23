@@ -1,0 +1,108 @@
+﻿@page "/Phrases/PhraseBrowser"
+
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Grids
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+
+<PageHeader Title="List of Phrases" />
+
+<SfDialog Target="#target" Width="700px" ShowCloseIcon="true" @bind-Visible="Visibility">
+    <DialogTemplates>
+        <Header> Substance Details </Header>
+        <Content>
+            <PhraseDetail SelectedPhrase="@selectedPhrase" />
+        </Content>
+    </DialogTemplates>
+</SfDialog>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-3">
+            <label>Display:</label>
+            <select @onchange="@SetPhraseCount">
+                <option value=10 selected>10</option>
+                <option value=20>20</option>
+                <option value=50>50</option>
+                <option value=100>100</option>
+            </select>
+        </div>
+
+        <div class="col-9 float-right">
+            <p>Click on a row to view Phrase details</p>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <SfGrid DataSource="@phraseList" Height="400" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
+                AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" >
+            <GridEvents RowSelected="RowSelectHandler" TValue="Phrase"></GridEvents>
+            <GridPageSettings PageSize="10" />
+            <GridColumns>
+                <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+
+    </div>
+
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    List<Phrase> phraseList;
+    List<Phrase> selectedPhraseList = new();
+
+    int phraseCount { get; set; } = 10;
+    string selected { get; set; }
+    DataManager dMgr;
+    bool Visibility { get; set; } = false;
+    Phrase selectedPhrase = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        dMgr = new(api);
+
+        AppState.BackToURL = string.Empty;
+        AppState.BackToURLText = string.Empty;
+
+        AppState.StatusBarMessage = $"Fetching phrases ...";
+
+        await SetPhraseList();
+
+        AppState.StatusBarMessage = $"Total phrases available: {phraseList.Count}";
+    }
+
+    private async Task SetPhraseList()
+    {
+        if (appData.Phrases.Count == 0)
+        {
+            appData.Phrases = await dMgr.GetAllPhrasesAsync();
+        }
+
+        phraseList = appData.Phrases;
+    }
+
+    private async Task SetPhraseCount(ChangeEventArgs e)
+    {
+        phraseCount = int.Parse(e.Value.ToString());
+        await SetPhraseList();
+    }
+
+    public void RowSelectHandler(RowSelectEventArgs<Phrase> args)
+    {
+        selectedPhrase = args.Data;
+        Visibility = true;
+    }
+}

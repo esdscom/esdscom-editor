@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EnumList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<EnumItems>
+		<EnumItem>
+			<Name>SdscomVersionEnum</Name>
+			<Comments>
+				The version of the XML standard which is applied in the transmission of datasheet information. This enum must list all compatible versions, but not any older ones! See issue #89.
+				It is used to reference the version number in the XML data file, as the schema name does not include the version number. So this complements the version attribute in the xs:schema tag of the XSD files, and one of the enum values here must match the version attribute in the schema.
+			</Comments>
+			<Values>5.4.0</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>LanguageCodeEnum</Name>
+			<Comments> Language according to ISO standard ISO 639-1 (2 letters).</Comments>
+			<Values>aa,ab,ae,af,ak,am,an,ar,as,av,ay,az,ba,be,bg,bh,bi,bm,bn,bo,br,bs,ca,ce,ch,co,cr,cs,cu,cv,cy,da,de,dv,dz,ee,el,en,eo,es,et,eu,fa,ff,fi,fj,fo,fr,fy,ga,gd,gl,gn,gu,gv,ha,he,hi,ho,hr,ht,hu,hy,hz,ia,id,ie,ig,ii,ik,io,is,it,iu,ja,jv,ka,kg,ki,kj,kk,kl,km,kn,ko,kr,ks,ku,kv,kw,ky,la,lb,lg,li,ln,lo,lt,lu,lv,mg,mh,mi,mk,ml,mn,mr,ms,mt,my,na,nb,nd,ne,ng,nl,nn,no,nr,nv,ny,oc,oj,om,or,os,pa,pi,pl,ps,pt,qu,rm,rn,ro,ru,rw,sa,sc,sd,se,sg,si,sk,sl,sm,sn,so,sq,sr,ss,st,su,sv,sw,ta,te,tg,th,ti,tk,tl,tn,to,tr,ts,tt,tw,ty,ug,uk,ur,uz,ve,vi,vo,wa,wo,xh,yi,yo,za,zh,zu</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>CountryCodeEnum</Name>
+			<Comments> Country according to ISO standard ISO 3166 (2 letters).</Comments>
+			<Values>AD,AE,AF,AG,AI,AL,AM,AO,AQ,AR,AS,AT,AU,AW,AX,AZ,BA,BB,BD,BE,BF,BG,BH,BI,BJ,BL,BM,BN,BO,BQ,BR,BS,BT,BV,BW,BY,BZ,CA,CC,CD,CF,CG,CH,CI,CK,CL,CM,CN,CO,CR,CU,CV,CW,CX,CY,CZ,DE,DJ,DK,DM,DO,DZ,EC,EE,EG,EH,ER,ES,ET,FI,FJ,FK,FM,FO,FR,GA,GB,GD,GE,GF,GG,GH,GI,GL,GM,GN,GP,GQ,GR,GS,GT,GU,GW,GY,HK,HM,HN,HR,HT,HU,ID,IE,IL,IM,IN,IO,IQ,IR,IS,IT,JE,JM,JO,JP,KE,KG,KH,KI,KM,KN,KP,KR,KW,KY,KZ,LA,LB,LC,LI,LK,LR,LS,LT,LU,LV,LY,MA,MC,MD,ME,MF,MG,MH,MK,ML,MM,MN,MO,MP,MQ,MR,MS,MT,MU,MV,MW,MX,MY,MZ,NA,NC,NE,NF,NG,NI,NL,NO,NP,NR,NU,NZ,OM,PA,PE,PF,PG,PH,PK,PL,PM,PN,PR,PS,PT,PW,PY,QA,RE,RO,RS,RU,RW,SA,SB,SC,SD,SE,SG,SH,SI,SJ,SK,SL,SM,SN,SO,SR,SS,ST,SV,SX,SY,SZ,TC,TD,TF,TG,TH,TJ,TK,TL,TM,TN,TO,TR,TT,TV,TW,TZ,UA,UG,UM,US,UY,UZ,VA,VC,VE,VG,VI,VN,VU,WF,WS,YE,YT,ZA,ZM,ZW</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>RoleDescriptionEnum</Name>
+			<Comments> The role values of a contact. Used in field Role. Role definitions are compatible with Norwegian SDScom applications. </Comments>
+			<Values>Responsible company,National responsible,Manufacturer,Importer,Only representative,Reimporter,Formulator,Distributor,Downstream user,Foreign manufacturer</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>CompositionTypeEnum</Name>
+			<Comments>Legal view on the composition, to determine whether the product is a substance, mixture, or else. Polymer is included for compatibility with Iuclid6 picklist N08.</Comments>
+			<Values>SingleConstituent,MultiConstituent,UVCB,Mixture,Mixture: Polymer</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ExactQualifierEnum</Name>
+			<Values>eq,ca</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>LowerQualifierEnum</Name>
+			<Values>lt,le</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>UpperQualifierEnum</Name>
+			<Values>gt,ge</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>QualifierEnum</Name>
+			<Comments> Symbols like less than, greater than, equal, greater or equal,less or equal or circa. </Comments>
+			<Values>lt,gt,le,ge,eq,ca</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>DoseEnum</Name>
+			<Comments>The legal values for the DoseEnum.</Comments>
+			<Values>NOEC,LOEC,NOEL,LOEL,NOAEL,LOAEL,LC0,LCLo,LC50,LC100,LD0,LDLo,LD50,LD100,EC0,EC3,EC10,EC20,EC25,EC50,EC50 (+ UVA),EC50 (- UVA),EC80,ATEmix,cATpE,ERC50,ERCLo,IC50,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ExposureRouteEnum</Name>
+			<Comments> The legal values for the ExposureRouteEnum. </Comments>
+			<Values>Inhalation,Oral,Dermal,Inhalation(Gas),Inhalation(Vapour),Inhalation(Dust/Mist),Subcutane,Intraperitonial,Intravenal,Intraarterial,Unreported</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ExposureLimitValueTypeEnum</Name>
+			<Comments>
+				The legal codes for the ExposureLimitValueTypeEnum. Source: Chapter 8.
+				DE: AGW / ES: VLA / NL: MAC / UK: WEL / EC: OEL, TWA, STEL / FR: VLE / HU: AK, PK, MK / US: PEL / CH: MAK / PL: NDS, NDSCH, NDSP / DK: GV / SE: NGV, TGV, KTV / NO: AN, ADN / FI: HTP
+			</Comments>
+			<Values>AGW,VLA,MAC,WEL,OEL,TWA,STEL,VLE,AK,PK,MK,PEL,MAK,NDS,NDSCH,NDSP,GV,NGV,TGV,KTV,AN,ADN,HTP</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PhValueStateEnum</Name>
+			<Comments> The legal codes for the PhValueStateEnum. Source: Chapter 9. </Comments>
+			<Values>In delivery state,In aqueous solution</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PhNotRelevantEnum</Name>
+			<Comments>This type corresponds directly to Iuclid Picklist PH_1 nd is relevant e.g. for PCN notifications in Europe. Enumeration values are taken literally from this list to facilitate mapping.</Comments>
+			<Values>pH is below -3,pH is above 15,substance/mixture is a gas,substance/mixture is non-polar/aprotic,substance/mixture is non-soluble (in water),substance/mixture not stable,substance/mixture reacts with water</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ViscosityTypeEnum</Name>
+			<Comments> The legal codes for the ViscosityTypeEnum. Source: Chapter 9. </Comments>
+			<Values>Dynamic,Kinematic,Flow time,Undefined,Other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SolubilityMediumEnum</Name>
+			<Comments> The legal codes for the SolubilityMediumEnum. Source: Chapter 9. </Comments>
+			<Values>Water,Fat,Undefined,Other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>StateUnderStandardConditionsEnum</Name>
+			<Comments> physical state (only solid/liquid/gaseous) under standard conditions (20°C, 1013 hpa) </Comments>
+			<Values>solid,liquid,gaseous</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ExposureLimitFractionEnum</Name>
+			<Values>inhalable,respirable</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>UnitEnum</Name>
+			<Comments>Sensible values for units in various contexts. SI units are used where available, and no super/subsets (i.e. 3 instead of ³)</Comments>
+			<Values>°C,°F,µg/Animal,µg/cm3,µg/dL,µg/g,µg/kg,µg/L,µg/mg,µg/mL,µg/mmol,µg/mol,µg,µL/g,µL/kg,µL/L,µL/m3,µL/mg,µL/mL,µL/mmol,µL/mol,µm,µmol/L,µmol/mol,µPa.s,%,1/K,1/mol.s,1/W,A.h,A,a,atm,bar.m/s,bar/s,bar,Bq,C,cal/kg,cal/mol.K,cal/mol,cal,cd,Ci,cL,cm/d,cm/h,cm/min,cm/s,cm2,cm3/g,cm3/h,cm3/min,cm3/s,cm3,cm,cP,cSt,d,dL,dm2,dm3,dm,dyn/cm,F,fiber/cm3,fiber/m3,fiber/mL,fm,g O2/g,g O2/L,g/cm3,g/dm3,g/g,g/h,g/kg,g/L.s,g/L,g/m3,g/m,g/min,g/mL,g/mol,g/s,g,Gbq,h,hPa/s,hPa,J/kg,J/mol,J,K/min,K,kA.h,kcal/kg,kcal/mol,kcal,kg/dm3,kg/h,kg/ha,kg/L,kg/m3,kg/min,kg/mol,kg/s.m2,kg/s,kg,kJ/kg,kJ/mol,kJ,km/d,km/h,kPa/s,kPa,kV,kW,L/h,L/kg.h,L/kg.min,L/kg.s,L/kg,L/L,L/m3,L/min,L/mol,L/s,L,lm,lx,m/d,m/h,m/min,m/s,m2,m3/h,m3/min,m3/s,m3,m,mA,mbar,mCi,mg C/g,mg C/L,mg KOH/g,mg O2/g,mg O2/L,mg/Animal,mg/cm2,mg/cm3,mg/dm2,mg/dm3,mg/Eye,mg/g,mg/h,mg/kg bw.d,mg/kg bw,mg/kg,mg/L,mg/m3,mg/mg,mg/min,mg/mL,mg/mmol,mg/mol,mg/s,mg,min,mJ,mL/Animal,mL/Eye,mL/g,mL/h,mL/kg,mL/L,mL/m3,mL/mg,mL/min,mL/mL,mL/mmol,mL/mol,mL/s,mL,mm H2O,mm Hg,mm/a,mm/d,mm/h,mm/min,mm/s,mm2/s,mm2,mm3,mm,mmol/g,mmol/kg,mmol/L,mmol/m3,mmol/mg,mmol/mL,mmol/mmol,mmol/mol,mN/m,mol-%,mol/g,mol/kg,mol/L.s,mol/L,mol/m3,mol/mg,mol/mL,mol/mmol,mol/mol,mPa.s,mPa,ms,mV,N/cm2,N/m2,N/m,N/mm2,ng/cm3,ng/g,ng/L,ng/mg,ng/mL,ng/mmol,ng/mol,nm,nmol/L,P,Pa.m3/mol,Pa.s,Pa/s,Pa,pm,ppb,ppm,ppq,ppt,S,s,St,t/h,t/min,t/s,t,Torr,U/g,U/kg,U/L,U/mg,U/mL,U/mmol,U/mol,V,Vol-%,W.h,W.m,W,Wb,Weight-%</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ReasonForWaiving</Name>
+			<Comments>For physical or chemical properties, reasons for waiving are: 1. cannot be determined = technically impossible to obtain (pH value for solids, arguably) 2. not applicable = irrelevant (because no hazard assessment requires such info) 3. no data = unknown (not tested so far) Implemented for https://github.com/esdscom/sdscom-xml/issues/33</Comments>
+			<Values>cannot be determined,not applicable,no data</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TemperatureClassEnum</Name>
+			<Comments> Legal values for the TemperatureClassEnum. Source: Chapter 9. </Comments>
+			<Values>T 1,T 2,T 3,T 4,T 5,T 6</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>GasGroupEnum</Name>
+			<Comments> Legal values for the GasGroupEnum. Source: Chapter 9. </Comments>
+			<Values>IIA,IIB,IIC</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SdscomSubsetEnum</Name>
+			<Comments> Legal values for the XMLStandardSubsetEnum. It should specify the minimum requirements matched, i.e. any subset with full coverage of SDScomChem should pick SDScomChem. SdscomXml light is a Norwegian specification, SDScomBau and SDScomChem are German, full means complete SDS information, other means any non-standard subset.</Comments>
+			<Values>SdsComXml Light,SDScomBau,SDScomChem,full,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PackingGroupEnum</Name>
+			<Comments> Legal values for the PackingGroupEnum </Comments>
+			<Values>I,II,III</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TransportClassEnum</Name>
+			<Values>1,2,3,4.1,4.2,4.3,5.1,5.2,6.1,6.2,7,8,9</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TransportHazardLabelEnum</Name>
+			<Values>1,1.1,1.2,1.3,1.4,1.5,1.6,2.1,2.2,2.3,3,4.1,4.2,4.3,5.1,5.2,6.1,6.2,7,8,9</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>JustificationForUpdateEnum</Name>
+			<Comments>
+				Enumeration for structured communication of SDS changes, consistent with Iuclid6 PG6-60571 v1.0 (Justifications for update) for CLP article 45 notification:
+				64936 change in composition of the mixture (addition, deletion, substitution of component)
+				64937 change in composition of the mixture (change in the concentration range)
+				64938 change in composition of the mixture (change in the exact concentration)
+				64939 change in the mixture classification
+				64940 change in the product identifier
+				64941 new toxicological information available
+				1342 other
+			</Comments>
+			<Values>ChangeComponent,ChangeConcentrationRange,ChangeExactConcentration,ChangeMixtureClassification,ChangeProductIdentifier,NewToxInfo,Other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>FormEnum</Name>
+			<Comments>
+				Form as specified in Iuclid6 Picklist A101 v3.0:
+				A101 - v3.0 – Mixture form
+				60037 aerosol dispenser: not specified
+				60038 aerosol dispenser: foam aerosol
+				60039 aerosol dispenser: spray aerosol
+				2830 gas
+				60040 gas: vapour
+				60041 gas under pressure: compressed gas
+				60042 gas under pressure: dissolved gas
+				60043 gas under pressure: liquefied gas
+				60044 gas under pressure: refrigerated liquefied gas
+				64931 cream / paste
+				5994 foam
+				6003 gel
+				2038 liquid
+				60048 liquid: viscous
+				60049 liquid: volatile
+				60045 liquid - liquid: emulsion
+				60047 liquid - solid: mixture of
+				60050 semi-solid (amorphous): gel
+				2381 solid
+				61424 solid: bulk
+				60051 solid: compact
+				60052 solid: crystalline
+				60053 solid: fibres
+				60054 solid: filaments
+				60055 solid: flakes
+				60056 solid: granular
+				60058 solid: particulate/powder
+				60057 solid: pellets
+				64932 solid: pressed powder
+				61861 solid: nanomaterial, surface-treated
+				61862 solid: nanomaterial, no surface treatment
+				60059 solid: nanomaterial
+				64933 solid: tabs / tablets
+				60062 solid - liquid: aqueous solution
+				60063 solid - liquid: suspension
+				60064 solid - solid: alloy
+				1342 other
+			</Comments>
+			<Values>aerosol dispenser: not specified,aerosol dispenser: foam aerosol,aerosol dispenser: spray aerosol,gas,gas: vapour,gas under pressure: compressed gas,gas under pressure: dissolved gas,gas under pressure: liquefied gas,gas under pressure: refrigerated liquefied gas,cream / paste,foam,gel,liquid,liquid: viscous,liquid: volatile,liquid - liquid: emulsion,liquid - solid: mixture of,semi-solid (amorphous): gel,solid,solid: bulk,solid: compact,solid: crystalline,solid: fibres,solid: filaments,solid: flakes,solid: granular,solid: particulate/powder,solid: pellets,solid: pressed powder,solid: nanomaterial, surface-treated,solid: nanomaterial, no surface treatment,solid: nanomaterial,solid: tabs / tablets,solid - liquid: aqueous solution,solid - liquid: suspension,solid - solid: alloy,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ColourEnum</Name>
+			<Comments>
+				Colour as described in Iuclid6 picklist PG6-60569 v1.0 – Mixture colour
+				64912 colourless
+				64913 black
+				64914 blue
+				64915 brown
+				64916 gold
+				64917 green
+				64918 grey
+				64919 orange
+				64920 pink
+				64921 purple
+				64922 red
+				64923 silver
+				64924 violet
+				64925 white
+				64926 yellow
+				64927 multicolour (select all relevant colours)
+				64928 mixture containing generic product identifier ‘colouring agent’ (select all relevant colours)
+			</Comments>
+			<Values>colourless,black,blue,brown,gold,green,grey,orange,pink,purple,red,silver,violet,white,yellow,multicolour,colouring agent</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ColourIntensityEnum</Name>
+			<Comments>
+				Colour intensity as specified in Iuclid6 picklist PG6-60568 v1.0 – Mixture colour intensity:
+				64908 transparent [should be translucent, as transparent means colourless)
+				64909 light
+				64910 dark
+				64911 fluorescent
+			</Comments>
+			<Values>translucent,light,dark,fluorescent</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PackagingTypeEnum</Name>
+			<Comments>
+				Type of Packaging as specified in Iuclid6 picklist B05 v2.0:
+				58353 aerosol can
+				58354 airspray
+				64859 atomizer
+				58355 bag / sack
+				58356 baitbox
+				58357 blister
+				58358 bottle
+				58359 box
+				64861 brick
+				64862 bucket
+				58360 can / tin
+				64863 carboy
+				58361 case
+				64864 dispenser
+				58362 dropper
+				58363 drum
+				64865 envelope
+				58364 IBC (intermediate bulk container)
+				64866 jar
+				58365 jerry can
+				64867 jug
+				58366 packet
+				58367 sachet
+				64868 phial
+				64869 stick
+				64870 syringe
+				58368 talcum powder container
+				64871 tank
+				58369 tea bag (product disperses through the container when added to water)
+				64872 tube
+				58370 water soluble bag
+				1342 other:
+			</Comments>
+			<Values>aerosol can,airspray,atomizer,bag / sack,baitbox,blister,bottle,box,brick,bucket,can / tin,carboy,case,dispenser,dropper,drum,envelope,IBC (intermediate bulk container),jar,jerry can,jug,packet,sachet,phial,stick,syringe,talcum powder container,tank,tea bag (product disperses through the container when added to water),tube,water soluble bag,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PackagingMaterialEnum</Name>
+			<Comments>
+				Material as specified in Iuclid6 picklist B07:
+				58378	glass
+				58379	plastic: HDPE
+				58380	plastic: LDPE
+				58381	plastic: PET
+				58382	plastic: composite:
+				58383	metal:
+				58384	paper, cardboard
+				1342	other:
+			</Comments>
+			<Values>glass,plastic: HDPE,plastic: LDPE,plastic: PET,plastic: composite,metal,paper, cardboard,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SubstanceTypeEnum</Name>
+			<Comments>
+				Substance type as represented in Iuclid6 picklist N58:
+				1756	element
+				2003	inorganic
+				1334	organic
+				2240	organometallic
+				2262	petroleum product
+				1342	other:
+			</Comments>
+			<Values>element,inorganic,organic,organometallic,petroleum product,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>FormulationTypeEnum</Name>
+			<Comments>
+				Formulation Type as represented in Iuclid6 picklist B04 v1.0:
+				58439	AE Aerosol dispenser
+				58440	AL Any other liquid
+				58441	AP Any other powder
+				58442	BR Briquette
+				58443	CB Bait concentrate
+				58444	CL Contact liquid or gel
+				58445	CP Contact powder
+				58446	CS Capsule suspension
+				58447	DC Dispersible concentrate
+				58448	DP Dustable powder
+				58449	DT Tablet for direct application
+				58450	EC Emulsifiable concentrate
+				58451	EG Emulsifiable granule
+				58452	EO Emulsion, water in oil
+				58453	EP Emulsifiable powder
+				58454	EW Emulsion, oil in water
+				58455	FU Smoke generator
+				58456	GA Gas
+				58457	GE Gas generating product
+				58458	GL Emulsifiable gel
+				58459	GR Granule
+				58460	GS Grease
+				58461	GW Water soluble gel
+				58462	HN Hot fogging concentrate
+				58463	KK Combi-pack solid/liquid
+				58464	KL Combi-pack liquid/liquid
+				58465	KN Cold fogging concentrate
+				58466	LN Long-lasting insecticidal net
+				58467	LV Liquid vaporizer
+				58468	MC Mosquito coil
+				58469	ME Micro-emulsion
+				58470	MV Vaporizing mats
+				58471	OD Oil dispersion
+				58472	OF Oil miscible flowable concentrate (oil miscible suspension)
+				58473	OL Oil miscible liquid
+				58474	OP Oil dispersible powder
+				58475	PA Paste
+				58476	PC Gel or paste concentrate
+				58477	PO Pour-on
+				58478	RB Bait (ready for use)
+				58479	SA Spot-on
+				58480	SC Suspension concentrate (= flowable concentrate)
+				58481	SD Suspension concentrate for direct application
+				58482	SE Suspo-emulsion
+				58483	SG Water soluble granule
+				58484	SL Soluble concentrate
+				58485	SO Spreading oil
+				58486	SP Water soluble powder
+				58487	ST Water soluble tablet
+				58488	SU Ultra-low volume (ULV) suspension
+				58489	TB Tablet
+				58490	TC Technical material
+				58491	TK Technical concentrate
+				58492	UL Ultra-low volume (ULV) liquid
+				58493	VP Vapour releasing product
+				58494	WG Water dispersible granules
+				58495	WP Wettable powder
+				58496	WT Water dispersible tablet
+				58497	ZC A mixed formulation of CS and SC
+				58498	ZE A mixed formulation of CS and SE
+				58499	ZW A mixed formulation of CS and EW
+				58500	XX Others:
+			</Comments>
+			<Values>AE Aerosol dispenser,AL Any other liquid,AP Any other powder,BR Briquette,CB Bait concentrate,CL Contact liquid or gel,CP Contact powder,CS Capsule suspension,DC Dispersible concentrate,DP Dustable powder,DT Tablet for direct application,EC Emulsifiable concentrate,EG Emulsifiable granule,EO Emulsion, water in oil,EP Emulsifiable powder,EW Emulsion, oil in water,FU Smoke generator,GA Gas,GE Gas generating product,GL Emulsifiable gel,GR Granule,GS Grease,GW Water soluble gel,HN Hot fogging concentrate,KK Combi-pack solid/liquid,KL Combi-pack liquid/liquid,KN Cold fogging concentrate,LN Long-lasting insecticidal net,LV Liquid vaporizer,MC Mosquito coil,ME Micro-emulsion,MV Vaporizing mats,OD Oil dispersion,OF Oil miscible flowable concentrate (oil miscible suspension),OL Oil miscible liquid,OP Oil dispersible powder,PA Paste,PC Gel or paste concentrate,PO Pour-on,RB Bait (ready for use),SA Spot-on,SC Suspension concentrate (= flowable concentrate),SD Suspension concentrate for direct application,SE Suspo-emulsion,SG Water soluble granule,SL Soluble concentrate,SO Spreading oil,SP Water soluble powder,ST Water soluble tablet,SU Ultra-low volume (ULV) suspension,TB Tablet,TC Technical material,TK Technical concentrate,UL Ultra-low volume (ULV) liquid,VP Vapour releasing product,WG Water dispersible granules,WP Wettable powder,WT Water dispersible tablet,ZC A mixed formulation of CS and SC,ZE A mixed formulation of CS and SE,ZW A mixed formulation of CS and EW,XX Other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ComponentFunctionEnum</Name>
+			<Comments>
+				Function of a component according to Iuclid6 picklists N28 and N28A (map "stabilizer" to "stabilizer: other"):
+				2675	absorbent
+				1699	active substance
+				2680	adsorbent
+				2693	anticaking agent
+				2694	anticoagulant
+				2721	booster
+				2728	buffer
+				2752	coagulant
+				2753	coating agent
+				2756	colourant
+				2761	complexing agent
+				2763	conditioner
+				2768	controlled release agent
+				2772	crystal growth regulator
+				2781	dehydrating agent
+				2783	denaturant
+				2794	drying agent
+				2795	dye
+				2802	emulsifier
+				2819	filler
+				2823	flow aid agent
+				2824	fragrance
+				2847	hardener
+				2895	lubricant
+				2918	moisturiser
+				2937	neutraliser
+				2976	odour masking agent
+				3442	pH adjuster
+				2999	pigment
+				3026	propellant
+				3342	solvent
+				61432	stabiliser: antioxidant
+				61433	stabiliser: inhibitor
+				61434	stabiliser: UV absorber
+				61435	stabiliser: other
+				3350	stiffener
+				3400	UV absorber
+				3424	viscosity modifier
+				3426	water repellent
+				3429	wetting agent
+				1342	other:
+			</Comments>
+			<Values>absorbent,active substance,adsorbent,anticaking agent,anticoagulant,booster,buffer,coagulant,coating agent,colourant,complexing agent,conditioner,controlled release agent,crystal growth regulator,dehydrating agent,denaturant,drying agent,dye,emulsifier,filler,flow aid agent,fragrance,hardener,lubricant,moisturiser,neutraliser,odour masking agent,pH adjuster,pigment,propellant,solvent,stabiliser: antioxidant,stabiliser: inhibitor,stabiliser: UV absorber,stabiliser: other,stiffener,UV absorber,viscosity modifier,water repellent,wetting agent,other</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>InvestigationMethodEnum</Name>
+			<Values>in-vivo,in-vitro</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ReproductiveToxicityTypeEnum</Name>
+			<Values>sexual function,developmental,lactation</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ReasonForWaiving</Name>
+			<Comments>For physical or chemical properties, reasons for waiving are: 1. cannot be determined = technically impossible to obtain (pH value for solids, arguably) 2. not applicable = irrelevant (because no hazard assessment requires such info) 3. no data = unknown (not tested so far) Implemented for https://github.com/esdscom/sdscom-xml/issues/33</Comments>
+			<Values>cannot be determined,not applicable,no data</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ReasonForWaiving</Name>
+			<Comments>For physical or chemical properties, reasons for waiving are: 1. cannot be determined = technically impossible to obtain (pH value for solids, arguably) 2. not applicable = irrelevant (because no hazard assessment requires such info) 3. no data = unknown (not tested so far) Implemented for https://github.com/esdscom/sdscom-xml/issues/33</Comments>
+			<Values>cannot be determined,not applicable,no data</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionGeneral</Name>
+			<Comments>The original UN GHS (2003) had no harmonized Precautionary Statements, and GHS Revision 1 (2005) had no numbering for Precautionary Statements. Thus, SDScom implements Precautionary Statements with GHS Revision 2 (2007).</Comments>
+			<Values>101,102,103</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassExpl</Name>
+			<Comments>Explosive categories according to the original UN GHS (2003).</Comments>
+			<Values>Expl. 1.1,Expl. 1.2,Expl. 1.3,Expl. 1.4,Expl. 1.5,Expl. 1.6</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardExpl</Name>
+			<Values>200,201,202,203,204,205</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassExpl</Name>
+			<Comments>Explosives according to UN GHS Revision 1 (2005).</Comments>
+			<Values>Unst. Expl.,Expl. 1.1,Expl. 1.2,Expl. 1.3,Expl. 1.4,Expl. 1.5,Expl. 1.6</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01HazardExpl</Name>
+			<Values>200,201,202,203,204,205</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionExpl</Name>
+			<Values>201,202,210,230,240,250,280,281,370,372,373,374,380,401,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionExpl</Name>
+			<Values>201,210,230,234,240,250,280,370,372,373,375,380,401,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionExpl</Name>
+			<Values>201,210,230,234,240,250,280,370,372,373,375,380,401,503</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionExpl</Name>
+			<Values>203,210,230,234,240,250,280,370,372,373,375,380,401,503</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassFlamGas</Name>
+			<Comments>Flammable Gas categories according to the original UN GHS (2003).</Comments>
+			<Values>Flam. Gas 1,Flam. Gas 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardFlamGas</Name>
+			<Values>220,221</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionFlamGas</Name>
+			<Values>210,377,381,403</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04ClassChemUnstGas</Name>
+			<Comments>Chemically Unstable Gas categories according to UN GHS revision 4 (2011). This is officially part of Flam. Gas., but must be applied in addition where applicable. </Comments>
+			<Values>Chem. Unst. Gas A,Chem. Unst. Gas B</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04HazardChemUnstGas</Name>
+			<Values>230,231</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionChemUnstGas</Name>
+			<Values>202</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06ClassPyrGas</Name>
+			<Comments>Pyrophoric Gas categories according to UN GHS revision 6 (2015). This is officially part of Flam. Gas., but must be applied in addition where applicable. </Comments>
+			<Values>Pyr. Gas</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06HazardPyrGas</Name>
+			<Values>232</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06PrecautionPyrGas</Name>
+			<Values>222,280</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07ClassFlamGas</Name>
+			<Comments>Flammable Gas categories according to UN GHS Revision 7 (2017). Although part of category 1A, the only official abbreviation (in annex VI of the European CLP) chooses a wording which looks like different categories or even classes.</Comments>
+			<Values>Flam. Gas 1A,Flam. Gas 1B,Flam. Gas 2,Pyr. Gas,Chem. Unstab. Gas A,Chem. Unstab. Gas B</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07HazardFlamGas</Name>
+			<Values>220,221,232,230,231</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionFlamGas</Name>
+			<Values>202,210,222,280,377,381,403</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionFlamGas</Name>
+			<Values>203,210,222,280,377,381,403</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassFlamAer</Name>
+			<Comments>Flammable Aerosol categories according to the original UN GHS (2003).</Comments>
+			<Values>Flam. Aer. 1,Flam. Aer. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardFlamAer</Name>
+			<Values>222,223</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionFlamAer</Name>
+			<Values>210,211,251,410,412</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04ClassAerosol</Name>
+			<Comments>Aerosol categories according to UN GHS revision 4 (2011).</Comments>
+			<Values>Aerosol 1,Aerosol 2,Aerosol 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04HazardAerosol</Name>
+			<Comments>While Precautionary statements are combined with a plus sign, Aerosol categories carry two separate Hazard statements - an exception within GHS.</Comments>
+			<Values>222,223,229</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionAerosol</Name>
+			<Values>210,211,251,410,412</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08ClassAerosolPressChem</Name>
+			<Comments>Aerosols And Chemicals Under Pressure categories (one common hazard class!) according to UN GHS revision 8 (2019).</Comments>
+			<Values>Aerosol 1,Aerosol 2,Aerosol 3,Press. Chem. 1,Press. Chem. 2,Press. Chem. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08HazardAerosolPressChem</Name>
+			<Comments>While Precautionary statements are combined with a plus sign, Aerosol categories carry two separate Hazard statements - an exception within GHS.</Comments>
+			<Values>222,223,229,282,283</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionAerosolPressChem</Name>
+			<Comments>For Chemicals Under Pressure in transportable cylinders, P410 may be omitted. Thus P403 is added in this list.</Comments>
+			<Values>210,211,251,370,376,378,381,403,410,412</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassOxGas</Name>
+			<Comments>Oxidizing Gas categories according to the original UN GHS (2003).</Comments>
+			<Values>Ox. Gas 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardOxGas</Name>
+			<Values>270</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionOxGas</Name>
+			<Values>220,244,370,376,403</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassPressGas</Name>
+			<Comments>Gases Under Pressure categories according to the original UN GHS (2003).</Comments>
+			<Values>Press. Gas,Press. Gas (Comp.),Press. Gas (Liq.),Press. Gas (Ref. Liq.),Press. Gas (Diss.)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardPressGas</Name>
+			<Values>280,281</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionPressGas</Name>
+			<Comments>For Gases Under Pressure in transportable cylinders, P410 may be omitted. Thus P403 is added in this list.</Comments>
+			<Values>282,315,336,403,410</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionPressGas</Name>
+			<Comments>For Gases Under Pressure in transportable cylinders, P410 may be omitted. Thus P403 is added in this list.</Comments>
+			<Values>282,315,336,403,410</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassFlamLiq</Name>
+			<Comments>Flammable Liquids categories according to the original UN GHS (2003).</Comments>
+			<Values>Flam. Liq. 1,Flam. Liq. 2,Flam. Liq. 3,Flam. Liq. 4</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassFlamLiq_no4</Name>
+			<Comments>Flammable Liquids categories according to the original UN GHS (2003), without category 4.</Comments>
+			<Values>Flam. Liq. 1,Flam. Liq. 2,Flam. Liq. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardFlamLiq</Name>
+			<Values>224,225,226</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionFlamLiq</Name>
+			<Values>210,233,235,240,241,242,243,280,303,353,361,370,378,403,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionFlamLiq</Name>
+			<Values>210,233,235,240,241,242,243,280,303,353,361,370,378,403,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassFlamSol</Name>
+			<Comments>Flammable Solids categories according to the original UN GHS (2003).</Comments>
+			<Values>Flam. Sol. 1,Flam. Sol. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardFlamSol</Name>
+			<Values>228</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionFlamSol</Name>
+			<Values>210,240,241,280,370,378</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassSelfReact</Name>
+			<Comments>Self-reactive categories according to the original UN GHS (2003).</Comments>
+			<Values>Self-react. A,Self-react. B,Self-react. C,Self-react. CD,Self-react. D,Self-react. E,Self-react. EF,Self-react. F,Self-react. G</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardSelfReact</Name>
+			<Values>240,241,242</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionSelfReact</Name>
+			<Values>210,220,234,235,280,370,375,378,380,403,411,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionSelfReact</Name>
+			<Values>210,234,235,240,280,370,372,373,375,378,380,403,411,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassPyrLiq</Name>
+			<Comments>Pyrophoric Liquids categories according to the original UN GHS (2003).</Comments>
+			<Values>Pyr. Liq. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardPyrLiq</Name>
+			<Values>250</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionPyrLiq</Name>
+			<Values>210,222,280,302,334,370,378,422</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionPyrLiq</Name>
+			<Values>210,222,231,232,233,280,302,334,370,378</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionPyrLiq</Name>
+			<Values>210,222,233,280,302,334,370,378</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassPyrSol</Name>
+			<Comments>Pyrophoric Solids categories according to the original UN GHS (2003).</Comments>
+			<Values>Pyr. Sol. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardPyrSol</Name>
+			<Values>250</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionPyrSol</Name>
+			<Values>210,222,280,334,335,370,378,422</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionPyrSol</Name>
+			<Values>210,222,231,232,233,280,302,334,335,370,378</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionPyrSol</Name>
+			<Values>210,222,233,280,302,334,335,370,378</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassSelfHeat</Name>
+			<Comments>Self-heating categories according to the original UN GHS (2003).</Comments>
+			<Values>Self-heat. 1,Self-heat. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardSelfHeat</Name>
+			<Values>251,252</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionSelfHeat</Name>
+			<Values>235,280,407,410,413,420</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionSelfHeat</Name>
+			<Values>235,280,407,413,420</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionSelfHeat</Name>
+			<Values>235,280,407,410,413,420</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassWaterReact</Name>
+			<Comments>Water-reactive categories according to the original UN GHS (2003).</Comments>
+			<Values>Water-react. 1,Water-react. 2,Water-react. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardWaterReact</Name>
+			<Values>260,261</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionWaterReact</Name>
+			<Values>223,231,232,280,334,335,370,378,402,404,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionWaterReact</Name>
+			<Values>223,231,232,280,302,334,335,370,378,402,404,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassOxLiq</Name>
+			<Comments>Oxidizing Liquids categories according to the original UN GHS (2003).</Comments>
+			<Values>Ox. Liq. 1,Ox. Liq. 2,Ox. Liq. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardOxLiq</Name>
+			<Values>271,272</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionOxLiq</Name>
+			<Values>210,220,221,280,283,306,360,370,371,375,378,380,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionOxLiq</Name>
+			<Values>210,220,280,283,306,360,371,375,370,378,380,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassOxSol</Name>
+			<Comments>Oxidizing Solids categories according to the original UN GHS (2003).</Comments>
+			<Values>Ox. Sol. 1,Ox. Sol. 2,Ox. Sol. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardOxSol</Name>
+			<Values>271,272</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionOxSol</Name>
+			<Values>210,220,221,280,283,306,360,370,371,375,378,380,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionOxSol</Name>
+			<Values>210,220,280,283,306,360,370,371,375,378,380,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassOrgPerox</Name>
+			<Comments>Organic Peroxides categories according to the original UN GHS (2003).</Comments>
+			<Values>Org. Perox. A,Org. Perox. B,Org. Perox. C,Org. Perox. CD,Org. Perox. D,Org. Perox. E,Org. Perox. EF,Org. Perox. F,Org. Perox. G</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardOrgPerox</Name>
+			<Values>240,241,242</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionOrgPerox</Name>
+			<Values>210,220,234,235,280,410,411,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs05PrecautionOrgPerox</Name>
+			<Values>210,220,234,235,240,280,370,372,373,375,378,380,403,410,411,420,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassMetCorr</Name>
+			<Comments>Metal Corrosion categories according to the original UN GHS (2003).</Comments>
+			<Values>Met. Corr. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardMetCorr</Name>
+			<Values>290</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionMetCorr</Name>
+			<Values>234,390,406</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06ClassDesensExpl</Name>
+			<Comments>Desensitized Explosives categories according to UN GHS revision 6 (2015).</Comments>
+			<Values>Desen. Expl. 1,Desen. Expl. 2,Desen. Expl. 3,Desen. Expl. 4</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06HazardDesensExpl</Name>
+			<Values>206,207,208</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs06PrecautionDesensExpl</Name>
+			<Values>210,212,230,233,280,380,370,375,371,375,380,401,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxOral</Name>
+			<Comments>Acute Toxicity by oral intake categories according to the original UN GHS (2003).</Comments>
+			<Values>Acute Tox. 1 (oral),Acute Tox. 2 (oral),Acute Tox. 3 (oral),Acute Tox. 4 (oral),Acute Tox. 5 (oral)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxOral_no5</Name>
+			<Comments>Acute Toxicity by oral intake categories according to the original UN GHS (2003), without category 5.</Comments>
+			<Values>Acute Tox. 1 (oral),Acute Tox. 2 (oral),Acute Tox. 3 (oral),Acute Tox. 4 (oral)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardAcuteToxOral</Name>
+			<Values>300,301,302</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAcuteToxOral</Name>
+			<Values>264,270,301,310,312,312,321,330,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionAcuteToxOral</Name>
+			<Values>264,270,301,310,312,321,330,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionAcuteToxOral</Name>
+			<Values>264,270,301,316,317,321,330,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxDermal</Name>
+			<Comments>Acute Toxicity by dermal contact categories according to the original UN GHS (2003).</Comments>
+			<Values>Acute Tox. 1 (dermal),Acute Tox. 2 (dermal),Acute Tox. 3 (dermal),Acute Tox. 4 (dermal),Acute Tox. 5 (dermal)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxDermal_no5</Name>
+			<Comments>Acute Toxicity by dermal contact categories according to the original UN GHS (2003), without category 5.</Comments>
+			<Values>Acute Tox. 1 (dermal),Acute Tox. 2 (dermal),Acute Tox. 3 (dermal),Acute Tox. 4 (dermal)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardAcuteToxDermal</Name>
+			<Values>310,311,312</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAcuteToxDermal</Name>
+			<Values>262,264,270,280,302,350,352,310,312,322,361,363,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionAcuteToxDermal</Name>
+			<Values>262,264,270,280,302,310,312,321,352,361,362,364,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionAcuteToxDermal</Name>
+			<Values>262,264,270,280,302,312,352,310,312,321,361,362,364,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionAcuteToxDermal</Name>
+			<Values>262,264,270,280,302,352,316,317,321,361,362,364,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxInhal</Name>
+			<Comments>Acute Toxicity by inhalation categories according to the original UN GHS (2003).</Comments>
+			<Values>Acute Tox. 1 (inhalation),Acute Tox. 2 (inhalation),Acute Tox. 3 (inhalation),Acute Tox. 4 (inhalation),Acute Tox. 5 (inhalation)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAcuteToxInhal_no5</Name>
+			<Comments>Acute Toxicity by inhalation categories according to the original UN GHS (2003), without category 5.</Comments>
+			<Values>Acute Tox. 1 (inhalation),Acute Tox. 2 (inhalation),Acute Tox. 3 (inhalation),Acute Tox. 4 (inhalation)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardAcuteToxInhal</Name>
+			<Values>330,331,332</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAcuteToxInhal</Name>
+			<Values>233,260,261,271,284,304,312,310,311,312,320,321,340,403,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionAcuteToxInhal</Name>
+			<Values>233,260,261,271,284,304,317,316,317,320,321,340,403,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassSkinCorr</Name>
+			<Comments>Skin Corrosion/Irritiation categories according to the original UN GHS (2003).</Comments>
+			<Values>Skin Corr. 1,Skin Corr. 1A,Skin Corr. 1B,Skin Corr. 1C,Skin Irrit. 2,Skin Irrit. 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassSkinCorr_no3</Name>
+			<Comments>Skin Corrosion/Irritiation categories according to the original UN GHS (2003), without category 3.</Comments>
+			<Values>Skin Corr. 1,Skin Corr. 1A,Skin Corr. 1B,Skin Corr. 1C,Skin Irrit. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardSkinCorr</Name>
+			<Values>314,315</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionSkinCorr</Name>
+			<Values>260,264,280,301,302,303,304,305,313,330,340,331,338,351,352,353,361,310,321,332,362,363,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionSkinCorr</Name>
+			<Values>260,264,280,301,302,303,304,305,313,330,331,338,340,351,352,353,361,310,321,332,362,364,363,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionSkinCorr</Name>
+			<Values>260,264,280,301,302,304,305,316,317,321,330,331,332,338,340,352,354,361,362,364,363,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassEyeDam</Name>
+			<Comments>Eye Damage/Irritation categories according to the original UN GHS (2003).</Comments>
+			<Values>Eye Dam. 1,Eye Irrit. 2,Eye Irrit. 2A,Eye Irrit. 2B</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardEyeDam</Name>
+			<Values>318,319</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionEyeDam</Name>
+			<Values>264,280,305,310,313,337,338,351</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionEyeDam</Name>
+			<Values>264,280,305,317,337,338,351,354</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassRespSens</Name>
+			<Comments>Respiratory tract sensitizer categories according to the original UN GHS (2003).</Comments>
+			<Values>Resp. Sens.</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardRespSens</Name>
+			<Values>334</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02ClassRespSens</Name>
+			<Comments>Respiratory tract sensitizer categories according to UN GHS revision 2 (2007).</Comments>
+			<Values>Resp. Sens. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02HazardRespSens</Name>
+			<Values>334</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionRespSens</Name>
+			<Values>261,285,304,311,341,342,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03ClassRespSens</Name>
+			<Comments>Respiratory tract sensitizer categories according to UN GHS revision 3 (2009).</Comments>
+			<Values>Resp. Sens. 1,Resp. Sens. 1A,Resp. Sens. 1B</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03HazardRespSens</Name>
+			<Values>334</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionRespSens</Name>
+			<Values>261,284,304,311,341,342,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionRespSens</Name>
+			<Values>261,284,304,316,341,342,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassSkinSens</Name>
+			<Comments>Skin Sensitizer categories according to the original UN GHS (2003).</Comments>
+			<Values>Skin Sens.</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardSkinSens</Name>
+			<Values>317</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02ClassSkinSens</Name>
+			<Comments>Skin Sensitizer categories according to UN GHS revision 2 (2007).</Comments>
+			<Values>Skin Sens. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02HazardSkinSens</Name>
+			<Values>317</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionSkinSens</Name>
+			<Values>261,272,280,302,313,352,321,333,363,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03ClassSkinSens</Name>
+			<Comments>Skin Sensitizer categories according to UN GHS revision 3 (2009).</Comments>
+			<Values>Skin Sens. 1,Skin Sens. 1A,Skin Sens. 1B</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03HazardSkinSens</Name>
+			<Values>317</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionSkinSens</Name>
+			<Values>261,272,280,302,313,352,321,333,362,364,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionSkinSens</Name>
+			<Values>261,272,280,302,317,321,333,352,362,364,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassMuta</Name>
+			<Comments>Mutagenicity categories according to the original UN GHS (2003).</Comments>
+			<Values>Muta. 1,Muta. 1A,Muta. 1B,Muta. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardMuta</Name>
+			<Values>340,341</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionMuta</Name>
+			<Values>201,202,281,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionMuta</Name>
+			<Values>201,202,280,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionMuta</Name>
+			<Values>203,280,318,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassCarc</Name>
+			<Comments>Carcinogenicity categories according to the original UN GHS (2003).</Comments>
+			<Values>Carc. 1,Carc. 1A,Carc. 1B,Carc. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardCarc</Name>
+			<Values>350,351</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionCarc</Name>
+			<Values>201,202,281,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionCarc</Name>
+			<Values>201,202,280,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionCarc</Name>
+			<Values>203,280,318,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassRepr</Name>
+			<Comments>Flammable Solids categories according to the original UN GHS (2003).</Comments>
+			<Values>Repr. 1,Repr. 1A,Repr. 1B,Repr. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardRepr</Name>
+			<Values>360,361</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionRepr</Name>
+			<Values>201,202,281,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionRepr</Name>
+			<Values>201,202,280,308,313,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionRepr</Name>
+			<Values>203,280,318,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassLact</Name>
+			<Comments>Lactatioon effects category (offically a subcategory of Repr) according to the original UN GHS (2003).</Comments>
+			<Values>Lact.</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardLact</Name>
+			<Values>362</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionLact</Name>
+			<Values>201,260,263,264,270,308,313</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs07PrecautionLact</Name>
+			<Values>201,202,260,263,264,270,308,313</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionLact</Name>
+			<Values>203,260,263,264,270,318</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassStotSe</Name>
+			<Comments>STOT single exposure categories according to the original UN GHS (2003).</Comments>
+			<Values>STOT SE 1,STOT SE 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardStotSe</Name>
+			<Values>370,371</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionStotSe</Name>
+			<Values>260,264,270,307,309,311,321,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs04PrecautionStotSe</Name>
+			<Values>260,264,270,308,311,321,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionStotSe</Name>
+			<Values>260,264,270,308,316,321,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassStotSe3</Name>
+			<Comments>STOT single exposure category 3 according to UN GHS revision 1 (2005). Officially a part of STOT SE, but can be applied independently from STOT SE 1 and 2 as it describes different effects.</Comments>
+			<Values>STOT SE 3 (resp.),STOT SE 3 (narc.),STOT SE 3 (resp., narc.)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01HazardStotSe3</Name>
+			<Values>335,336</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionStotSe3</Name>
+			<Values>233,261,271,304,340,312,403,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionStotSe3</Name>
+			<Values>233,261,271,304,319,340,403,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassStotRe</Name>
+			<Comments>STOT repreated exposure categories according to the original UN GHS (2003).</Comments>
+			<Values>STOT RE 1,STOT RE 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardStotRe</Name>
+			<Values>372,373</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionStotRe</Name>
+			<Values>260,264,270,314,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionStotRe</Name>
+			<Values>260,264,270,319,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassAspTox</Name>
+			<Comments>Aspiration hazard categories according to UN GHS revision 1 (2005).</Comments>
+			<Values>Asp. Tox. 1,Asp. Tox. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassAspTox_no2</Name>
+			<Comments>Aspiration hazard categories according to UN GHS revision 1 (2005), without category 2.</Comments>
+			<Values>Asp. Tox. 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01HazardAspTox</Name>
+			<Values>304,305</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAspTox</Name>
+			<Values>301,310,331,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs08PrecautionAspTox</Name>
+			<Values>301,316,331,405,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAquaticAcute</Name>
+			<Comments>Acute Aquatic environmental hazard categories according to the original UN GHS (2003).</Comments>
+			<Values>Aquatic Acute I,Aquatic Acute II,Aquatic Acute III</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardAquaticAcute</Name>
+			<Values>400,401,402</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassAquaticAcute</Name>
+			<Comments>Acute Aquatic environmental hazard categories according to UN GHS revision 1 (2005).</Comments>
+			<Values>Aquatic Acute 1,Aquatic Acute 2,Aquatic Acute 3</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassAquaticAcute_no23</Name>
+			<Comments>Acute Aquatic environmental hazard categories according to UN GHS revision 1 (2005).</Comments>
+			<Values>Aquatic Acute 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01HazardAquaticAcute</Name>
+			<Values>400,401,402</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAquaticAcute</Name>
+			<Values>273,391,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00ClassAquaticChronic</Name>
+			<Comments>Chronic Aquatic environmental hazard categories according to the original UN GHS (2003).</Comments>
+			<Values>Aquatic Chronic I,Aquatic Chronic II,Aquatic Chronic III,Aquatic Chronic IV</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs00HazardAquaticChronic</Name>
+			<Values>410,411,412,413</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01ClassAquaticChronic</Name>
+			<Comments>Chronic Aquatic environmental hazard categories according to UN GHS revision 1 (2005).</Comments>
+			<Values>Aquatic Chronic 1,Aquatic Chronic 2,Aquatic Chronic 3,Aquatic Chronic 4</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs01HazardAquaticChronic</Name>
+			<Values>410,411,412,413</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs02PrecautionAquaticChronic</Name>
+			<Values>273,391,501</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03ClassOzone</Name>
+			<Comments>Ozone layer hazard categories according to UN GHS revision 3 (2009).</Comments>
+			<Values>Ozone 1</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03HazardOzone</Name>
+			<Values>420</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Ghs03PrecautionOzone</Name>
+			<Values>502</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>GhsPictogramCodeEnum</Name>
+			<Comments>Pictogram code enumeration with a predefined set of legal values.</Comments>
+			<Values>GHS01,GHS02,GHS03,GHS04,GHS05,GHS06,GHS07,GHS08,GHS09</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>GhsSignalWordEnum</Name>
+			<Comments>Signal word enumeration with a predefined set of legal values.</Comments>
+			<Values>DGR,WNG</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Whmis2015ClassCategoryEnumRestr</Name>
+			<Comments>
+				This type restricts GHS revision 3 to the classes and categories which are covered in WHMIS. Since environmental hazards are optional, they are not excluded here.
+				In theory, WHMIS is based on GHS revision 5 and then rolled back to be "compatible" with GHS revision 3, in order to be consistent with the USA. We are treating it as rev. 3 to make SDScom easier to read.
+			</Comments>
+			<Values>Acute Tox. 5 (oral),Acute Tox. 5 (dermal),Acute Tox. 5 (inhalation),Skin Irrit. 3,Asp. Tox. 2</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Whmis2015ClassCategoryEnumExt</Name>
+			<Comments>Canada specific hazard classes</Comments>
+			<Values>Pyrophoric Gas,Simple Asphyxiant,Combustible Dust</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>StorageClassEnumCH</Name>
+			<Comments>Enumeration of the Swiss storage class in the style of German TRGS 510.</Comments>
+			<Values>1,2,3,4.1,4.2,4.3,5,6.1,6.2,7,8,9,10/12,11/13,10,11,12,13,NK</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>WaterHazardClassEnum</Name>
+			<Comments> Enumaration of the german water hazard class. awg = "allgemein wassergefährdend", nwg = "nicht wassergefährdend" </Comments>
+			<Values>1,2,3,nwg,awg</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>StorageClassEnumDE</Name>
+			<Comments>Enumaration of the german storage class according to TRGS 510.</Comments>
+			<Values>1,2A,2B,3,4.1A,4.1B,4.2,4.3,5.1A,5.1B,5.1C,5.2,6.1A,6.1B,6.1C,6.1D,6.2,7,8A,8B,9,10,11,12,13,10-13</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SectorOfUseCodeEnum</Name>
+			<Comments> The legal codes for the SectorOfUseCodeEnum. Source: Chapter 1. </Comments>
+			<Values>SU1,SU2a,SU2b,SU3,SU4,SU5,SU6a,SU6b,SU7,SU8,SU9,SU10,SU11,SU12,SU13,SU14,SU15,SU16,SU17,SU18,SU19,SU20,SU21,SU22,SU23,SU24,SU0</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ProductCategoryCodeEnum</Name>
+			<Comments> The legal codes for the ProductCategoryCodeEnum. Source: Chapter 1. </Comments>
+			<Values>PC1,PC2,PC3,PC4,PC7,PC8,PC9a,PC9b,PC9c,PC11,PC12,PC13,PC14,PC15,PC16,PC17,PC18,PC19,PC20,PC21,PC22,PC23,PC24,PC25,PC26,PC27,PC28,PC29,PC30,PC31,PC32,PC33,PC34,PC35,PC36,PC37,PC38,PC39,PC40,PC0</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ProcessCategoryCodeEnum</Name>
+			<Comments> The legal codes for the ProcessCategoryCodeEnum. Source: Chapter 1. </Comments>
+			<Values>PROC1,PROC2,PROC3,PROC4,PROC5,PROC6,PROC7,PROC8a,PROC8b,PROC9,PROC10,PROC11,PROC12,PROC13,PROC14,PROC15,PROC16,PROC17,PROC18,PROC19,PROC20,PROC21,PROC22,PROC23,PROC24,PROC25,PROC26,PROC27a,PROC27b</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ArticleCategoryCodeEnum</Name>
+			<Comments> The legal values for the ArticleCategoryCodeEnum. Source: Chapter 1. </Comments>
+			<Values>AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8,AC10,AC11,AC13,AC30,AC31,AC32,AC33,AC34,AC35,AC36,AC38,AC0</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>EnvironmentalReleaseCategoryCodeEnum</Name>
+			<Comments> The legal codes for the EnvironmentalReleaseCategoryCodeEnum. Source: Chapter 1. </Comments>
+			<Values>ERC1,ERC2,ERC3,ERC4,ERC5,ERC6a,ERC6b,ERC6c,ERC6d,ERC7,ERC8a,ERC8b,ERC8c,ERC8d,ERC8e,ERC8f,ERC9a,ERC9b,ERC10a,ERC10b,ERC11a,ERC11b,ERC12a,ERC12b</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>EupcsCategoryCodeEnum</Name>
+			<Comments>
+				Use codes according to the European Product Categorisation System EuPCS, as covered by Iuclid6 picklist PG6-60567 V1.1: 64945 F Mixtures for further formulation 64877 PC-ADH-1 Adhesives and sealants - household, office or school use 64878 PC-ADH-2 Adhesives and sealants - building and construction works (except cement based adhesives) 64879 PC-ADH-3 Adhesives and sealants - footwear and leather goods 64880 PC-ADH-4 Adhesives and sealants - paper and board related processes 64881 PC-ADH-5 Adhesives and sealants - transportation industry 64882 PC-ADH-6 Adhesives and sealants - woodworking and joinery (includes putty) 64883 PC-ADH-7 Adhesives and sealants - assembly line processes 64884 PC-ADH-8 Multi-component adhesives and sealants 64886 PC-ADH-OTH Other adhesives and sealants 64946 PC-AIR-1 Air care products for indoor rooms (continuous action) 64947 PC-AIR-2 Air care products for indoor rooms (instant action) 64948 PC-AIR-3 Air care products for shoes
+				64949 PC-AIR-4 Air care products for vehicles 64950 PC-AIR-5 Ambient deodorisers (excludes room deodorisers) 64951 PC-AIR-6 Incense 64952 PC-AIR-7 Candles - scented and unscented 64953 PC-AIR-8 Matches 64954 PC-AIR-OTH Other air care products 64955 PC-ANI-1 Additives and premixtures for animal feed 64956 PC-ANI-2 Animal shampoos and conditioners 64957 PC-ANI-OTH Other products for animals (excluding biocidal products) 64958 PC-ART-1 Artists’, craft and hobby paints 64959 PC-ART-2 Finger paints 64960 PC-ART-3 Crayons, chalks and pastels 64961 PC-ART-4 Auxiliary materials for artists 64962 PC-ART-5 Modelling compounds 64963 PC-ART-6 Chemical products used for decorative purposes 64964 PC-ART-OTH Other art materials (including chemical products used for decorative purposes) 64965 PC-CLN-1 Abrasive cleaning products 64966 PC-CLN-2 All-purpose (or multi-purpose) non-abrasive cleaners 64967 PC-CLN-3 Bleaching products for cleaning or laundry use (excludes biocidal products)
+				64968 PC-CLN-4 Descaling products 64969 PC-CLN-5 Drain cleaning products 64970 PC-CLN-6 Fireplace and smoke resin cleaners 64971 PC-CLN-7 Glass/window/mirror cleaning products (excludes windscreens) 64972 PC-CLN-8 Indoor furniture cleaning/care products (excludes leather and upholstery) 64973 PC-CLN-9 Outdoor cleaners (excludes stone, concrete and similar surfaces) 64974 PC-CLN-10.1 Cleaners for kitchen areas 64975 PC-CLN-10.2 Cleaners for kitchen machinery and equipment 64976 PC-CLN-10.3 Cooking hob cleaning/care products 64977 PC-CLN-10.4 Oven, grill or barbecue cleaners 64978 PC-CLN-10.OTH Other kitchen and related cleaning products 64979 PC-CLN-11.1 Bathroom cleaners 64980 PC-CLN-11.2 Toilet cleaners 64981 PC-CLN-11.3 Multi-flush products for toilets 64982 PC-CLN-11.OTH Other bathroom and toilet cleaning/care products (excludes biocidal products) 64983 PC-CLN-12.1 Cleaning/care products for stone and tiles - regular use 64984 PC-CLN-12.2 Heavy duty cleaning products
+				for stone and similar surfaces 64985 PC-CLN-12.3 Grout cleaners 64986 PC-CLN-12.OTH Other stone, tile and grout cleaning/care products 64987 PC-CLN-13.2 Floor cleaning products 64988 PC-CLN-13.3 Floor care products e.g. waxes, emulsions 64989 PC-CLN-13.4 Floor strippers 64990 PC-CLN-13.OTH Other floor cleaning, care and maintenance products (excludes stone and tile) 64991 PC-CLN-14.1 Cleaning products for carpet/upholstery 64992 PC-CLN-14.2 Deodorisers or fresheners for carpet/upholstery 64993 PC-CLN-14.OTH Other carpet and upholstery products 64994 PC-CLN-15.1 Cleaners for eyewear 64995 PC-CLN-15.2 Cleaners for home electronic screens 64996 PC-CLN-15.3 Cleaners for musical instruments 64997 PC-CLN-15.4 Metal polish/tarnish remover 64998 PC-CLN-15.OTH Other cleaners for specific personal items 64999 PC-CLN-16.1 Leather - cleaning and care productsPoison Centres Notification Format 65000 PC-CLN-16.2 Textile footwear - cleaning products 65001 PC-CLN-16.3 Textile
+				fresheners/deodorisers 65002 PC-CLN-16.4 Dry cleaning and associated products 65003 PC-CLN-16.5 Impregnation products for finished textiles and leather goods 65004 PC-CLN-16.6 Outdoor textiles - cleaning products 65005 PC-CLN-16.OTH Other textile and leather cleaning and care products (including footwear) 65006 PC-CLN-17.1 Exterior cleaning products - all vehicle types 65007 PC-CLN-17.2 Exterior care products - all vehicle types 65008 PC-CLN-17.3 Interior cleaning and care products (excludes air care products, and products for upholstery or leather) 65009 PC-CLN-17.4 Engine cleaners 65010 PC-CLN-17.5 Brake cleaners 65011 PC-CLN-17.6 Chromium, rim and other metal cleaners - all vehicle types 65012 PC-CLN-17.7 Windscreen/windshield cleaners 65013 PC-CLN-17.8 Windscreen/windshield wash fluid 65014 PC-CLN-17.OTH Other vehicle (all types) cleaning and care products 65015 PC-CLN-OTH Other cleaning, care and maintenance products (excludes biocidal products) 65016 PC-COL-1 Dyes
+				65017 PC-COL-2 Pigments 65018 PC-CON-1 Cement 65019 PC-CON-2 Concrete 65020 PC-CON-3 Gypsum 65021 PC-CON-4 Mortars 65022 PC-CON-5 Construction chemicals 65023 PC-CON-OTH Other construction products 65024 PC-DET-1.1 Laundry detergent for hand washing 65025 PC-DET-1.2 Laundry detergents - household usePoison Centres Notification Format 65026 PC-DET-1.3 Laundry detergents - professional or industrial use 65027 PC-DET-1.OTH Other laundry detergents 65028 PC-DET-2.1 Detergency boosters and in-wash stain removers 65029 PC-DET-2.2 Fabric softeners 65030 PC-DET-2.3 Ironing aid products 65031 PC-DET-2.4 Laundry starch 65032 PC-DET-2.5 Pre-treatment stain removers 65033 PC-DET-2.6 Rinse agents for laundry (excludes biocidal products) 65034 PC-DET-2.7 Washing machine care agents 65035 PC-DET-2.8 Whitening agents or optical brighteners 65036 PC-DET-2.OTH Other auxiliary laundry and care products (excludes biocidal products) 65037 PC-DET-3.1 Automatic dishwashing detergents -
+				household use 65038 PC-DET-3.2 Automatic dishwashing detergents - professional or industrial use 65039 PC-DET-3.3 Hand dishwashing detergents 65040 PC-DET-3.OTH Other dishwashing detergents 65041 PC-DET-4.1 Dishwasher salt 65042 PC-DET-4.2 Dishwashing machine care agents 65043 PC-DET-4.3 Glass protection products 65044 PC-DET-4.4 Rinse agents for dishes 65045 PC-DET-4.OTH Other auxiliary dishwashing and care products 65046 PC-ELQ E-liquids and mixtures for electronic cigarettes 65047 PC-FER-1 Fertilisers 65048 PC-FER-2 Liming material 65049 PC-FER-3 Soil improvers 65050 PC-FER-4 Growing media 65051 PC-FER-5 Agronomic additivesPoison Centres Notification Format 65052 PC-FER-6 Plant biostimulants 65053 PC-FER-7 Combination of fertilisers and fertilising products 65054 PC-FUE-1 Fuels for vehicles and machinery 65055 PC-FUE-2 Lamp oils 65056 PC-FUE-3 Grill lighter fluids 65057 PC-FUE-4 Camp fuels 65058 PC-FUE-5 Fuel additives and fuel components 65059 PC-FUE-OTH Other fuels
+				65060 PC-INK-1 Writing and drawing inks 65061 PC-INK-2 Inks and toners for home and office printers 65062 PC-INK-3 Commercial printing inks, toners and related finishing products 65063 PC-INK-4 Pressroom chemicals 65064 PC-INK-5 Correction fluids 65065 PC-INK-OTH Other inks, toners and related printing materials 65066 PC-PNT-1 Aerosol paints and coatings 65067 PC-PNT-2 Paints/coatings - Decorative 65068 PC-PNT-3 Paints/coatings - Protective and functional 65069 PC-PNT-4 Marine vessel coatings (excludes anti-fouling products) 65070 PC-PNT-5 Automotive and aerospace coatings 65071 PC-PNT-6 Factory-applied coatings (excludes categories already covered) 65072 PC-PNT-7 Paint removers, thinners and related auxiliaries 65073 PC-PNT-OTH Other paints and coating materials 65074 PC-PYR-1 Fire works for indoor use 65075 PC-PYR-2 Fire works for outdoor use 65076 PC-PYR-3 Theatrical pyrotechnic products 65077 PC-PYR-4 Signalling productsPoison Centres Notification Format 65078
+				PC-PYR-OTH Other pyrotechnic products 65079 PC-TAT Tattoo inks 65080 PC-TEC-1 Adsorbents 65081 PC-TEC-2 Antifreeze and de-icing products 65082 PC-TEC-3 Desiccants 65083 PC-TEC-4 Electrolytes for batteries 65084 PC-TEC-5 Fire extinguishers 65085 PC-TEC-6 Fragrances 65086 PC-TEC-7 Heat transfer fluids 65087 PC-TEC-8 Hydraulic fluids, including brake and transmission fluids 65088 PC-TEC-9 Intermediates 65089 PC-TEC-10 Leather treatment products (excludes dyes and pigments) 65090 PC-TEC-11 Lubricants, greases, release agents 65091 PC-TEC-12 Metal surface treatment products 65092 PC-TEC-13 Metal working fluids 65093 PC-TEC-14 Paper and board treatment products (excluding dyes) 65094 PC-TEC-15 Photochemicals 65095 PC-TEC-16 Polymer preparations and compounds 65096 PC-TEC-17 Processing aids 65097 PC-TEC-18 Products used in mining, oil or gas exploration processes 65098 PC-TEC-19 Reagents and laboratory chemicals 65099 PC-TEC-20 Soil remediation products 65100 PC-TEC-21
+				Solvents and extraction agents 65101 PC-TEC-22 Surfactants mixtures for industrial applications 65102 PC-TEC-23 Textile treatment products (excludes dyes and pigments) 65103 PC-TEC-24 Welding, soldering, and flux productsPoison Centres Notification Format 65104 PC-TEC-OTH Other products for chemical or technical processes 65105 PC-UNC Chemical products - uncategorised 65106 PP-BIO-1 Biocidal products for human hygiene 65107 PP-BIO-2 Disinfectants and algaecides not intended for direct application to humans or animals 65108 PP-BIO-3 Biocidal products for veterinary hygiene 65109 PP-BIO-4 Biocidal products for food and feed area 65110 PP-BIO-5 Biocidal products for drinking water 65111 PP-BIO-6 Biocidal products used as preservatives for products during storage 65112 PP-BIO-7 Film preservatives 65113 PP-BIO-8 Wood preservatives 65114 PP-BIO-9 Fibre, leather, rubber and polymerised materials preservatives 65115 PP-BIO-10 Construction material preservatives 65116 PP-BIO-11
+				Preservatives for liquid-cooling and processing systems 65117 PP-BIO-12 Slimicides 65118 PP-BIO-13 Working or cutting fluid preservatives 65119 PP-BIO-14 Rodenticides (excluding for plant protection) 65120 PP-BIO-15 Avicides 65121 PP-BIO-16 Molluscicides, vermicides and products to control other invertebrates (excluding plant protection products) 65122 PP-BIO-17 Piscicides 65123 PP-BIO-18 Insecticides, acaricides and products to control other arthropods (excluding equivalent products when used as pesticides) 65124 PP-BIO-19 Repellents and attractants 65125 PP-BIO-20 Control of other vertebrates 65126 PP-BIO-21 Antifouling products 65127 PP-BIO-22 Embalming and taxidermist fluids 65128 PP-PRD-1 Acaricides for plant protectionPoison Centres Notification Format 65129 PP-PRD-2 Attractants (excluding semio-chemicals) 65130 PP-PRD-3 Bactericides for plant protection 65131 PP-PRD-4 Biopesticides for plant protection 65132 PP-PRD-5 Fungicides for plant protection 65133 PP-PRD-6
+				Herbicides for plant protection, including haulm destructors and moss killers 65134 PP-PRD-7 Insecticides for plant protection 65135 PP-PRD-8 Molluscicides for plant protection 65136 PP-PRD-9 Nematicides for plant protection 65137 PP-PRD-10 Plant growth regulators 65138 PP-PRD-11 Repellents for plant protection 65139 PP-PRD-12 Rodenticides for plant protection 65140 PP-PRD-13 Semio-chemicals 65141 PP-PRD-14 Soil sterilants 65142 PP-PRD-15 Talpicides for plant protection 65143 PP-PRD-16 Viricides for plant protection 65144 PP-PRD-OTH Other plant protection products
+			</Comments>
+			<Values>F,PC-ADH-1,PC-ADH-2,PC-ADH-3,PC-ADH-4,PC-ADH-5,PC-ADH-6,PC-ADH-7,PC-ADH-8,PC-ADH-OTH,PC-AIR-1,PC-AIR-2,PC-AIR-3,PC-AIR-4,PC-AIR-5,PC-AIR-6,PC-AIR-7,PC-AIR-8,PC-AIR-OTH,PC-ANI-1,PC-ANI-2,PC-ANI-OTH,PC-ART-1,PC-ART-2,PC-ART-3,PC-ART-4,PC-ART-5,PC-ART-6,PC-ART-OTH,PC-CLN-1,PC-CLN-2,PC-CLN-3,PC-CLN-4,PC-CLN-5,PC-CLN-6,PC-CLN-7,PC-CLN-8,PC-CLN-9,PC-CLN-10.1,PC-CLN-10.2,PC-CLN-10.3,PC-CLN-10.4,PC-CLN-10.OTH,PC-CLN-11.1,PC-CLN-11.2,PC-CLN-11.3,PC-CLN-11.OTH,PC-CLN-12.1,PC-CLN-12.2,PC-CLN-12.3,PC-CLN-12.OTH,PC-CLN-13.2,PC-CLN-13.3,PC-CLN-13.4,PC-CLN-13.OTH,PC-CLN-14.1,PC-CLN-14.2,PC-CLN-14.OTH,PC-CLN-15.1,PC-CLN-15.2,PC-CLN-15.3,PC-CLN-15.4,PC-CLN-15.OTH,PC-CLN-16.1,PC-CLN-16.2,PC-CLN-16.3,PC-CLN-16.4,PC-CLN-16.5,PC-CLN-16.6,PC-CLN-16.OTH,PC-CLN-17.1,PC-CLN-17.2,PC-CLN-17.3,PC-CLN-17.4,PC-CLN-17.5,PC-CLN-17.6,PC-CLN-17.7,PC-CLN-17.8,PC-CLN-17.OTH,PC-CLN-OTH,PC-COL-1,PC-COL-2,PC-CON-1,PC-CON-2,PC-CON-3,PC-CON-4,PC-CON-5,PC-CON-OTH,PC-DET-1.1,PC-DET-1.2,PC-DET-1.3,PC-DET-1.OTH,PC-DET-2.1,PC-DET-2.2,PC-DET-2.3,PC-DET-2.4,PC-DET-2.5,PC-DET-2.6,PC-DET-2.7,PC-DET-2.8,PC-DET-2.OTH,PC-DET-3.1,PC-DET-3.2,PC-DET-3.3,PC-DET-3.OTH,PC-DET-4.1,PC-DET-4.2,PC-DET-4.3,PC-DET-4.4,PC-DET-4.OTH,PC-ELQ,PC-FER-1,PC-FER-2,PC-FER-3,PC-FER-4,PC-FER-5,PC-FER-6,PC-FER-7,PC-FUE-1,PC-FUE-2,PC-FUE-3,PC-FUE-4,PC-FUE-5,PC-FUE-OTH,PC-INK-1,PC-INK-2,PC-INK-3,PC-INK-4,PC-INK-5,PC-INK-OTH,PC-PNT-1,PC-PNT-2,PC-PNT-3,PC-PNT-4,PC-PNT-5,PC-PNT-6,PC-PNT-7,PC-PNT-OTH,PC-PYR-1,PC-PYR-2,PC-PYR-3,PC-PYR-4,PC-PYR-OTH,PC-TAT,PC-TEC-1,PC-TEC-2,PC-TEC-3,PC-TEC-4,PC-TEC-5,PC-TEC-6,PC-TEC-7,PC-TEC-8,PC-TEC-9,PC-TEC-10,PC-TEC-11,PC-TEC-12,PC-TEC-13,PC-TEC-14,PC-TEC-15,PC-TEC-16,PC-TEC-17,PC-TEC-18,PC-TEC-19,PC-TEC-20,PC-TEC-21,PC-TEC-22,PC-TEC-23,PC-TEC-24,PC-TEC-OTH,PC-UNC,PP-BIO-1,PP-BIO-2,PP-BIO-3,PP-BIO-4,PP-BIO-5,PP-BIO-6,PP-BIO-7,PP-BIO-8,PP-BIO-9,PP-BIO-10,PP-BIO-11,PP-BIO-12,PP-BIO-13,PP-BIO-14,PP-BIO-15,PP-BIO-16,PP-BIO-17,PP-BIO-18,PP-BIO-19,PP-BIO-20,PP-BIO-21,PP-BIO-22,PP-PRD-1,PP-PRD-2,PP-PRD-3,PP-PRD-4,PP-PRD-5,PP-PRD-6,PP-PRD-7,PP-PRD-8,PP-PRD-9,PP-PRD-10,PP-PRD-11,PP-PRD-12,PP-PRD-13,PP-PRD-14,PP-PRD-15,PP-PRD-16,PP-PRD-OTH</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>EffectLevelGroupEnum</Name>
+			<Comments>The legal values for DNEL target groups</Comments>
+			<Values>Worker,Consumer</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>EffectLevelTypeEnum</Name>
+			<Comments> The legal codes for the DNEL and DMEL types. Source: Chapter 8. </Comments>
+			<Values>Acute oral (systemic),Long-term oral (systemic),Acute dermal (local),Acute dermal (systemic),Long-term dermal (local),Long-term dermal (systemic),Acute inhalation (local),Acute inhalation (systemic),Long-term inhalation (local),Long-term inhalation (systemic)</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>PNECTypeEnum</Name>
+			<Comments> The legal codes for the PNECTypeEnum. Source: Chapter 8 </Comments>
+			<Values>Soil,Sediment, marine water,Sediment, freshwater,Aquatic, intermittent release,Aquatic, marine water,Aquatic, freshwater,Sewage treatment plant (STP),Secondary poisoning,Air</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ESSection2Head</Name>
+			<Comments>Specifies the sub headers of section 2 for exposure scenarios: AFD: Amount used (or contained in articles), frequency and duration of use/exposure AGPA: Additional good practice advice OOC: Other conditions PC: Product (article) characteristics PPE: Conditions and measures related to personal protection, hygiene and health evaluation STP: Conditions and measures related to sewage treatment plant TOM: Technical and organizational conditions and measures WASTE: Conditions and measures related to treatment of waste (incl. article waste)</Comments>
+			<Values>AFD,AGPA,OOC,PC,PPE,STP,TOM</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ESSectionSubHeader</Name>
+			<Comments>Defines the abbreviations of headings of section 2 for the exposure scenario for communication.</Comments>
+			<Values>AFD,AGPA,OOC,PC,PPE,STP,TOM,WASTE</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ReachRoleDescriptionEnum</Name>
+			<Comments>The role values of a contact as defined under REACH. Used in field Role. See issue #18. </Comments>
+			<Values>Manufacturer,Importer,Only representative,Distributor</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>AtpEnum</Name>
+			<Values>CLP00-1272/2008,CLP01-790/2009,CLP02-286/2011,CLP03-618/2012,CLP04-487/2013,CLP05-944/2013,CLP06-605/2014,CLP06a-1297/2014,CLP07-2015/1221,CLP08-2016/918,CLP09-2016/1179,CLP09a-2017/542,CLP10-2017/776,CLP11-2018/669,CLP13-2018/1480,CLP12-2019/521,CLP14-2020/217,CLP15-2020/1182,CLP16-2021/643,CLP17-2021/849</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SupplementalHazardInformationEnum</Name>
+			<Comments> Supplemental Hazard Information Code with a predefined set of legal values. CLP </Comments>
+			<Values>001,006,014,018,019,044,029,031,032,066,070,071,059</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>SpecialSupplementalLabelInfoEnum</Name>
+			<Comments> Special Supplemental Label Info Code with a predefined set of legal values. CLP </Comments>
+			<Values>201,201A,202,203,204,205,206,207,208,209,209A,210,401</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Atp14SpecialSupplementalLabelInfoEnum</Name>
+			<Comments> Special Supplemental Label Info Code with a predefined set of legal values. CLP </Comments>
+			<Values>201,201A,202,203,204,205,206,207,208,209,209A,210,211,212,401</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>AssessmentEnum</Name>
+			<Comments> Legal values for the AssessmentEnum </Comments>
+			<Values>Yes,No,Not assessed</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TransportHazardLabelAdrAdnOnlyEnum</Name>
+			<Comments>List of carrier specific hazard label elements for ADR.</Comments>
+			<Values>7E,7X,9A</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TransportHazardLabelRidOnlyEnum</Name>
+			<Comments>List of carrier specific hazard label elements for RID.</Comments>
+			<Values>7E,7X,9A,13,15</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ESSectionSubHeader</Name>
+			<Comments>Defines the abbreviations of headings of section 2 for the exposure scenario for communication.</Comments>
+			<Values>AFD,AGPA,OOC,PC,PPE,STP,TOM,WASTE</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>ESSectionSubHeader</Name>
+			<Comments>Defines the abbreviations of headings of section 2 for the exposure scenario for communication.</Comments>
+			<Values>AFD,AGPA,OOC,PC,PPE,STP,TOM,WASTE</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Pdscl</Name>
+			<Values>deleterious,poisonous,special</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Pdscl</Name>
+			<Values>deleterious,poisonous,special</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>Hazcom2012ClassCategoryEnumExt</Name>
+			<Comments>U.S. specific hazard classes</Comments>
+			<Values>Pyrophoric Gas,Simple Asphyxiant,Combustible Dust</Values>
+		</EnumItem>
+		<EnumItem>
+			<Name>TransportHazardLabelUsaOnlyEnum</Name>
+			<Comments>List of carrier specific hazard label elements for transportation under U.S. DOT rules.</Comments>
+			<Values>1.1A,1.1B,1.1C,1.1D,1.1E,1.1F,1.1G,1.1J,1.1L,1.2B,1.2C,1.2D,1.2E,1.2F,1.2G,1.2H,1.2J,1.2K,1.2L,1.3C,1.3G,1.3H,1.3J,1.3K,1.3L,1.4B,1.4C,1.4D,1.4E,1.4F,1.4G,1.4B,1.4S,1.5D,1.6N</Values>
+		</EnumItem>
+	</EnumItems>
+</EnumList>

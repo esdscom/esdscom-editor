@@ -1,0 +1,44 @@
+﻿@inject NavigationManager nav
+@inject AppData appData;
+
+<div class="card border-dark mb-3">
+	<div class="card-header">
+		<p>@displayName</p>
+	</div>
+	<div class="card-body">
+		<p class="card-text"> @comments</p>
+		<hr />
+		<button type="button" class="btn btn-primary" @onclick="FollowActionLink">Go</button>
+	</div>
+	
+</div>
+
+@code
+{
+	[CascadingParameter] public AppState AppState { get; set; }
+
+	[Parameter] public XmlNode Node { get; set; }
+
+	private string displayName;
+	private string comments;
+
+    protected override void OnInitialized()
+    {		
+		BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == Node.Name).FirstOrDefault();
+
+		if (entity is not null)
+		{
+			displayName = entity.DisplayName;
+			comments = entity.Comments;
+		}
+
+        base.OnInitialized();
+
+    }
+
+	private void FollowActionLink()
+	{
+		AppState.ActiveSectionName =  Node.Name;
+		nav.NavigateTo($"/Documents/Sections/SectionMaster/{Node.Name}");
+	}
+}

@@ -1,0 +1,105 @@
+﻿@page "/AddEditUser/{IsNew:bool}"
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm Model="@user" OnValidSubmit="HandleValidSubmit" role="form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+     <div class="container-fluid">
+
+         <PageHeader Title="User Information" BackToName="My Organization" BackToURL="/MyOrganization"/>
+
+        <div class="form-group">
+            <label for="itName">Email </label>
+            <InputText class="form-control" id="itName" @bind-Value="user.Email"></InputText>
+        </div>
+        
+        <div class="form-group">
+            <label for="itName">Name </label>
+            <InputText class="form-control" id="itName" @bind-Value="user.Name"></InputText>
+        </div>
+
+         <div class="form-group">
+            <label for="chkIsAdmin">Administrator for Organization? </label>
+            <InputCheckbox class="form-control" id="chkIsAdmin" @bind-Value="IsAdmin"></InputCheckbox>         
+        </div>
+
+        <div class="form-group">
+            <label for="chkIsActive">Active? </label>
+            <InputCheckbox class="form-control" id="chkIsActive" @bind-Value="user.IsActive"></InputCheckbox>         
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+             <div class="col-6">
+                <button type="button" class="btn btn-warning" @onclick="Close"> Cancel</button>
+            </div>
+        </div>
+
+        <hr/>
+
+        <DateDisplay CreatedDate="@user.CreatedDate" UpdatedDate="@user.UpdatedDate"/>
+
+     </div>
+
+</EditForm>
+
+
+@code 
+{
+    [CascadingParameter] public AppState AppState { get; set; }   
+    [Parameter] public bool IsNew { get; set; }
+
+    private User user = new();
+    private DataManager dMgr;
+    private bool IsAdmin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        dMgr = new(api);
+
+        if (IsNew)
+        {
+            user = new()
+            {
+                Id = Guid.NewGuid(),
+                OrganizationId = AppState.User.OrganizationId  //always use the current users org key
+            };
+        }
+        else
+        {            
+            user = await dMgr.GetUserAsync(AppState.EditUserGuid);
+            IsAdmin = (user.Role == 1);           
+        }    
+    }
+
+    private async Task HandleValidSubmit()
+    {  
+        if (IsAdmin) user.Role = 1; else user.Role = 2;
+
+        if (IsNew)
+        {
+            user = await dMgr.AddUserAsync(user);
+        }
+        else
+        {
+            user = await dMgr.UpdateUserAsync(user);
+        }
+
+        if (user.Id == AppState.User.Id)
+        {
+            AppState.User = user;
+        }
+        Close();
+    }
+
+    private void Close() => nav.NavigateTo("/MyOrganization");
+
+}

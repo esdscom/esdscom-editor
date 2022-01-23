@@ -1,0 +1,72 @@
+﻿@inject AppData appData
+
+    <div class="form-group">        
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <br />
+        <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname">
+            @foreach (var value in enumValueArray)
+            {               
+                <option value="@value">@value</option>
+            }
+        </InputSelect>
+    </div>
+
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+</div>
+
+@code 
+{
+    [Parameter] public XmlNode Node { get; set; }
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private string comments;
+    private string occurs;
+    private string displayname;
+    private bool bHideHelp;
+
+    private ElementEnum elementEnum = new();
+    private string[] enumValueArray;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        string noOptions = "No options available";
+
+        bHideHelp = true;        
+
+        elementEnum = appData.EnumItems.Where(e => e.Name == Entity.Type).FirstOrDefault();
+
+        if (elementEnum is not null)
+        {
+            enumValueArray = elementEnum.Values.Split(",");
+        }
+        else
+        {
+            enumValueArray = new string[] { noOptions };
+        }
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments =  $"{Entity.Comments} {Entity.TypeComments} Possible Values: {(elementEnum == null ?  noOptions :  elementEnum.Values)}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+        }
+        else
+        {
+            displayname = "Entity not found!!!";
+        }
+    }
+
+    void ChangeValue(ChangeEventArgs e)
+    {
+        Node.InnerText = e.Value.ToString();
+    }
+
+    public void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+}

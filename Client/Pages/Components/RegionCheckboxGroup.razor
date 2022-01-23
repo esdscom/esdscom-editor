@@ -1,0 +1,39 @@
+﻿@inject AppData appData
+
+<div class="form-group">
+
+    <p>Region(s) included:</p>
+
+    @foreach (Region item in DatasheetRegions)
+    {
+        <p>
+            <label>
+                @item.Name
+                <InputCheckbox type="checkbox" id="@item.Suffix" @bind-Value="@item.IsSelected" />
+            </label>
+        </p>
+    }
+
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public EventCallback<List<Region>> OnRegionsSelected { get; set; }
+
+    [Parameter] public List<Region> DatasheetRegions { get; set; }
+
+    List<Region> selectedRegions = new();
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    private async Task RegionsSelected()
+    {
+        await OnRegionsSelected.InvokeAsync(selectedRegions);
+    }
+
+}

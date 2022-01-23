@@ -1,0 +1,53 @@
+﻿@inject AppData appData
+      
+<button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+<br />
+<InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
+
+<div hidden="@bHideHelp" class="row">
+    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+</div>
+
+@code 
+{
+    [Parameter] public XmlNode Node { get; set; }
+
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private string comments;
+    private string occurs;
+    private string displayname;
+    private bool bHideHelp;
+    private int nodeValue = 0;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        bHideHelp = true;
+
+        bool ok = int.TryParse(Node.InnerText, out nodeValue);
+        if (!ok) nodeValue = 0;
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+    }
+
+    private void SetValue (ChangeEventArgs args)
+    {
+        Node.InnerText = args.Value.ToString();
+    }
+
+    private void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+}

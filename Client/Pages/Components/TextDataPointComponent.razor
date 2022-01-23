@@ -1,0 +1,50 @@
+﻿@inject AppData appData
+
+<div class="row">
+    <div class="col">        
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <br />
+        <InputText class="form-control" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
+    </div>
+</div>
+
+<div hidden="@bHideHelp" class="row">
+    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+</div>
+
+@code 
+{
+    [Parameter] public XmlNode Node { get; set; }
+
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private string comments;
+    private string occurs;
+    private string displayname;
+    private bool bHideHelp;
+    private int maxLength = 128;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        bHideHelp = true;      
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+            maxLength = 128;   //get length from type
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+    }
+
+    public void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+}

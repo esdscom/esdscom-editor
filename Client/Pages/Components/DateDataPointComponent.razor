@@ -1,0 +1,60 @@
+﻿@inject AppData appData
+
+<div class="row">
+    <div class="col">        
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <br />
+        <InputDate class="form-control" @bind-Value="selectedDate" @oninput="@((e) => DateTimeChanged(e))" DisplayName="@displayname" />
+    </div>
+</div>
+
+<div hidden="@bHideHelp" class="row">
+    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+</div>
+
+@code 
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public XmlNode Node { get; set; }
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    private string comments;
+    private string occurs;
+    private string displayname;
+    private bool bHideHelp;
+
+    private DateTime selectedDate;   
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        bHideHelp = true;      
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+
+            bool ok = DateTime.TryParse(Node.InnerText, out selectedDate);
+            if (!ok) selectedDate = DateTime.UtcNow;
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+    }
+
+    public void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+
+    private void DateTimeChanged(ChangeEventArgs args)
+    {
+        Node.InnerText = args.Value.ToString();
+    }
+
+}

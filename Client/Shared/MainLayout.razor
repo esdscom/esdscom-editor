@@ -1,0 +1,28 @@
+﻿@inherits LayoutComponentBase
+
+<div class="main">
+    <div class="top-row px-4">
+        <Toolbar/>
+    </div>
+    <div class="content px-4">
+        @Body
+    </div>
+     <div class="app-footer px-4">
+        @if (showFooter)
+        {
+            <StatusBar/>
+        }
+    </div>
+</div>
+
+@code
+{
+    bool showFooter = false;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (firstRender) showFooter = true;        
+    }
+}

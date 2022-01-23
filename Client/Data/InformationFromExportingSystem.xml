@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<InformationFromExportingSystem>
+	<SdscomVersionNo />
+	<SdscomSubset />
+	<PhraseCatalogue PhraseCatalogueId="">
+		<PhraseCatalogueName />
+		<PhraseCatalogueIssuer />
+		<PhraseCatalogueVersion />
+		<PhraseCatalogueDate />
+	</PhraseCatalogue>
+	<Language>
+		<FreetextLanguageCode />
+		<FreetextLanguageCountryCode />
+		<FreetextLanguageName PhraseId="" PhraseCatalogueId="">
+			<PhraseCode />
+			<FullText />
+			<MergePhrase PhraseId="" PhraseCatalogueId="" MergePhraseNo="" ListItemNo="">
+				<MergeText />
+				<Delimiter />
+			</MergePhrase>
+		</FreetextLanguageName>
+	</Language>
+	<RegulationsRelatedToCountryOrRegion>
+		<RegulationsRelatedToCountryOrRegionCode />
+		<RegulationsRelatedToCountryOrRegionName PhraseId="" PhraseCatalogueId="">
+			<PhraseCode />
+			<FullText />
+			<MergePhrase PhraseId="" PhraseCatalogueId="" MergePhraseNo="" ListItemNo="">
+				<MergeText />
+				<Delimiter />
+			</MergePhrase>
+		</RegulationsRelatedToCountryOrRegionName>
+		<LegalDocument>
+			<LegalDocumentFileName />
+			<LegalDocumentPrintDate />
+			<LegalDocumentSignature />
+			<InternalSdsId />
+		</LegalDocument>
+		<RelatedDocuments>
+			<FileName />
+			<Description />
+		</RelatedDocuments>
+	</RegulationsRelatedToCountryOrRegion>
+	<SystemUsedInPreparation />
+	<DateGeneratedExport />
+</InformationFromExportingSystem>

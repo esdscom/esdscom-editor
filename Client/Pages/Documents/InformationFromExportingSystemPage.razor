@@ -1,0 +1,98 @@
+﻿@page "/Documents/InformationFromExportingSystemPage"
+
+@inject AppData appData
+@inject AppSettings appSettings
+@inject NavigationManager nav
+@inject HttpClient api
+
+<PageHeader BackToName="Back to My Organization" BackToURL="/MyOrganization" Title = "@title"/>
+
+<EditForm EditContext = "CurrentEditContext" OnValidSubmit="SaveAsync"> 
+     <DataAnnotationsValidator />
+     <ValidationSummary />
+
+    @foreach (XmlNode node in nodes)
+    {
+        BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+        if (entity is not null)
+        {
+            if (entity.Type is not null)
+            {
+                if (entity.Type.EndsWith("Enum"))
+                {
+                    <SelectDataPointComponent Node = "@node" Entity="@entity"/> 
+                }               
+                else if (entity.Type.StartsWith("string"))
+                {
+                    <TextDataPointComponent Node = "@node" Entity="@entity"/>
+                }
+                else if (entity.Type.ToLower() == "date")
+                {
+                    <DateDataPointComponent Node = "@node" Entity="@entity"/> 
+                }
+                else if (node.HasChildNodes)
+                {
+                    <ComplexTypeComponent Node="@node" Entity="@entity"/>
+                } 
+            }           
+            else
+            {
+               <ComplexTypeComponent Node="@node" Entity="@entity"/>            
+            }
+        }
+        else
+        {
+            <span> BaseEntity is null: @node.Name </span> 
+            <br />
+            <hr />
+        }
+    }
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+</EditForm>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    public EditContext CurrentEditContext { get; set; }
+
+    private XmlDocument orgInfoExpSys;
+    private XmlNodeList nodes;
+    private string title;
+    private Organization org;
+
+    protected override void OnInitialized()
+    {     
+        base.OnInitialized();
+
+        org = AppState.Organization;
+
+        title = $"Information From Exporting System for {org.Name}";
+        AppState.StatusBarMessage = "Ready";
+
+        orgInfoExpSys = org.InfoExSysXDoc;
+
+        if (orgInfoExpSys is null)
+        {
+            orgInfoExpSys = Utils.ReadInfoExpSysResource();
+        }       
+
+        if (orgInfoExpSys.HasChildNodes)
+        {
+            nodes = orgInfoExpSys.DocumentElement.ChildNodes;
+        }
+
+        CurrentEditContext = new EditContext(orgInfoExpSys);
+    }
+
+    private async Task SaveAsync()
+    {
+        DataManager dMgr = new(api);
+        AppState.Organization = await dMgr.UpdateOrganizationAsync(org);
+        nav.NavigateTo("/");
+    }
+}
+

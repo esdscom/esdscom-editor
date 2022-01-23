@@ -1,0 +1,237 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Spinner
+
+@inject HttpClient api
+@inject NavigationManager nav
+@inject AppData appData
+
+@if (IsLoading)
+{
+    <SfSpinner @bind-Visible="IsLoading" Label="Please wait while your data is set up...."></SfSpinner>
+}
+else
+{
+
+    <button type="button" @onclick="GoTest1">Test 1</button>
+
+    <button type="button" @onclick="GoTest2">Test 2</button>
+
+    <CardSet CardItemList="itemList" />
+}
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    private bool IsLoading = true;
+    private List<CardItem> itemList = new();
+    private DataManager dMgr;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        @*        #if DEBUG
+            Thread.Sleep(10000);
+            #endif*@
+
+        await base.OnInitializedAsync();
+
+        dMgr = new(api);
+
+        if (appData.StarterDocument is null)
+        {
+            appData.StarterDocument = Utils.ReadXMLStarterResource();
+        }
+
+        Guid userGuid = Guid.Parse("35984ABA-E95C-4591-82FF-0E38A2D1FECD");
+        Guid orgGuid = Guid.Parse("60D03E92-ED1E-47A6-83BF-8D56ED3561AF");
+
+        // HttpResponseMessage response;
+
+        @* var newUser = new User()
+            {
+            Id =  userGuid,
+            Email = "tester@test.com",
+            Name = "a test user",
+            Role = 1,
+            OrganizationId = orgGuid,
+            IsActive = true
+            };
+
+            await dMgr.AddUserAsync(newUser);*@
+
+        try
+        {
+            AppState.User = await dMgr.GetUserAsync(userGuid);
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.Message);
+        }
+
+            //-------------------------------------------------------------------------------------------
+        // create a new organization
+
+@*        XmlDocument xDocIES = Utils.ReadInfoExpSysResource();
+
+        AppState.Organization = new()
+            {
+                Id = orgGuid,
+                Name = "Test Organization",
+                Address = "123 Smith Street, Omaha, Ne. 22222",
+                OrganizationType = "Commercial",
+                InfoExSys = xDocIES.OuterXml
+            };        
+
+            AppState.Organization = await dMgr.AddOrganizationAsync(AppState.Organization);*@
+
+        //-----------------------------------------------------------------------------------------------
+
+        AppState.Organization = await dMgr.GetOrganizationAsync(orgGuid);
+
+        AppState.Organization.InfoExSysXDoc = new();
+        AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
+
+        Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
+        AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
+
+        //AppState.Organization = await api.GetFromJsonAsync<Organization>($"organization/get?id={"60D03E92-ED1E-47A6-83BF-8D56ED3561AF".ToLower()}");
+        //XmlDocument xDoc = new();
+        //xDoc.LoadXml(AppState.Organization.XmlData);
+        //AppState.Organization.InformationFromExportingSystem = xDoc.DocumentElement;
+
+        BuildCardItems();
+
+        if (appData.SchemaElements is null)
+        {
+            appData.SchemaElements = Utils.GetSchemaElements();
+        }
+
+        if (appData.EnumItems is null)
+        {
+            appData.EnumItems = Utils.GetSchemaEnums();
+        }
+
+        if (appData.Regions is null)
+        {
+            appData.Regions = Utils.GetRegions();
+        }
+
+        IsLoading = false;
+
+        AppState.StatusBarMessage = "Authoring tool is ready for use.";
+    }
+
+    private List<CardItem> BuildCardItems()
+    {
+        
+        CardItem docSets = new()
+            {
+                Title = "Document Set List",
+                Comment = "List of Document sets managed by my organization",
+                ActionLink = "/Documents/ListDocumentSets",
+                ImageURL = "images/documentset.jpg"
+            };
+        itemList.Add(docSets);
+
+         //this should always be done in the context of one or more docusment sets
+@*        CardItem docAdd = new()
+            {
+                Title = "Create a new Datasheet",
+                Comment = "Create a new Datasheet for authoring",
+                ActionLink = "/Documents/EditDocument/true",
+                ImageURL = "images/document.jpg"
+            };
+        itemList.Add(docAdd!);*@
+
+       
+         CardItem docSetAdd = new()
+            {
+                Title = "Create a new Document Set",
+                Comment = "Create a new Document set for authoring",
+                ActionLink = "/Documents/EditDocumentSet/true",
+                ImageURL = "images/documentset.jpg"
+            };
+        itemList.Add(docSetAdd!);
+
+        //Column 2
+
+        CardItem docList = new()
+            {
+                Title = "Datasheet List",
+                Comment = "List of Datasheets managed by my organization",
+                ActionLink = "/Documents/ListDocuments",
+                ImageURL = "images/document.jpg"
+            };
+        itemList.Add(docList);
+
+
+     
+
+        CardItem substances = new()
+            {
+                Title = "Substances",
+                Comment = "Search the list of provided Substances",
+                ActionLink = "/Substances/ListSubstances",
+                ImageURL = "images/substance.png"
+            };
+        itemList.Add(substances);
+
+        CardItem phrasebrowser = new()
+            {
+                Title = "Phrase Browser",
+                Comment = "Search the list of EUPHRAC phrases",
+                ActionLink = "/Phrases/PhraseBrowser",
+                ImageURL = "images/phrase.jpg"
+            };
+        itemList.Add(phrasebrowser);
+
+      
+
+        // column 3
+        
+        CardItem orginfo = new()
+            {
+                Title = "My Organization",
+                Comment = "Manage my organization",
+                ActionLink = "/MyOrganization",
+                ImageURL = "images/organization.png"
+            };
+        itemList.Add(orginfo);
+
+        CardItem import = new()
+            {
+                Title = "Import",
+                Comment = "Import one or more Document sets from another system",
+                ActionLink = "/Documents/ImportDocuments",
+                ImageURL = "images/organization.png"
+            };
+        itemList.Add(import);
+
+        CardItem export = new()
+            {
+                Title = "Export",
+                Comment = "Export one or more Document sets from another system",
+                ActionLink = "/Documents/ExportDocuments",
+                ImageURL = "images/organization.png"
+            };
+        itemList.Add(export);
+
+       
+
+        return itemList;
+    }
+
+    private void GoTest1()
+    {
+        nav.NavigateTo("/Test");
+    }
+
+    private void GoTest2()
+    {
+        nav.NavigateTo("/TestPage2");
+    }
+
+
+}

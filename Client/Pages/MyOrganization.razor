@@ -1,0 +1,135 @@
+﻿@page "/MyOrganization"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Buttons
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm Model="@AppState.Organization" OnValidSubmit="HandleValidSubmit" role="form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container-fluid">
+
+        <PageHeader Title="My Organization" />
+
+        <div class="form-group">
+            <label for="itName">Name</label>
+            <InputText class="form-control" id="itName" @bind-Value="AppState.Organization.Name"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="itType">Type</label>
+            <InputText class="form-control" id="itType" @bind-Value="AppState.Organization.OrganizationType"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="itaAddress">Address</label>
+            <InputTextArea class="form-control" id="itaAddress" rows="5" cols="50" @bind-Value="AppState.Organization.Address"></InputTextArea>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button id="btnInfo" type="button" class="btn btn-info" @onclick="GoToInfo"><Tooltip Text="@tt1">Info</Tooltip></button>                      
+        </div>
+
+        <DateDisplay CreatedDate="@AppState.Organization.CreatedDate" UpdatedDate="@AppState.Organization.UpdatedDate" />
+
+    </div>
+
+</EditForm>
+
+<hr />
+
+<div class="content-wrapper">
+
+    <div class="row">
+        <div class="col-12">
+            <h4 class="text-center">Users in My Organization</h4>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-12">
+            <button type="button" @onclick="AddUser">Add User</button>
+        </div>
+    </div>
+    <div class="row">
+        <SfGrid DataSource="@userList" AllowPaging="true">
+            <GridPageSettings PageSize="10"></GridPageSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(User.Id) HeaderText="ID" Visible="false" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(User.Name) HeaderText="Name" Width="200"></GridColumn>
+                <GridColumn Field=@nameof(User.Email) HeaderText="eMail" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(User.Role) HeaderText="Role" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(User.CreatedDate) HeaderText="Created Date" Width="120"></GridColumn>
+                <GridColumn HeaderText="Actions" TextAlign="TextAlign.Center" Width="100">
+                    <Template Context="userContext">
+                        @{
+                            User user = (userContext as User);
+                            <SfButton CssClass="e-link" OnClick="@(() => EditUser(user.Id))">View/Edit</SfButton>
+                        }
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    private List<User> userList = new();
+    private DataManager dMgr;
+
+    // SfCheckBox<bool> CheckboxObj;
+    private bool Visibility { get; set; } = false;
+    private bool ShowButton { get; set; } = false;
+    //  private string editUserId;
+
+    private string tt1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        AppState.BackToURL = string.Empty;
+        AppState.BackToURLText = string.Empty;
+
+        dMgr = new(api);
+
+        tt1 = "Manage 'Information from Exporting System' XML content for use in Document Sets";
+
+        userList = await dMgr.GetUserListForOrganizationAsync(AppState.User.OrganizationId);
+    }   
+
+    private void EditUser(Guid userId)
+    {
+        AppState.EditUserGuid = userId;
+        nav.NavigateTo($"/AddEditUser/false");
+    }
+
+    private void AddUser()
+    {
+        AppState.BackToURL = "/MyOrganization";
+        AppState.BackToURLText = "Back to my organization";
+        AppState.EditUserGuid = Guid.Empty;
+        nav.NavigateTo($"/AddEditUser/true");
+    }
+
+    private void GoToInfo()
+    {     
+        AppState.BackToURL = "/MyOrganization";
+        AppState.BackToURLText = "Back to my organization";
+        nav.NavigateTo($"/Documents/InformationFromExportingSystemPage");
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        AppState.Organization = await dMgr.AddOrganizationAsync(AppState.Organization);
+        nav.NavigateTo("/Documents/ListDocumentSets");
+    }
+
+}

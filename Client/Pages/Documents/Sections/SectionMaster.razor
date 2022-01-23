@@ -1,0 +1,108 @@
+﻿@page "/Documents/Sections/SectionMaster/{NodeName}"
+
+@inject AppData appData
+@inject AppSettings appSettings
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container-fluid">
+
+        @foreach (XmlNode node in nodes)
+        {
+            BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+            if (entity is not null)
+            {
+                if (entity.Type is not null)
+                {
+                    if (entity.Type.EndsWith("Enum"))
+                    {
+                        <SelectDataPointComponent Node="@node" Entity="@entity" />
+                    }
+                    else if (entity.Type.StartsWith("string"))
+                    {
+                        <TextDataPointComponent Node="@node" Entity="@entity" />
+                    }
+                    else if (entity.Type.ToLower() == "date")
+                    {
+                        <DateDataPointComponent Node="@node" Entity="@entity" />
+                    }
+                    else if (node.HasChildNodes)
+                    {
+                        <span>Known Entity Type Property for @node.Name</span>
+                        <span>BaseEntity Type Property: @entity.Type</span>
+                        <br />
+                        <hr />
+                    }
+                    <hr />
+                }
+                else if (node.HasChildNodes)
+                {
+                    <span>Null entity type but has children: Complex type: @node.Name</span>
+                    <br />
+                    <hr />
+                }
+                else
+                {
+                    <span>BaseEntity Type Property is null: @node.Name</span>
+                    <hr />
+                }
+            }
+            else
+            {
+                <span> BaseEntity is null: @node.Name </span>
+                <br />
+                <hr />
+            }
+        }
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </div>
+
+</EditForm>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public string NodeName { get; set; }
+    [Parameter] public string EntityType { get; set; }
+
+    public EditContext CurrentEditContext { get; set; }
+
+    private XmlNode activeNode;
+    private XmlNodeList nodes;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);
+
+        if (activeNode.HasChildNodes)
+        {
+            nodes = activeNode.ChildNodes;
+        }
+
+       // AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
+
+        CurrentEditContext = new EditContext(activeNode);
+    }
+
+    private async Task SaveAsync()
+    {
+        DataManager dMgr = new(api);
+
+        AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(AppState.ActiveDatasheet);
+
+        AppState.StatusBarMessage = "Document Saved";
+
+        nav.NavigateTo("/Documents/Sections/SectionHome");
+    }
+}
+

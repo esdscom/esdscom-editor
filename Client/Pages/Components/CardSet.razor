@@ -1,0 +1,22 @@
+﻿    @if(CardItemList!.Count == 0)
+    {
+        <div class="row pad-10">
+            <div class="col">
+                <p>There are no items to display.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card-columns">	
+            @foreach (CardItem cardItem in CardItemList)
+            {
+                <Card CardItem ="@cardItem"/>
+            }
+        </div>
+    }
+                
+@code
+{
+    [Parameter] public List<CardItem> CardItemList {get; set;}
+}

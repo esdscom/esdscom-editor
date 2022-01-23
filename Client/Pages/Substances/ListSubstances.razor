@@ -1,0 +1,105 @@
+﻿@page "/Substances/ListSubstances"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Popups
+
+@inject AppData appData
+@inject NavigationManager nav
+@inject HttpClient api
+
+<PageHeader Title="List of Substances"/>
+
+<SfDialog Target="#target" Width="500px" ShowCloseIcon="true" @bind-Visible="Visibility">
+    <DialogTemplates>
+        <Header> Substance Details </Header>
+        <Content>
+           <SubstanceDetail Substance="@selectedSubstance"/>
+        </Content>
+    </DialogTemplates>
+</SfDialog>
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-3">
+            <label>Display:</label>
+            <select @onchange="@SetSubstanceCount">
+                <option value=20 selected>20</option>
+                <option value=50>50</option>
+                <option value=100>100</option>
+                <option value=250>250</option>
+            </select>
+        </div>
+
+        <div class="col-9 float-right">
+            <p>Click on a row to view Substance details</p>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <SfGrid DataSource="@substanceList" Height="400" EnableVirtualization="true" AllowPaging="true" AllowSorting="true" AllowFiltering="true">
+            <GridEvents RowSelected="RowSelectHandler" TValue="Substance"></GridEvents>
+            <GridPageSettings PageSize="10" />
+            <GridColumns>
+                <GridColumn Field=@nameof(Substance.SubstanceId) Visible="false"></GridColumn>
+                <GridColumn Field=@nameof(Substance.ID) HeaderText="ID" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Substance.ECNumber) HeaderText="EC Number" Width="150"></GridColumn>
+                <GridColumn Field=@nameof(Substance.CASNumber) HeaderText="CAS Number" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Substance.Name) HeaderText="ECHA Name" TextAlign="TextAlign.Left" Width="300"></GridColumn>                
+            </GridColumns>
+        </SfGrid>
+
+    </div>
+
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; } 
+
+    private List<Substance> substanceList = new();
+    private int substanceCount { get; set; } = 20;
+    private Substance selectedSubstance = new();
+    private bool Visibility { get; set; } = false;
+    private DataManager dMgr;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        dMgr = new(api);
+
+        AppState.BackToURL = string.Empty;
+        AppState.BackToURLText = string.Empty;
+
+        AppState.StatusBarMessage = $"Fetching substances ...";
+
+        await SetSubstanceList();
+
+        AppState.StatusBarMessage = $"Total substances available: {substanceList.Count}";
+    }
+
+    private async Task SetSubstanceList()
+    {
+        if (AppState.SubstanceList.Count == 0)
+        {
+            AppState.SubstanceList = await dMgr.GetAllSubstancesAsync();
+        }
+
+        substanceList = AppState.SubstanceList;
+    }
+
+    private async Task SetSubstanceCount(ChangeEventArgs e)
+    {
+        substanceCount = int.Parse(e.Value.ToString());
+        await SetSubstanceList();
+    }
+
+    public void RowSelectHandler(RowSelectEventArgs<Substance> args)
+    {
+        selectedSubstance = args.Data;
+        Visibility = true;        
+    }
+  
+}

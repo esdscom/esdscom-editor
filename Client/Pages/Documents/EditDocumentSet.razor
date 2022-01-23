@@ -1,0 +1,166 @@
+﻿@page "/Documents/EditDocumentSet/{IsNew:bool}"
+
+@inject AppData appData
+@inject AppSettings appSettings
+@inject NavigationManager nav
+@inject HttpClient api
+
+<EditForm EditContext="@editContext" OnValidSubmit="HandleValidSubmit" role="form">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+     <PageHeader Title="@title"/>
+
+    <div class="container-fluid">       
+
+        <div class="form-group">
+            <label for="itName">Document Set Name</label>
+            <InputText id="itName" class="form-control" @bind-Value="@datasheetFeed.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="itAuthor">Author</label>
+            <InputText id="itAuthor" class="form-control" @bind-Value="@datasheetFeed.UserName" />
+        </div>
+
+        <DocStatus Status="@datasheetFeed.Status" OnStatusSelected="StatusSelectionHandler"/>
+
+         <div class="form-group">
+            <label for="comments">Comments:</label>
+            <InputTextArea id="comments" class="form-control" @bind-Value="@datasheetFeed.Comments" rows="5" cols="30"/>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>              
+          @*  <div class="col-2">
+                <button type="button" class="btn btn-primary" @onclick="ShowLinkedDocuments"><Tooltip Text="@tt3">Linked Documents</Tooltip></button>
+            </div>*@
+        
+@*            <div class="col-2">
+                <button type="button" class="btn btn-primary" @onclick="AddNewDocument"><Tooltip Text="@tt1">Add New Document</Tooltip></button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-secondary" @onclick="AddExistingDocument"><Tooltip Text="@tt2">Add Existing Document</Tooltip></button>
+            </div>*@
+            <div class="col-2">
+                <button type="button" class="btn btn-info" @onclick="Info">Information from exporting system</button>
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-warning" @onclick="Close">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public bool IsNew { get; set; }
+
+    User appUser;
+    DatasheetFeed datasheetFeed = new();
+    DataManager dMgr;
+    EditContext editContext;
+    string title;
+  //  string backToURL;
+
+   // string tt1 = "Create a new Datasheet and add it to this Datasheet Set.";
+   // string tt2 = "Select an existing Datasheet and add it to this Datasheet Set.";   
+   // string tt3 = "View the list of Datasheets linked to this Datasheet Set.";
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(datasheetFeed);
+
+        base.OnInitialized();
+
+        dMgr = new(api);
+
+        appUser = AppState.User;
+
+        if (IsNew)
+        {
+            title = "Add a Document Set";
+            //backToURL = "/";
+            //TODO:  Populate default Info section
+            datasheetFeed = new()
+                {
+                    Id = Guid.NewGuid(),
+                    OrganizationId = appUser.OrganizationId,
+                    UserId = appUser.Id,
+                    UserName = appUser.Email,
+                    Status = 1,
+                    DatasheetFeedString = "<DatasheetFeed/>"
+                };
+        }
+        else
+        {
+            datasheetFeed = AppState.ActiveDatasheetFeed; 
+            title = $"Edit Document set {datasheetFeed.Name}";
+            AppState.StatusBarMessage = "Viewing/editing";
+            //backToURL = "/Documents/ListDocumentSets";
+        }  
+    } 
+
+    private void StatusSelectionHandler(int status)
+    {
+        datasheetFeed.Status = status;   
+    }
+
+    private XmlNode GetDefaultInfoSection()
+    {
+        XmlDocument xDoc = appData.StarterDocument;
+
+        XmlNode infoNode = xDoc.DocumentElement.SelectSingleNode("InformationFromExportingSystem");
+
+        if (AppState.Organization.InfoExSys is not null)
+        {
+            infoNode.InnerXml = AppState.Organization.InfoExSys;
+        }
+
+        return infoNode;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (IsNew)
+        {
+            AppState.ActiveDatasheetFeed = await dMgr.AddDatasheetFeedAsync(datasheetFeed);
+            AppState.StatusBarMessage = "Added Document Set";
+        }
+        else
+        {
+            AppState.ActiveDatasheetFeed = await dMgr.UpdateDatasheetFeedAsync(datasheetFeed);
+            AppState.StatusBarMessage = "Updated Document Set";
+        }
+        Close();
+    }
+
+    private void Close() => nav.NavigateTo("/Documents/ListDocumentSets");
+
+    private void Info()
+    {
+        nav.NavigateTo("/Documents/InformationFromExportingSystemPage");
+    }
+
+    //private void AddNewDocument()
+    //{
+    //    nav.NavigateTo("/Documents/EditDocument");
+    //}
+
+    //private void AddExistingDocument()
+    //{
+    //    nav.NavigateTo("/Documents/ListDocuments");
+    //}
+
+    //private void ShowLinkedDocuments()
+    //{
+    //    nav.NavigateTo("/Documents/ListDocumentsInSet");
+    //}
+    
+
+}

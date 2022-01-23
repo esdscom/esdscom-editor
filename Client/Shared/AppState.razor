@@ -1,0 +1,208 @@
+﻿@using eSDSCom.Editor.Shared.DocumentElements
+@using eSDSCom.Editor.Shared.Models
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+
+
+@code
+{
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    //--------------------------------------------------------------------------------------
+
+    private User _user;
+    public User User
+    {
+        get
+        {
+            return _user;
+        }
+        set
+        {
+            _user = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private Organization _org;
+    public Organization Organization
+    {
+        get
+        {
+            return _org;
+        }
+        set
+        {
+            _org = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private Datasheet _ds;
+    public Datasheet ActiveDatasheet
+    {
+        get
+        {
+            return _ds;
+        }
+        set
+        {
+            _ds = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _aen = string.Empty;
+    public string ActiveElementName
+    {
+        get
+        {
+            return _aen;
+        }
+        set
+        {
+            _aen = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _asn = string.Empty;
+    public string ActiveSectionName
+    {
+        get
+        {
+            return _asn;
+        }
+        set
+        {
+            _asn = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private DatasheetFeed _dsf;
+    public DatasheetFeed ActiveDatasheetFeed
+    {
+        get
+        {
+            return _dsf;
+        }
+        set
+        {
+            _dsf = value;
+            StateHasChanged();
+        }
+    }
+
+     //--------------------------------------------------------------------------------------
+
+    private List<Substance> _subsList = new();
+    public List<Substance> SubstanceList
+    {
+        get
+        {
+            return _subsList;
+        }
+        set
+        {
+            _subsList = value;
+            StateHasChanged();
+        }
+    }
+
+   //--------------------------------------------------------------------------------------
+
+    private Substance _subs;
+    public Substance ActiveSubstance
+    {
+        get
+        {
+            return _subs;
+        }
+        set
+        {
+            _subs = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _sbm = string.Empty;
+    public string StatusBarMessage
+    {
+        get
+        {
+            return _sbm;
+        }
+        set
+        {
+            _sbm = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _backToUrl = string.Empty;
+    public string BackToURL
+    {
+        get
+        {
+            return _backToUrl;
+        }
+        set
+        {
+            _backToUrl = value;
+            StateHasChanged();
+        }
+    }
+
+     //--------------------------------------------------------------------------------------
+
+    private string _backToUrlText = string.Empty;
+    public string BackToURLText
+    {
+        get
+        {
+            return _backToUrlText;
+        }
+        set
+        {
+            _backToUrlText = value;
+            StateHasChanged();
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private Guid _editUserGuid = Guid.Empty;
+    public Guid EditUserGuid
+    {
+        get
+        {
+            return _editUserGuid;
+        }
+        set
+        {
+            _editUserGuid = value;
+            StateHasChanged();
+        }
+    }
+
+   
+
+}

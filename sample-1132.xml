@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SDScom:DatasheetFeed xmlns:SDScom="http://www.esdscom.eu/SDScom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Datasheet>
+    <InformationFromExportingSystem>
+      <XmlStandardVersionNo>4.4.0.2</XmlStandardVersionNo>
+      <PhraseCatalogue>
+        <PhraseCatalogueName>GisChem Standardsätze</PhraseCatalogueName>
+        <PhraseCatalogueIssuer>GisChem</PhraseCatalogueIssuer>
+        <PhraseCatalogueVersion>3.0.70</PhraseCatalogueVersion>
+        <PhraseCatalogueDate>2021-10-26</PhraseCatalogueDate>
+      </PhraseCatalogue>
+      <Language>
+        <FreetextLanguageCode>de</FreetextLanguageCode>
+        <FreetextLanguageName>
+          <FullText>Deutsch</FullText>
+        </FreetextLanguageName>
+      </Language>
+      <RegulationsRelatedToCountryOrRegion>
+        <RegulationsRelatedToCountryOrRegionCode>DE</RegulationsRelatedToCountryOrRegionCode>
+        <RegulationsRelatedToCountryOrRegionName>
+          <FullText>Deutschland</FullText>
+        </RegulationsRelatedToCountryOrRegionName>
+      </RegulationsRelatedToCountryOrRegion>
+      <SystemUsedInPreparation>GisChem</SystemUsedInPreparation>
+      <DateGeneratedExport>2021-10-26</DateGeneratedExport>
+      <RelatedDocuments>
+        <FileName>1132.xml</FileName>
+        <Description>XML</Description>
+      </RelatedDocuments>
+      <XMLStandardSubset>undefined</XMLStandardSubset>
+    </InformationFromExportingSystem>
+    <IdentificationSubstPrep>
+      <IssueDate>2021-10-26</IssueDate>
+      <VersionNo>1</VersionNo>
+      <ItemNo>0/068479-98-1/000000</ItemNo>
+      <ProductNo>
+        <UserId>1132</UserId>
+        <ProductNoUser>068479-98-1</ProductNoUser>
+      </ProductNo>
+      <ProductIdentity>
+        <SubstanceName>
+          <IupacName>Diethyltoluylendiamin</IupacName>
+          <Synonym>Diethyltoluylendiamin</Synonym>
+          <Synonym>Diethyltoluendiamin</Synonym>
+          <Synonym>Diethylmethylbenzoldiamin</Synonym>
+          <Synonym>DETDA</Synonym>
+          <Synonym>Diaminodiethyltoluol</Synonym>
+        </SubstanceName>
+        <TradeName>Diethyltoluylendiamin</TradeName>
+        <IdentificationComments>
+          <FullText>Diethyltoluylendiamin</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86427</PhraseCode>
+          <FullText>wird auch als Die­thyl­methyl­benzoldiamin, Diaminodiethyltoluol oder DETDA bezeichnet.</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86429</PhraseCode>
+          <FullText>Es handelt sich dabei um ein Isomerengemisch aus den isomeren Formen 2,6-Diamino-3,5-diethyltoluol und 2,4-Diamino-3,5-diethyltoluol. </FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86426</PhraseCode>
+          <FullText>Die Substanz ist eine klare, bräunliche Flüssigkeit mit stechendem aminartigem Geruch. Sie ist in Wasser schwer löslich.</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86428</PhraseCode>
+          <FullText>Diethyltoluylendiamin ist ein Vernetzer für Polyure­than-Schäume, die nach dem RIM-Verfahren (Reaction Injection Moulding) hergestellet werden.</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86430</PhraseCode>
+          <FullText>Die Vernetzer sind in der Regel schon der Poly­olkomponente zugesetzt (10 bis 25 %, in Abhängigkeit von der Verarbeitungstechnik und -temperatur auch in anderen Konzentrationsbereichen, für bestimmte Anwendungen bis zu 50%).</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C86577</PhraseCode>
+          <FullText>Sie bestimmen damit auch die Eigenschaften dieser Polyolformulierungen hinsichtlich möglicher Gesund­heits­gefährdungen.</FullText>
+        </IdentificationComments>
+        <IdentificationComments>
+          <PhraseCode>C26</PhraseCode>
+          <FullText>Die im Folgenden aufgeführten Stoffdaten, Einstufungen sowie die be­schrie­benen Gefahren und Maßnahmen be­zie­hen sich auf den flüssigen Reinstoff.</FullText>
+        </IdentificationComments>
+      </ProductIdentity>
+      <UseOfChemicalComments PhraseId="Cb26">
+        <FullText>Die im Folgenden aufgeführten Stoffdaten, Einstufungen sowie die beschriebenen Gefahren und Maßnahmen beziehen sich auf den flüssigen Reinstoff.</FullText>
+      </UseOfChemicalComments>
+      <SupplierInformation>
+        <Role>
+          <RoleDescription>
+            <FullText>GisChem ist weder Hersteller, Importeur noch Lieferant von Stoffen und Gemischen.</FullText>
+          </RoleDescription>
+          <RoleDescription>
+            <FullText>Für weitere Informationen siehe www.gischem.de.</FullText>
+          </RoleDescription>
+        </Role>
+        <Country>DE</Country>
+        <Name>Gefahrstoffinformationssystem Chemikalien (GisChem) der BG RCI und BGHM</Name>
+        <Address>
+          <PostAddressLine1>Kurfürsten-Anlage 62</PostAddressLine1>
+          <PostAddressLine2>c/o Berufsgenossenschaft Rohstoffe und chemische Industrie</PostAddressLine2>
+          <PostCode>D-69115</PostCode>
+          <PostCity>Heidelberg</PostCity>
+        </Address>
+        <Phone>06221-5108 28364</Phone>
+        <Fax>06221-5108 29989</Fax>
+        <Email>info@gischem.de</Email>
+        <CompanyUrl>www.gischem.de</CompanyUrl>
+      </SupplierInformation>
+      <InternalSdsId>0/068479-98-1/000000</InternalSdsId>
+    </IdentificationSubstPrep>
+    <HazardIdentification>
+      <Classification>
+        <ClpClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>Acute Tox. 4</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O49">
+              <PhraseCode>302</PhraseCode>
+              <FullText>Akute Toxizität oral (Kapitel 3.1) - Kategorie 4 (Acute Tox. 4), H302</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>Acute Tox. 4</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O53">
+              <PhraseCode>312</PhraseCode>
+              <FullText>Akute Toxizität dermal (Kapitel 3.1) - Kategorie 4 (Acute Tox. 4), H312</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>Eye Irrit. 2</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O64">
+              <PhraseCode>319</PhraseCode>
+              <FullText>Schwere Augenreizung (Kapitel 3.3) - Kategorie 2 (Eye Irrit. 2), H319</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>STOT RE 2</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O82">
+              <PhraseCode>373</PhraseCode>
+              <FullText>Spezifische Zielorgan-Toxizität (wiederholte Exposition) (Kapitel 3.9) - Kategorie 2 (STOT RE 2), H373</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>Aquatic Acute 1</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O84">
+              <PhraseCode>400</PhraseCode>
+              <FullText>Kurzfristig (akut) gewässergefährdend (Kapitel 4.1) - Kategorie 1 (Aquatic Acute 1), H400</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpHazardClassification>
+            <ClpHazardClassCategory>Aquatic Chronic 1</ClpHazardClassCategory>
+            <ClpHazardStatement PhraseId="O85">
+              <PhraseCode>410</PhraseCode>
+              <FullText>Langfristig (chronisch) gewässergefährdend (Kapitel 4.1) - Kategorie 1 (Aquatic Chronic 1), H410</FullText>
+            </ClpHazardStatement>
+          </ClpHazardClassification>
+          <ClpAtp>CLP12-2019/521</ClpAtp>
+          <ClpClassificationComments PhraseId="O138">
+            <FullText>Der Stoff ist im Anhang VI der CLP-Verordnung gelistet.</FullText>
+          </ClpClassificationComments>
+          <ClpClassificationComments PhraseId="O139">
+            <FullText>Bei der Einstufung nach GHS handelt es sich um eine Einstufung aus Anhang VI, die auch nach Auswertung von Herstellereinstufungen und Literatur nicht um weitere Einstufungen ergänzt werden muss.</FullText>
+          </ClpClassificationComments>
+          <ClpClassificationComments PhraseId="O137">
+            <FullText>Die Mindesteinstufung aus Anhang VI in die Gefahrenklassen Akute Toxizität und Spezifische Zielorgan-Toxizität (wiederholte Exposition) wurde anhand von Hersteller- und Literaturangaben bestätigt.</FullText>
+          </ClpClassificationComments>
+        </ClpClassification>
+      </Classification>
+      <HazardLabelling>
+        <ClpLabellingInfo>
+          <ClpHazardPictogram>
+            <PhraseCode>GHS08</PhraseCode>
+          </ClpHazardPictogram>
+          <ClpHazardPictogram>
+            <PhraseCode>GHS07</PhraseCode>
+          </ClpHazardPictogram>
+          <ClpHazardPictogram>
+            <PhraseCode>GHS09</PhraseCode>
+          </ClpHazardPictogram>
+          <ClpSignalWord>
+            <PhraseCode>WNG</PhraseCode>
+          </ClpSignalWord>
+          <ClpHazardStatement PhraseId="620">
+            <PhraseCode>302+312</PhraseCode>
+            <FullText>Gesundheitsschädlich bei Verschlucken oder Hautkontakt.</FullText>
+          </ClpHazardStatement>
+          <ClpHazardStatement PhraseId="544">
+            <PhraseCode>319</PhraseCode>
+            <FullText>Verursacht schwere Augenreizung.</FullText>
+          </ClpHazardStatement>
+          <ClpHazardStatement PhraseId="570">
+            <PhraseCode>373</PhraseCode>
+            <FullText>Kann... ... schädigen bei längerer oder wiederholter Exposition.</FullText>
+            <MergePhrase PhraseId="98" MergePhraseNo="1">
+              <MergeText> bei Verschlucken</MergeText>
+              <Delimiter>...</Delimiter>
+            </MergePhrase>
+            <MergePhrase PhraseId="" MergePhraseNo="2">
+              <MergeText>die Organe</MergeText>
+              <Delimiter>...</Delimiter>
+            </MergePhrase>
+          </ClpHazardStatement>
+          <ClpHazardStatement PhraseId="574">
+            <PhraseCode>410</PhraseCode>
+            <FullText>Sehr giftig für Wasserorganismen mit langfristiger Wirkung.</FullText>
+          </ClpHazardStatement>
+          <ClpPrecautionaryStatement PhraseId="25">
+            <PhraseCode>260</PhraseCode>
+            <FullText>... nicht einatmen.</FullText>
+            <MergePhrase PhraseId="170" MergePhraseNo="1">
+              <MergeText>Dampf/Aerosol/Nebel</MergeText>
+              <Delimiter>...</Delimiter>
+            </MergePhrase>
+          </ClpPrecautionaryStatement>
+          <ClpPrecautionaryStatement PhraseId="33">
+            <PhraseCode>273</PhraseCode>
+            <FullText>Freisetzung in die Umwelt vermeiden.</FullText>
+          </ClpPrecautionaryStatement>
+          <ClpPrecautionaryStatement PhraseId="34">
+            <PhraseCode>280</PhraseCode>
+            <FullText>... tragen.</FullText>
+            <MergePhrase PhraseId="157" MergePhraseNo="1">
+              <MergeText>Schutzhandschuhe/Schutzkleidung/Augenschutz</MergeText>
+              <Delimiter>...</Delimiter>
+            </MergePhrase>
+          </ClpPrecautionaryStatement>
+          <ClpPrecautionaryStatement PhraseId="98">
+            <PhraseCode>302+352</PhraseCode>
+            <FullText>BEI BERÜHRUNG MIT DER HAUT: Mit viel Wasser/... waschen.</FullText>
+            <MergePhrase PhraseId="" MergePhraseNo="1">
+              <MergeText>... (Hersteller kann, falls zweckmäßig, ein Reinigungsmittel angeben oder, wenn Wasser eindeutig ungeeignet ist, ein alternatives Mittel empfehlen)</MergeText>
+              <Delimiter>...</Delimiter>
+            </MergePhrase>
+          </ClpPrecautionaryStatement>
+          <ClpPrecautionaryStatement PhraseId="103">
+            <PhraseCode>305+351+338</PhraseCode>
+            <FullText>BEI KONTAKT MIT DEN AUGEN: Einige Minuten lang behutsam mit Wasser spülen. Eventuell vorhandene Kontaktlinsen nach Möglichkeit entfernen. Weiter spülen.</FullText>
+          </ClpPrecautionaryStatement>
+          <ClpPrecautionaryStatement PhraseId="92">
+            <PhraseCode>391</PhraseCode>
+            <FullText>Verschüttete Mengen aufnehmen.</FullText>
+          </ClpPrecautionaryStatement>
+        </ClpLabellingInfo>
+      </HazardLabelling>
+    </HazardIdentification>
+    <Composition>
+      <CompositionType>SingleConstituent</CompositionType>
+      <Substance>
+        <SubstanceName>
+          <IupacName>Diethyltoluylendiamin</IupacName>
+          <Synonym>Diethyltoluylendiamin</Synonym>
+          <Synonym>Diethyltoluendiamin</Synonym>
+          <Synonym>Diethylmethylbenzoldiamin</Synonym>
+          <Synonym>DETDA</Synonym>
+          <Synonym>Diaminodiethyltoluol</Synonym>
+        </SubstanceName>
+        <CasNo>68479-98-1</CasNo>
+        <IndexNo>612-130-00-0</IndexNo>
+        <EcNo>270-877-4</EcNo>
+      </Substance>
+      <CompositionComments>
+        <FullText>ZVG</FullText>
+      </CompositionComments>
+      <CompositionComments>
+        <FullText>491745</FullText>
+      </CompositionComments>
+    </Composition>
+    <FirstAidMeasures>
+      <DescriptionOfFirstAidMeasures>
+        <FirstAidInhalation PhraseId="EE300">
+          <FullText>Verletzten unter Selbstschutz aus dem Gefahrenbereich bringen.</FullText>
+        </FirstAidInhalation>
+        <FirstAidInhalation PhraseId="EE408">
+          <FullText>Bei Atemnot Sauerstoff inhalieren lassen.</FullText>
+        </FirstAidInhalation>
+        <FirstAidInhalation PhraseId="EE518">
+          <FullText>Ärztliche Behandlung.</FullText>
+        </FirstAidInhalation>
+        <FirstAidSkin PhraseId="EH220">
+          <FullText>Verunreinigte Kleidung, auch Unterwäsche und Schuhe, sofort ausziehen; auf Selbstschutz achten.</FullText>
+        </FirstAidSkin>
+        <FirstAidSkin PhraseId="EH260">
+          <FullText>Haut mit viel Wasser spülen.</FullText>
+        </FirstAidSkin>
+        <FirstAidSkin PhraseId="EH501">
+          <FullText>Ärztliche Behandlung.</FullText>
+        </FirstAidSkin>
+        <FirstAidEye PhraseId="EA180">
+          <FullText>Augen unter Schutz des unverletzten Auges sofort ausgiebig (mind. 10 Minuten) bei geöffneten Augenlidern mit Wasser spülen.</FullText>
+        </FirstAidEye>
+        <FirstAidEye PhraseId="EA406">
+          <FullText>Augenärztliche Behandlung.</FullText>
+        </FirstAidEye>
+        <FirstAidIngestion PhraseId="EV360">
+          <FullText>Sofortiges kräftiges Ausspülen des Mundes.</FullText>
+        </FirstAidIngestion>
+        <FirstAidIngestion PhraseId="EV370">
+          <FullText>Wasser in kleinen Schlucken trinken lassen (Verdünnungseffekt).</FullText>
+        </FirstAidIngestion>
+        <FirstAidIngestion PhraseId="EV502">
+          <FullText>Ärztliche Behandlung.</FullText>
+        </FirstAidIngestion>
+      </DescriptionOfFirstAidMeasures>
+      <MedicalAttentionAndSpecialTreatmentNeeded>
+        <SpecificAntidotes PhraseId="EZ514">
+          <FullText>Antidot: Toluidinblau.</FullText>
+        </SpecificAntidotes>
+      </MedicalAttentionAndSpecialTreatmentNeeded>
+    </FirstAidMeasures>
+    <FireFightingMeasures>
+      <ExtinguishingMedia>
+        <MediaToBeUsed PhraseId="SB20">
+          <FullText>Kohlendioxid</FullText>
+        </MediaToBeUsed>
+        <MediaToBeUsed PhraseId="SB20">
+          <FullText>Schaum</FullText>
+        </MediaToBeUsed>
+        <MediaToBeUsed PhraseId="SB20">
+          <FullText>Löschpulver</FullText>
+        </MediaToBeUsed>
+        <MediaToBeUsed PhraseId="SB20">
+          <FullText>Wassernebel</FullText>
+        </MediaToBeUsed>
+        <MediaNotBeUsed PhraseId="SB20">
+          <FullText>Wasser im Vollstrahl</FullText>
+        </MediaNotBeUsed>
+      </ExtinguishingMedia>
+      <FireAndExplosionHazards PhraseId="SB16">
+        <FullText>Berst- und Explosionsgefahr durch Druckanstieg in Behältern bei Erwärmung.</FullText>
+      </FireAndExplosionHazards>
+      <HazardCombustionProd PhraseId="SB8">
+        <FullText>Bei Brand entstehen gefährliche Gase/Dämpfe (z.B. Kohlenmonoxid, Kohlendioxid, Stickoxide).</FullText>
+      </HazardCombustionProd>
+      <FireFightingPrecautions PhraseId="SB52">
+        <FullText>Brandbekämpfung nur mit persönlicher Schutzausrüstung.</FullText>
+      </FireFightingPrecautions>
+      <FireFightingPrecautions PhraseId="SB23">
+        <FullText>Brandbekämpfung größerer Brände nur mit umgebungsluftunabhängigem Atemschutzgerät und geeigneter Schutzausrüstung!</FullText>
+      </FireFightingPrecautions>
+      <FireFightingProcedures PhraseId="SB2">
+        <FullText>Bei Brand in der Umgebung Behälter mit Sprühwasser kühlen.</FullText>
+      </FireFightingProcedures>
+    </FireFightingMeasures>
+    <AccidentalReleaseMeasures>
+      <ForNonEmergencyPersonnel>
+        <ProtectiveEquipment PhraseId="SA50">
+          <FullText>Bei der Beseitigung von ausgelaufenem/verschüttetem Produkt immer persönliche Schutzausrüstung tragen: Auf jeden Fall Schutzbrille, Handschuhe sowie bei größeren Mengen Atemschutz.</FullText>
+        </ProtectiveEquipment>
+      </ForNonEmergencyPersonnel>
+      <EnvironmentalPrecautions PhraseId="S45">
+        <FullText>Das Eindringen in Boden, Gewässer und Kanalisation muss verhindert werden.</FullText>
+      </EnvironmentalPrecautions>
+      <ContainmentAndCleaningUp>
+        <CleaningUp PhraseId="SA18">
+          <FullText>Nach Verschütten mit saugfähigem Material (z.B. Sand, Universalbinder) aufnehmen und wie unter Entsorgung beschrieben verfahren.</FullText>
+        </CleaningUp>
+      </ContainmentAndCleaningUp>
+    </AccidentalReleaseMeasures>
+    <HandlingAndStorage>
+      <SafeHandling>
+        <PrecautionaryMeasures>
+          <ProtectiveMeasures PhraseId="TE78">
+            <FullText>Bildung von Dämpfen und Nebeln vermeiden. Insbesondere an Ab/Umfüll-, Wiege- und Mischarbeitsplätzen funktionstüchtige Absaugung sicherstellen (siehe Mindeststandards).</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH6">
+            <FullText>Gebinde nicht offen stehen lassen.</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH20">
+            <FullText>Beim Ab- und Umfüllen Verspritzen und Nachlauf vermeiden, Dichtheit gewährleisten.</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH3">
+            <FullText>Reaktionsfähige Stoffe fern halten bzw. nur kontrolliert zugeben.</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH230">
+            <FullText>Bei hoher Gefährdung durch Hautkontakt möglichst in geschlossenen Anlagen arbeiten. Ist dies technisch nicht möglich, Exposition nach Stand der Technik minimieren.</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH231">
+            <FullText>Z.B. nur solche Arbeitsgeräte verwenden, mit denen Hautkontakt vermieden oder verringert wird.</FullText>
+          </ProtectiveMeasures>
+          <ProtectiveMeasures PhraseId="TH229">
+            <FullText>Bei mittlerer Gefährdung durch Hautkontakt diese beseitigen oder verringern, z.B. durch Arbeit in geschlossenen Anlagen, durch geeignete Arbeitsgeräte.</FullText>
+          </ProtectiveMeasures>
+        </PrecautionaryMeasures>
+        <GeneralOccupationalHygiene PhraseId="HK50">
+          <FullText>Einatmen von Dämpfen vermeiden!</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HK14">
+          <FullText>Berührung mit Augen, Haut und Kleidung vermeiden!</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HR2">
+          <FullText>Vor Pausen und nach Arbeitsende Hände und andere verschmutzte Körperstellen gründlich reinigen.</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HR17">
+          <FullText>Hautpflegemittel nach der Hautreinigung am Arbeitsende verwenden (rückfettende Creme).</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HR53">
+          <FullText>Stoff-/Produktreste sofort von der Haut entfernen und die Haut möglichst schonend reinigen, anschließend sorgfältig abtrocknen.</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HR71">
+          <FullText>Lösungen auf der Haut abwaschen, nicht eintrocknen lassen.</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HR70">
+          <FullText>Bei der Arbeit keinen Arm- oder Handschmuck tragen.</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HU3">
+          <FullText>Straßen- und Arbeitskleidung getrennt aufbewahren!</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HU72">
+          <FullText>Bei mittlerer oder hoher Gefährdung durch Hautkontakt zusätzlich:</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HU73">
+          <FullText>Verschmutzte und durchtränkte Arbeitskleidung sofort wechseln, Reinigung durch den Betrieb.</FullText>
+        </GeneralOccupationalHygiene>
+        <GeneralOccupationalHygiene PhraseId="HU75">
+          <FullText>Separate Putzlappen und Reinigungstücher für die Haut und Maschinen oder Geräte verwenden.</FullText>
+        </GeneralOccupationalHygiene>
+      </SafeHandling>
+    </HandlingAndStorage>
+    <ExposureControlPersonalProtection>
+      <ControlParameters>
+        <OccupationalExposureLimits>
+          <OccupationalExposureLimit>
+            <LimitValueTypeWithCountryOrOrganisation>AGW</LimitValueTypeWithCountryOrOrganisation>
+            <Comments />
+          </OccupationalExposureLimit>
+        </OccupationalExposureLimits>
+        <ControlParametersComments PhraseId="Vþ38">
+          <FullText>Wirksamkeit der Schutzmaßnahmen durch geeignete Beurteilungsmethoden nachweisen oder messen.</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ52">
+          <FullText>Es handelt sich um einen hautgefährdenden Gefahrstoff gemäß TRGS 401.</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ70">
+          <FullText>Eine hohe Gefährdung durch Hautkontakt liegt vor:</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ71">
+          <FullText>bei großflächigem und längerfristigem (&gt; 15 min pro Schicht) Kontakt.</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ65">
+          <FullText>Eine mittlere Gefährdung durch Hautkontakt liegt vor:</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ66">
+          <FullText>bei großflächigem und kurzfristigem Kontakt (&lt; 15 min pro Schicht) oder</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ67">
+          <FullText>bei kleinflächigem und längerfristigem Kontakt (z.B. Spritzer &gt; 15 min pro Schicht).</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ60">
+          <FullText>Eine geringe Gefährdung durch Hautkontakt liegt vor:</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ62">
+          <FullText>bei kleinflächigem und kurzfristigem (z.B. Spritzer, Einwirkung &lt; 15 min pro Schicht) Kontakt,</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ63">
+          <FullText>bei kurzfristigem und kleinflächigem Hautkontakt mit verschmutzter Arbeitskleidung, Arbeitsmitteln oder Arbeitsflächen.</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ50">
+          <FullText>Bei mittlerer/hoher Gefährdung durch Hautkontakt zusätzlich:</FullText>
+        </ControlParametersComments>
+        <ControlParametersComments PhraseId="Vþ51">
+          <FullText>Aufgrund der Hautgefährdung prüfen, ob ein Ersatzstoff verwendet oder eine Verfahrensänderung durchgeführt werden kann. Wenn nicht möglich, in der Gefährdungsbeurteilung begründen.</FullText>
+        </ControlParametersComments>
+      </ControlParameters>
+      <PersonalProtectionEquipment>
+        <RespiratoryProtection>
+          <SuitableRespiratoryProtectionEquipment>
+            <FullText>Das Tragen von Atemschutz wird z.B. bei Reparaturarbeiten oder unkontrollierten Betriebs@---zu@---stän@---den empfohlen, z.B.  Voll@---mas@---ke/Halb@---maske/filtrierende Halbmaske mit:</FullText>
+          </SuitableRespiratoryProtectionEquipment>
+          <SuitableRespiratoryProtectionEquipment>
+            <FullText>Gasfilter A1 (braun) bis 1000 ml/m3 (ppm)</FullText>
+          </SuitableRespiratoryProtectionEquipment>
+          <SuitableRespiratoryProtectionEquipment>
+            <FullText>Gasfilter A2 (braun) bis 5000 ml/m3 (ppm)</FullText>
+          </SuitableRespiratoryProtectionEquipment>
+        </RespiratoryProtection>
+        <EyeProtection>
+          <SuitableEyeProtection PhraseId="PA30">
+            <FullText>Bei Überwachungstätigkeit: Gestellbrille mit Seitenschutz.</FullText>
+          </SuitableEyeProtection>
+          <SuitableEyeProtection PhraseId="PA42">
+            <FullText>Bei Spritzgefahr: Korbbrille.</FullText>
+          </SuitableEyeProtection>
+        </EyeProtection>
+        <HandProtection>
+          <Equipment>
+            <SuitableMaterial>
+              <FullText>Polychloropren (CR)</FullText>
+            </SuitableMaterial>
+            <GloveBreakthroughTime>
+              <LowerValueSymbol>ge</LowerValueSymbol>
+              <LowerValue>1</LowerValue>
+              <Unit>h</Unit>
+            </GloveBreakthroughTime>
+          </Equipment>
+          <Equipment>
+            <SuitableMaterial>
+              <FullText>Nitrilkautschuk/Nitrillatex (NBR)</FullText>
+            </SuitableMaterial>
+            <GloveBreakthroughTime>
+              <LowerValueSymbol>ge</LowerValueSymbol>
+              <LowerValue>1</LowerValue>
+              <Unit>h</Unit>
+            </GloveBreakthroughTime>
+          </Equipment>
+          <Equipment>
+            <SuitableMaterial>
+              <FullText>Butylkautschuk (Butyl)</FullText>
+            </SuitableMaterial>
+            <GloveBreakthroughTime>
+              <UpperValue>8</UpperValue>
+              <LowerValue>4</LowerValue>
+              <Unit>h</Unit>
+            </GloveBreakthroughTime>
+          </Equipment>
+        </HandProtection>
+      </PersonalProtectionEquipment>
+    </ExposureControlPersonalProtection>
+    <PhysicalChemicalProperties>
+      <Appearance>
+        <Form>liquid</Form>
+        <FormDescription>
+          <FullText>flüssig</FullText>
+        </FormDescription>
+      </Appearance>
+      <SafetyRelevantInformation>
+        <MeltingPointRelated>
+          <MeltingPoint>
+            <UnitValue>
+              <ExactValue>-26.1</ExactValue>
+              <Unit>°C</Unit>
+            </UnitValue>
+          </MeltingPoint>
+        </MeltingPointRelated>
+        <BoilingPointRelated>
+          <BoilingPoint>
+            <UnitValue>
+              <ExactValueSymbol>gt</ExactValueSymbol>
+              <ExactValue>300</ExactValue>
+              <Unit>°C</Unit>
+            </UnitValue>
+          </BoilingPoint>
+        </BoilingPointRelated>
+        <FlashPoint>
+          <Value>
+            <UnitValue>
+              <UpperValue>170</UpperValue>
+              <Unit>°C</Unit>
+            </UnitValue>
+          </Value>
+        </FlashPoint>
+        <AutoignitionTemperature>
+          <UnitValue>
+            <UpperValue>430</UpperValue>
+            <Unit>°C</Unit>
+          </UnitValue>
+        </AutoignitionTemperature>
+      </SafetyRelevantInformation>
+      <ChemicalPhysicalPropertiesComments PhraseId="FH25">
+        <FullText>Die Stoffdaten wurden Herstellerinformationen entnommen.</FullText>
+      </ChemicalPhysicalPropertiesComments>
+    </PhysicalChemicalProperties>
+    <StabilityReactivity>
+      <HazardousReactions PhraseId="RR45">
+        <FullText>Reagiert mit starken Oxidationsmitteln unter heftiger Wärmeentwicklung.</FullText>
+      </HazardousReactions>
+      <HazardousReactions PhraseId="RR49">
+        <FullText>Bei unkontrollierter Reaktion besteht Explosionsgefahr.</FullText>
+      </HazardousReactions>
+      <HazardousReactions PhraseId="RR50">
+        <FullText>Zersetzt sich bei Erhitzen/Verbrennen in gefährliche Gase (z.B. Kohlenmonoxid, Kohlendioxid, Stickoxide).</FullText>
+      </HazardousReactions>
+      <HazardousReactions PhraseId="RR52">
+        <FullText>Begünstigt (katalysiert) z.B. den Zerfall von Peroxiden und die Reaktion von Isocyanaten. </FullText>
+      </HazardousReactions>
+    </StabilityReactivity>
+    <ToxicologicalInformation />
+    <EcologicalInformation />
+    <DisposalConsiderations />
+    <TransportInformation />
+    <RegulatoryInfo>
+      <NationalLegislation>
+        <NationalLegislationGermany>
+          <WaterHazardClass>
+            <Class>3</Class>
+            <Source>
+              <PhraseCode>1896</PhraseCode>
+              <FullText>Kenn-Nr.: 1896</FullText>
+            </Source>
+            <Remark>
+              <FullText>Bei der WGK handelt es sich um eine gemäß AwSV im Bundesanzeiger veröffentlichte Angabe.</FullText>
+            </Remark>
+          </WaterHazardClass>
+          <StorageClass>LGK 10</StorageClass>
+        </NationalLegislationGermany>
+      </NationalLegislation>
+    </RegulatoryInfo>
+    <OtherInformation>
+      <ManufacturersNotes>
+        <FullText>Garantie- und Haftungsausschluss:</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>Es wird ausdrücklich darauf hingewiesen, dass die Daten von GisChem zwar sorgfältig erstellt und gepflegt werden, jedoch keine Garantie für die Richtigkeit und Vollständigkeit übernommen werden kann.</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>Der Verwender der Daten wird daher nicht von der Pflicht und Verantwortung, die Daten auf Richtigkeit und Vollständigkeit selbst zu überprüfen, befreit.</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>Daher kann der Verwender die Träger von GisChem auch nicht für Fehler bezüglich der Richtigkeit und Vollständigkeit der übermittelten Daten gleich aus welchem Rechtsgrund haftbar machen.</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>Ebenso wird vorsorglich darauf hingewiesen, dass keine Garantie übernommen wird, dass die übermittelten Daten frei von Rechten Dritter sind. Auch diesbezüglich wird keine Haftung gleich aus welchem Rechtsgrund übernommen.</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>Im Übrigen haften die Träger von GisChem nach den gesetzlichen Bestimmungen jedoch nur für Vorsatz und grobe Fahrlässigkeit, soweit es nicht durch ein schuldhaftes Fehlverhalten der Träger von GisChem,</FullText>
+      </ManufacturersNotes>
+      <ManufacturersNotes>
+        <FullText>deren gesetzliche Vertreter oder durch deren Erfüllungsgehilfen zu einer Verletzung des Lebens, Körpers oder der Gesundheit kommt.</FullText>
+      </ManufacturersNotes>
+    </OtherInformation>
+  </Datasheet>
+</SDScom:DatasheetFeed>
