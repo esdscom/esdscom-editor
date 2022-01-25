@@ -3,7 +3,7 @@
     <div class="form-group">        
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
         <br />
-        <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname">
+        <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname" style="width:50%" >
             @foreach (var value in enumValueArray)
             {               
                 <option value="@value">@value</option>
