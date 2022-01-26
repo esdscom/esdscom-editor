@@ -11,7 +11,7 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="Add a new Datasheet"/>       
+        <PageHeader Title="@title"/>       
 
       @*  <div class="form-group">
             <label for="ddLanguage">Language</label>
@@ -38,7 +38,7 @@
             </InputSelect>
         </div>
 
-        <RegionCheckboxGroup DatasheetRegions="@datasheet.Regions" OnRegionsSelected="RegionSelectionHandler"/>
+        @*<RegionCheckboxGroup DatasheetRegions="@datasheet.Regions" OnRegionsSelected="RegionSelectionHandler"/>*@
 
          <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler"/>
 
@@ -49,7 +49,7 @@
 
         <div class="row">          
             <div class="col-3">
-                <button type="submit" class="btn btn-success"><Tooltip Text="@tt1">Save</Tooltip></button>
+                <button type="submit" class="btn btn-success">Save</button>
             </div>
             <div class="col-2">
                 <button type="button" class="btn btn-primary" @onclick="GoToSections">Edit Sections</button>
@@ -67,7 +67,9 @@
 
     Datasheet datasheet;
     DataManager dMgr;
-   
+
+    string title;
+
     string materialType = "Mixture";
 
     string tt1 = "Save Changes and proceed to edit this Document.";
@@ -98,6 +100,7 @@
                 Regions = Utils.GetRegions()
             };
 
+            title = "Add a new Datasheet";
             AppState.StatusBarMessage = "Adding a new Datasheet";
         }
         else
@@ -113,6 +116,7 @@
                 }
             }
 
+            title = $"Editing Datasheet {datasheet.Name}";
             AppState.StatusBarMessage = $"Editing the Datasheet {datasheet.Name}";
         }
     }

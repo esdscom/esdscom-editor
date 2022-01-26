@@ -104,7 +104,7 @@
     {
         AppState.BackToURL = "/Documents/ListDocuments";
         AppState.BackToURLText = "Back to Datasheet list";
-       // AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == dsId);       
+        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == dsId);       
         nav.NavigateTo("/Documents/EditDocument/false");
     }
 

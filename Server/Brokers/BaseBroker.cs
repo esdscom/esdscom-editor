@@ -14,8 +14,7 @@
         {
             return new()
             {
-                SubstanceId                 = reader.GetGuid("SubstanceId"),
-                ID                          = reader["ID"] as string,
+                SubstanceId                 = reader["SubstanceId"] as string,               
                 Name                        = reader["Name"] as string,  
                 ECNumber                    = reader["ECNumber"] as string,
                 CASNumber                   = reader["CASNumber"] as string,

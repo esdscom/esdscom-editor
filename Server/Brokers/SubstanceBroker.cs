@@ -4,7 +4,7 @@ public interface ISubstanceBroker
 {
     Task<Substance> Get(string ID);
 
-    Task<Substance> GetByGuid(Guid substanceId);
+    Task<Substance> GetById(string substanceId);
 
     Task<Substance> GetByECNumber(string ecNumber);
 
@@ -53,7 +53,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
         return subs;
     }
 
-    public async Task<Substance> GetByGuid(Guid substanceId)
+    public async Task<Substance> GetById(string substanceId)
     {
         Substance subs = new();
 

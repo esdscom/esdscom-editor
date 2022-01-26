@@ -7,7 +7,7 @@ public class Substance
 {
     public Substance(){ }
 
-    public Guid SubstanceId { get; set; }
+    public string SubstanceId { get; set; }
     public string ID { get; set; }  
 
     public string Name { get; set; }

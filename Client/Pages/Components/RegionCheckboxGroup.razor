@@ -6,12 +6,11 @@
 
     @foreach (Region item in DatasheetRegions)
     {
-        <p>
-            <label>
-                @item.Name
-                <InputCheckbox type="checkbox" id="@item.Suffix" @bind-Value="@item.IsSelected" />
-            </label>
-        </p>
+        <label>           
+            <InputCheckbox type="checkbox" id="@item.Suffix" @bind-Value="@item.IsSelected" />
+             @item.Name
+        </label>
+        <br/>
     }
 
 </div>
@@ -28,6 +27,10 @@
 
     protected override void OnInitialized()
     {
+        if (DatasheetRegions is null)
+        {
+            DatasheetRegions = Utils.GetRegions();
+        }
 
     }
 

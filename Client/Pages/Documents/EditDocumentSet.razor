@@ -33,19 +33,9 @@
         <div class="row">
             <div class="col-2">
                 <button type="submit" class="btn btn-success">Save</button>
-            </div>              
-          @*  <div class="col-2">
-                <button type="button" class="btn btn-primary" @onclick="ShowLinkedDocuments"><Tooltip Text="@tt3">Linked Documents</Tooltip></button>
-            </div>*@
-        
-@*            <div class="col-2">
-                <button type="button" class="btn btn-primary" @onclick="AddNewDocument"><Tooltip Text="@tt1">Add New Document</Tooltip></button>
-            </div>
+            </div>  
             <div class="col-2">
-                <button type="button" class="btn btn-secondary" @onclick="AddExistingDocument"><Tooltip Text="@tt2">Add Existing Document</Tooltip></button>
-            </div>*@
-            <div class="col-2">
-                <button type="button" class="btn btn-info" @onclick="Info">Information from exporting system</button>
+                <button type="button" class="btn btn-info" @onclick="Info">Information from Exporting System</button>
             </div>
             <div class="col-2">
                 <button type="button" class="btn btn-warning" @onclick="Close">Cancel</button>
@@ -66,11 +56,6 @@
     DataManager dMgr;
     EditContext editContext;
     string title;
-  //  string backToURL;
-
-   // string tt1 = "Create a new Datasheet and add it to this Datasheet Set.";
-   // string tt2 = "Select an existing Datasheet and add it to this Datasheet Set.";   
-   // string tt3 = "View the list of Datasheets linked to this Datasheet Set.";
 
     protected override void OnInitialized()
     {

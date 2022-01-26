@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Save</button>
-            <button id="btnInfo" type="button" class="btn btn-info" @onclick="GoToInfo"><Tooltip Text="@tt1">Info</Tooltip></button>                      
+            <button id="btnInfo" type="button" class="btn btn-info" @onclick="GoToInfo">Information from Exporting System</button>                      
         </div>
 
         <DateDisplay CreatedDate="@AppState.Organization.CreatedDate" UpdatedDate="@AppState.Organization.UpdatedDate" />
@@ -84,10 +84,8 @@
     private List<User> userList = new();
     private DataManager dMgr;
 
-    // SfCheckBox<bool> CheckboxObj;
     private bool Visibility { get; set; } = false;
     private bool ShowButton { get; set; } = false;
-    //  private string editUserId;
 
     private string tt1;
 
@@ -99,8 +97,6 @@
         AppState.BackToURLText = string.Empty;
 
         dMgr = new(api);
-
-        tt1 = "Manage 'Information from Exporting System' XML content for use in Document Sets";
 
         userList = await dMgr.GetUserListForOrganizationAsync(AppState.User.OrganizationId);
     }   

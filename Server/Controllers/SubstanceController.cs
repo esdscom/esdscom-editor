@@ -21,9 +21,9 @@ public class SubstanceController : Controller
 
     [HttpGet]
     [Route("GetByGuid")]
-    public async Task<ActionResult<Substance>> GetByGuid(Guid substanceId)
+    public async Task<ActionResult<Substance>> GetByGuid(string substanceId)
     {
-        Substance subs = await sBkr.GetByGuid(substanceId);
+        Substance subs = await sBkr.GetById(substanceId);
         return Ok(subs);
     }
 

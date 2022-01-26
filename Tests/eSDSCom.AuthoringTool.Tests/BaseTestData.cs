@@ -98,8 +98,7 @@ public class BaseTestData : IClassFixture<DatabaseFixture>
     {
         return new()
         {
-            SubstanceId = Guid.Parse("000C56B5-B201-418E-A012-16AC1BEC906D"),
-            ID = "100.003.133",
+            SubstanceId = "100.003.133",
             Name = "1-bromopropane",
             ECNumber = "203-445-0",
             CASNumber = "106-94-5",
