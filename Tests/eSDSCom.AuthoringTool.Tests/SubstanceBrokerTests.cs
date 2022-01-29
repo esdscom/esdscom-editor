@@ -20,7 +20,7 @@ public class SubstanceBrokerTests : BaseTestData
     {
         Substance subs = GetTestSubstance();
 
-        Substance newsubs = await broker.Get(subs.ID);
+        Substance newsubs = await broker.Get(subs.Id);
         Assert.NotNull(newsubs);
         Assert.Equal(subs.SubstanceId, newsubs.SubstanceId);
 

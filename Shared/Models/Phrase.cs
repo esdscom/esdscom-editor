@@ -28,6 +28,7 @@ public class Phrase
 
     }
 
+    public Guid Id { get; set; }    
     public string StrucCode { get; set; }
     public string XPath { get; set; }
     public string Region { get; set; }

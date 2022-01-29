@@ -98,12 +98,12 @@ public class PhraseBroker : BaseBroker , IPhraseBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = $"SELECT * FROM PHRASES";
 
-            using SqlCommand cmd = new(sql, connection);
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            using NpgsqlCommand cmd = new(sql, dbConn);
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {

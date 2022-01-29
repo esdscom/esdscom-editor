@@ -11,8 +11,8 @@ public interface IDatasheetFeedBroker
 }
 
 public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
-{  
-    public DatasheetFeedBroker() {}
+{
+    public DatasheetFeedBroker() { }
     public DatasheetFeedBroker(string testConnectionString)
     {
         ConnectionString = testConnectionString;
@@ -24,22 +24,24 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"SELECT dsf.*, u.NAME as USERNAME 
                             FROM DATASHEETFEEDS dsf , USERS u
                             WHERE dsf.UserId = u.ID
-                            AND dsf.ID = @ID
-                            AND dsf.ORGANIZATIONID = @ORGID";
+                            AND dsf.ID = $1
+                            AND dsf.ORGANIZATIONID = $2 ";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            
-            cmd.Parameters["@ID"].Value = dsfId;
-            cmd.Parameters["@ORGID"].Value = organizationId;
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = dsfId },
+                    new() { Value = organizationId }
+                }
+            };
 
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -55,7 +57,7 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
         }
 
         return dsf;
-    }  
+    }
 
 
     public async Task<List<DatasheetFeed>> GetForOrganization(Guid organizationId)
@@ -64,18 +66,22 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"SELECT dsf.*, u.NAME as USERNAME
                             FROM DATASHEETFEEDS dsf , USERS u
                             WHERE dsf.UserId = u.ID
-                            AND dsf.ORGANIZATIONID = @ORGID";
+                            AND dsf.ORGANIZATIONID =  $1";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ORGID"].Value = organizationId;
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = organizationId }
+                }
+            };
 
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -98,22 +104,24 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"SELECT dsf.*, u.NAME as USERNAME
                             FROM DATASHEETFEEDS dsf , USERS u
                             WHERE dsf.UserId = u.ID
-                            AND dsf.ORGANIZATIONID = @ORGID
-                            AND dsf.USERID = @UID";
+                            AND dsf.ORGANIZATIONID = $1
+                            AND dsf.USERID = $2 ";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@UID", SqlDbType.UniqueIdentifier));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = organizationId },
+                    new() { Value = userId }
+                }
+            };
 
-            cmd.Parameters["@ORGID"].Value = organizationId;
-            cmd.Parameters["@UID"].Value = userId;
-
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -134,33 +142,34 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            if (dsf.Id == default)
+            {
+                dsf.Id = Guid.NewGuid();
+            }
+
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"INSERT INTO DatasheetFeeds
-                                (ID, ORGANIZATIONID, USERID, NAME, CREATEDDATE, UPDATEDDATE, DATASHEETFEEDDOC, COMMENTS, STATUS)
+                                (ID, ORGANIZATIONID, USERID, NAME, DATASHEETFEEDDOC, COMMENTS, STATUS)
                             VALUES
-                                (@ID, @ORGID, @USERID, @NAME, getdate(), getdate(), @DOC, @COMMENTS, @STATUS)";
+                                ($1, $2, $3, $4, $5, $6, $7) ";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@USERID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@DOC", SqlDbType.NVarChar, -1));
-            cmd.Parameters.Add(new SqlParameter("@COMMENTS", SqlDbType.NVarChar, -1));
-            cmd.Parameters.Add(new SqlParameter("@STATUS", SqlDbType.Int));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = dsf.Id },
+                    new() { Value = dsf.OrganizationId },
+                    new() { Value = dsf.UserId },
+                    new() { Value = dsf.Name },
+                    new() { Value = dsf.DatasheetFeedString },
+                    new() { Value = dsf.Comments },
+                    new() { Value = dsf.Status }
+                }
+            };
 
-
-            cmd.Parameters["@ID"].Value = dsf.Id;
-            cmd.Parameters["@ORGID"].Value = dsf.OrganizationId;
-            cmd.Parameters["@USERID"].Value = dsf.UserId;
-            cmd.Parameters["@NAME"].Value = dsf.Name;
-            cmd.Parameters["@DOC"].Value = dsf.DatasheetFeedString;
-            cmd.Parameters["@COMMENTS"].Value = dsf.Comments;
-            cmd.Parameters["@STATUS"].Value = dsf.Status;
-
-            connection.Open();
+            dbConn.Open();
             int result = await cmd.ExecuteNonQueryAsync();
-
+            await dbConn.CloseAsync();
             if (result > 0)
             {
                 return dsf;
@@ -181,33 +190,35 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"UPDATE DatasheetFeeds
-                            SET ORGANIZATIONID = @ORGID, 
-                                USERID = @USERID, 
-                                NAME = @NAME, 
-                                UPDATEDDATE = getdate(), 
-                                DATASHEETFEEDDOC = @DOC,
-                                COMMENTS = @COMMENTS
-                            WHERE ID = @ID";
+                            SET ORGANIZATIONID = $1, 
+                                USERID = $2, 
+                                NAME = $3,                                
+                                DATASHEETFEEDDOC = $4,
+                                COMMENTS =$5,
+                                STATUS = $6
+                            WHERE ID = $7 ";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@USERID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@DOC", SqlDbType.NVarChar, -1));
-            cmd.Parameters.Add(new SqlParameter("@COMMENTS", SqlDbType.NVarChar, -1));
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = dsf.OrganizationId },
+                    new() { Value = dsf.UserId },
+                    new() { Value = dsf.Name },
+                    new() { Value = dsf.DatasheetFeedString },
+                    new() { Value = dsf.Comments },
+                    new() { Value = dsf.Status },
+                    new() { Value = dsf.Id }
+                }
+            };
 
-            cmd.Parameters["@ORGID"].Value = dsf.OrganizationId;
-            cmd.Parameters["@USERID"].Value = dsf.UserId;
-            cmd.Parameters["@NAME"].Value = dsf.Name;
-            cmd.Parameters["@DOC"].Value = dsf.DatasheetFeedString;
-            cmd.Parameters["@COMMENTS"].Value = dsf.Comments;
-            cmd.Parameters["@ID"].Value = dsf.Id;
+          
 
-            connection.Open();
+            dbConn.Open();
             int result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
 
             if (result > 0)
             {
@@ -230,14 +241,19 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
         int result = 0;
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "DELETE FROM DatasheetFeeds WHERE ID = @ID";
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ID"].Value = dsfId;
+            using NpgsqlConnection dbConn = new(ConnectionString);
+            string sql = "DELETE FROM DATASHEETFEEDS WHERE ID = $1";
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = dsfId }                  
+                }
+            };
 
-            connection.Open();
+            dbConn.Open();
             result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

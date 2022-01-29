@@ -9,6 +9,12 @@ global using Xunit;
 global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.Extensions.DependencyInjection;
 
+global using Npgsql;
+
+global using Azure.Core;
+global using Azure.Identity;
+global using Azure.Security.KeyVault.Secrets;
+
 global using eSDSCom.Editor.Shared.DocumentElements;
 global using eSDSCom.Editor.Shared.Models;
 

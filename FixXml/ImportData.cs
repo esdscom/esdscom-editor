@@ -1,21 +1,41 @@
 ﻿using Npgsql;
 using System.Xml;
 
+using Azure.Core;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
 
 namespace FixXml;
 
 public class ImportData
 {
-    static string connString = @"Server=esdscomeditor.postgres.database.azure.com;Port=5432;Database=esdscomeditor;User Id=postgres;Password=Gollum17;"; //@"Server=db.qualisys.eu;Port=5432;Database=esdscomdb;User Id=esdscomdb_admin;Password=temp;";
+    static string connString;
 
     public ImportData()
     {
+        if (string.IsNullOrEmpty(connString))
+        {
+            SecretClientOptions options = new()
+            {
+                Retry =
+                    {
+                        Delay= TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                     }
+            };
+            var client = new SecretClient(new Uri("https://esdscomeditorkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
+            KeyVaultSecret secret = client.GetSecret("ConnectionString");
+            connString = secret.Value;
+        }
+
         //  this is a 'one-time' utility to push source content for populating the db
         //  with content from the phrases and substances xml files that are obtained 
         //  from the ECHA and EUPHRAC sites
     }
 
-    public static async Task Run()
+    public static void Run()
     {
         ImportSubstances();
 

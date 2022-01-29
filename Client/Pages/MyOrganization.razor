@@ -81,13 +81,11 @@
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private List<User> userList = new();
-    private DataManager dMgr;
+    List<User> userList = new();
+    DataManager dMgr;
 
-    private bool Visibility { get; set; } = false;
-    private bool ShowButton { get; set; } = false;
-
-    private string tt1;
+    bool Visibility { get; set; } = false;
+    bool ShowButton { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {

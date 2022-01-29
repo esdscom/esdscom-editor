@@ -1,13 +1,29 @@
-﻿using System.Data.SqlClient;
+﻿
 
 namespace eSDSCom.Editor.Tests;
 public class BaseTestData : IClassFixture<DatabaseFixture>
 {
-   public static readonly string TestConnectionString = @"Server=localhost;Database=AuthorDBTest;Trusted_Connection=True";
+   public static readonly string TestConnectionString;
 
-    public BaseTestData()
+    static BaseTestData()
     {
-        
+        if (string.IsNullOrEmpty(TestConnectionString))
+        {
+            SecretClientOptions options = new()
+            {
+                Retry =
+                    {
+                        Delay= TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                     }
+            };
+            var client = new SecretClient(new Uri("https://esdscomeditorkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
+            KeyVaultSecret secret = client.GetSecret("ConnectionString");
+            TestConnectionString = secret.Value;
+        }
+
     }
     
     public static User GetTestUser(Guid theGuid, Guid theOrgGuid)
@@ -47,7 +63,8 @@ public class BaseTestData : IClassFixture<DatabaseFixture>
             Status = 1,
             UserName = "A test user",
             DatasheetString = "<Datasheet/>",
-            Comments = comments
+            Comments = comments,
+            RegionsString = ""
         };
     }
 
@@ -98,6 +115,7 @@ public class BaseTestData : IClassFixture<DatabaseFixture>
     {
         return new()
         {
+            Id = Guid.Parse("46e1be11-4eba-4c5f-a967-18db3c97f1e3"),
             SubstanceId = "100.003.133",
             Name = "1-bromopropane",
             ECNumber = "203-445-0",
@@ -107,7 +125,7 @@ public class BaseTestData : IClassFixture<DatabaseFixture>
             SubmissionType = "INDIVIDUAL_SUBMISSION",
             TonnageBand = "Intermediate use only",
             LastUpdated = "07-07-2015",
-            ViewLink = "https://echa.europa.eu/registration-dossier/-/registered-dossier/6200"
+            FactsheetURL = "https://echa.europa.eu/registration-dossier/-/registered-dossier/6200"
         };
     }
 }

@@ -24,15 +24,19 @@ public class UserBroker : BaseBroker, IUserBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "SELECT * FROM USERS WHERE ID = @ID";
+            using NpgsqlConnection connection = new(ConnectionString);
+            string sql = "SELECT * FROM USERS WHERE ID = $1";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ID"].Value = id;
+            using NpgsqlCommand cmd = new(sql, connection)
+            {
+                Parameters =
+                {
+                    new() { Value = id }
+                }
+            };
 
             connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -55,19 +59,23 @@ public class UserBroker : BaseBroker, IUserBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "SELECT * FROM USERS WHERE ORGANIZATIONID = @ID";
+            using NpgsqlConnection dbConn = new(ConnectionString);
+            string sql = "SELECT * FROM USERS WHERE ORGANIZATIONID = $1 ";
             if (activeOnly)
             {
-                sql = $"{sql} AND ISACTIVE = 1 ";
+                sql = $"{sql} AND ISACTIVE = True ";
             }
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ID"].Value = organizationId;
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = organizationId }
+                }
+            };
 
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -90,29 +98,34 @@ public class UserBroker : BaseBroker, IUserBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            if (user.Id == default)
+            {
+                user.Id = Guid.NewGuid();
+            }
+
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @" INSERT INTO USERS 
-                                (ID, ORGANIZATIONID,EMAIL,NAME,ROLE,ISACTIVE,CREATEDDATE, UPDATEDDATE)
+                                (ID,ORGANIZATIONID,EMAIL,NAME,ROLE,ISACTIVE)
                             VALUES 
-                                (@ID,@ORGID,@EMAIL,@NAME,@ROLE,@ISACTIVE,getdate(), getdate())";
+                                ($1,$2,$3,$4,$5,$6)";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@EMAIL", SqlDbType.NVarChar,250));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@ROLE", SqlDbType.SmallInt));
-            cmd.Parameters.Add(new SqlParameter("@ISACTIVE", SqlDbType.Bit));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = user.Id },
+                    new() { Value = user.OrganizationId },
+                    new() { Value = user.Email },
+                    new() { Value = user.Name },
+                    new() { Value = user.Role },
+                    new() { Value = user.IsActive }
+                }
+            };
 
-            cmd.Parameters["@ID"].Value = user.Id;
-            cmd.Parameters["@ORGID"].Value = user.OrganizationId;
-            cmd.Parameters["@EMAIL"].Value = user.Email;
-            cmd.Parameters["@NAME"].Value = user.Name;
-            cmd.Parameters["@ROLE"].Value = user.Role;
-            cmd.Parameters["@ISACTIVE"].Value = user.IsActive;
 
-            connection.Open();
+            dbConn.Open();
             int result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
 
             if (result > 0)
             {
@@ -135,35 +148,33 @@ public class UserBroker : BaseBroker, IUserBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @" UPDATE USERS 
-                                SET ORGANIZATIONID= @ORGID,
-                                    EMAIL = @EMAIL,
-                                    NAME = @NAME,
-                                    ROLE = @ROLE,
-                                    ISACTIVE = @ISACTIVE,
-                                    UPDATEDDATE = getdate()
-                            WHERE ID = @ID";
+                                SET ORGANIZATIONID= $1,
+                                    EMAIL = $2,
+                                    NAME = $3,
+                                    ROLE = $4,
+                                    ISACTIVE = $5
+                            WHERE ID = $6";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@ORGID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@EMAIL", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@ROLE", SqlDbType.Int));
-            cmd.Parameters.Add(new SqlParameter("@ISACTIVE", SqlDbType.Bit));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {                    
+                    new() { Value = user.OrganizationId },
+                    new() { Value = user.Email },
+                    new() { Value = user.Name },
+                    new() { Value = user.Role },
+                    new() { Value = user.IsActive },
+                    new() { Value = user.Id }
+                }
+            };
 
-            cmd.Parameters["@ID"].Value = user.Id;
-            cmd.Parameters["@ORGID"].Value = user.OrganizationId;
-            cmd.Parameters["@EMAIL"].Value = user.Email;
-            cmd.Parameters["@NAME"].Value = user.Name;
-            cmd.Parameters["@ISACTIVE"].Value = user.IsActive;
-            cmd.Parameters["@UPDATEDDATE"].Value = DateTime.Now;
-
-            connection.Open();
+            dbConn.Open();
             int result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
 
-            if (result == 0)
+            if (result > 0)
             {
                 return user;
             }
@@ -185,14 +196,19 @@ public class UserBroker : BaseBroker, IUserBroker
         int result = 0;
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "DELETE FROM USERS WHERE ID = @ID";
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier)); 
-            cmd.Parameters["@ID"].Value = id;
+            using NpgsqlConnection dbConn = new(ConnectionString);
+            string sql = "DELETE FROM USERS WHERE ID = $1";
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = id }
+                }
+            };
 
-            connection.Open();
-            result = await cmd.ExecuteNonQueryAsync();             
+            dbConn.Open();
+            result = await cmd.ExecuteNonQueryAsync();      
+            await dbConn.CloseAsync();
 
         }
         catch (Exception ex)
@@ -200,7 +216,6 @@ public class UserBroker : BaseBroker, IUserBroker
             Log.Error(ex.Message);
         }
         return result > 0;
-
     }
 }
 

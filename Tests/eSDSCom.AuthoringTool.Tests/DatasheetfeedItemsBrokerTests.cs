@@ -20,7 +20,7 @@ public class DatasheetfeedItemsBrokerTests : BaseTestData
         DatasheetFeedItem dsfi = GetTestDatasheetFeedItem(dsfGuid, dsGuid,userGuid);
         await dsfiBkr.Add(dsfi); 
 
-        dsfi = await dsfiBkr.Get(dsGuid, dsfGuid);
+        dsfi = await dsfiBkr.Get(dsfGuid, dsGuid);
         Assert.NotNull(dsfi);
 
         await dsfiBkr.Delete(dsfGuid, dsGuid);
