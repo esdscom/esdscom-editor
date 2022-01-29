@@ -11,8 +11,6 @@ using System.Xml.XPath;
 
 Console.WriteLine("Started");
 
-FixerClass fixerClass = new FixerClass();
-
-fixerClass.StartFix();
+ImportData.Run();
 
 Console.WriteLine("Finished");

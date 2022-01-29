@@ -23,15 +23,19 @@ public class OrganizationBroker : BaseBroker, IOrganizationBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "SELECT * FROM ORGANIZATIONS WHERE ID = @ID";
+            using NpgsqlConnection dbConn = new(ConnectionString);
+            string sql = "SELECT * FROM ORGANIZATIONS WHERE ID = $1 ";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ID"].Value = orgId;
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = orgId }
+                }
+            };           
 
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {
@@ -52,27 +56,33 @@ public class OrganizationBroker : BaseBroker, IOrganizationBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            if (org.Id == default)
+            {
+                org.Id = Guid.NewGuid();
+            }
+
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"INSERT INTO ORGANIZATIONS
-                                (ID, ORGANIZATIONTYPE, NAME, ADDRESS, CREATEDDATE, UPDATEDDATE, INFORMATIONFROMEXPORTINGSYSTEM)
+                                (ID, ORGANIZATIONTYPE, NAME, ADDRESS, INFORMATIONFROMEXPORTINGSYSTEM)
                             VALUES
-                                (@ID, @ORGTYPE, @NAME,@ADDRESS, getdate(), getdate(), @INFO)";
+                                ($1, $2, $3, $4, $5)";
 
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters.Add(new SqlParameter("@ORGTYPE", SqlDbType.NVarChar, 50));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@ADDRESS", SqlDbType.NVarChar, 1000));
-            cmd.Parameters.Add(new SqlParameter("@INFO", SqlDbType.NVarChar,-1));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = org.Id },
+                    new() { Value = org.OrganizationType },
+                    new() { Value = org.Name },
+                    new() { Value = org.Address },
+                    new() { Value = org.InfoExSys },
+                }
+            };
 
-            cmd.Parameters["@ID"].Value = org.Id;
-            cmd.Parameters["@ORGTYPE"].Value = org.OrganizationType;
-            cmd.Parameters["@NAME"].Value = org.Name;
-            cmd.Parameters["@ADDRESS"].Value = org.Address;
-            cmd.Parameters["@INFO"].Value = org.InfoExSys;
 
-           connection.Open();
-           int result = await cmd.ExecuteNonQueryAsync();
+            dbConn.Open();
+            int result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
 
             if (result > 0)
             {
@@ -94,30 +104,29 @@ public class OrganizationBroker : BaseBroker, IOrganizationBroker
     {
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"UPDATE ORGANIZATIONS
-                            SET ORGANIZATIONTYPE = @ORGTYPE,
-                                NAME = @NAME,
-                                ADDRESS = @ADDRESS,
-                                UPDATEDDATE = getdate(),
-                                INFORMATIONFROMEXPORTINGSYSTEM = @INFO
-                            WHERE ID = @ID";
+                            SET ORGANIZATIONTYPE =$1,
+                                NAME = $2,
+                                ADDRESS = $3,                                
+                                INFORMATIONFROMEXPORTINGSYSTEM = $4
+                            WHERE ID = $5";
 
-            using SqlCommand cmd = new(sql, connection);         
-            cmd.Parameters.Add(new SqlParameter("@ORGTYPE", SqlDbType.NVarChar, 50));
-            cmd.Parameters.Add(new SqlParameter("@NAME", SqlDbType.NVarChar, 250));
-            cmd.Parameters.Add(new SqlParameter("@ADDRESS", SqlDbType.NVarChar, 1000));
-            cmd.Parameters.Add(new SqlParameter("@INFO", SqlDbType.NVarChar,-1));
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {                    
+                    new() { Value = org.OrganizationType },
+                    new() { Value = org.Name },
+                    new() { Value = org.Address },
+                    new() { Value = org.InfoExSys },
+                    new() { Value = org.Id }
+                }
+            };
 
-            cmd.Parameters["@ORGTYPE"].Value = org.OrganizationType;
-            cmd.Parameters["@NAME"].Value = org.Name;
-            cmd.Parameters["@ADDRESS"].Value = org.Address;
-            cmd.Parameters["@INFO"].Value = org.InfoExSys;
-            cmd.Parameters["@ID"].Value = org.Id;
-
-            connection.Open();
+            dbConn.Open();
             int result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();  
 
             if (result > 0)
             {
@@ -140,19 +149,25 @@ public class OrganizationBroker : BaseBroker, IOrganizationBroker
         int result = 0;
         try
         {
-            using SqlConnection connection = new(ConnectionString);
-            string sql = "DELETE FROM ORGANIZATIONS WHERE ID = @ID";
-            using SqlCommand cmd = new(sql, connection);
-            cmd.Parameters.Add(new SqlParameter("@ID", SqlDbType.UniqueIdentifier));
-            cmd.Parameters["@ID"].Value = orgId;
+            using NpgsqlConnection dbConn = new(ConnectionString);
+            string sql = "DELETE FROM ORGANIZATIONS WHERE ID = $1 ";
+            using NpgsqlCommand cmd = new(sql, dbConn)
+            {
+                Parameters =
+                {
+                    new() { Value = orgId }
+                }
+            };
 
-            connection.Open();
+            dbConn.Open();
             result = await cmd.ExecuteNonQueryAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
             Log.Error(ex.Message);
         }
+
         return result > 0;
 
     } 

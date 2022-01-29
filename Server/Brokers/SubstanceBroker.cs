@@ -2,7 +2,7 @@
 
 public interface ISubstanceBroker
 {
-    Task<Substance> Get(string ID);
+    Task<Substance> Get(Guid id);
 
     Task<Substance> GetById(string substanceId);
 
@@ -10,7 +10,7 @@ public interface ISubstanceBroker
 
     Task<Substance> GetByCASNumber(string casNumber);
 
-    Task<List<Substance>> GetList(List<string> IDs);
+    Task<List<Substance>> GetList(List<string> substanceIds);
 
     Task<List<Substance>> GetAll();
 }
@@ -31,7 +31,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
     }
 
 
-    public async Task<Substance> Get(string ID)
+    public async Task<Substance> Get(Guid id)
     {
         Substance subs = new();
 
@@ -42,7 +42,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
                 allSubstances = await GetAllSubstances();
             }
 
-            subs = allSubstances.FirstOrDefault(p => p.ID == ID);
+            subs = allSubstances.FirstOrDefault(p => p.Id == id);
         }
         catch (Exception ex)
         {
@@ -119,7 +119,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
         return subs;
     }
 
-    public async Task<List<Substance>> GetList(List<string> IDs)
+    public async Task<List<Substance>> GetList(List<string> substanceIds)
     {
         List<Substance> phraseList = new();
 
@@ -131,7 +131,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
             }
 
             phraseList = (from a in allPhrases
-                         join s in IDs on a.ID equals s
+                         join s in substanceIds on a.SubstanceId equals s
                          select a).ToList();
         }
         catch (Exception ex)
@@ -171,12 +171,12 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
 
         try
         {
-            using SqlConnection connection = new(ConnectionString);
+            using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = $"SELECT * FROM SUBSTANCES";
 
-            using SqlCommand cmd = new(sql, connection);
-            connection.Open();
-            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            using NpgsqlCommand cmd = new(sql, dbConn);
+            dbConn.Open();
+            NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
 
             while (reader.Read())
             {

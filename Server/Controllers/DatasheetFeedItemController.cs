@@ -15,7 +15,7 @@ public class DatasheetFeedItemController : Controller
     [Route("Get")]
     public async Task<ActionResult<DatasheetFeedItem>> Get(Guid datasheetFeedId, Guid datasheetId)
     {
-        return await dBkr.Get(datasheetId, datasheetFeedId);
+        return await dBkr.Get(datasheetFeedId, datasheetId);
     }
 
     [HttpPost]

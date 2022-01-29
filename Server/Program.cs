@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Caching.Memory;
 
 Log.Logger = new LoggerConfiguration()
               .WriteTo.File(@"logs/authortool.log", rollingInterval: RollingInterval.Day)
@@ -44,4 +41,23 @@ app.MapFallbackToFile("index.html");
 
 app.Run();
 
+BaseBroker.ConnectionString = GetConnectionStringFromVault();
+
 Log.Information("Application started");
+
+string GetConnectionStringFromVault()
+{    
+        SecretClientOptions options = new()
+        {
+            Retry =
+                    {
+                        Delay= TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                     }
+        };
+        var client = new SecretClient(new Uri("https://esdscomeditorkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
+        KeyVaultSecret secret = client.GetSecret("ConnectionString");
+        return secret.Value;
+}

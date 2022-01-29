@@ -7,8 +7,8 @@ public class Substance
 {
     public Substance(){ }
 
+    public Guid Id { get; set; }
     public string SubstanceId { get; set; }
-    public string ID { get; set; }  
 
     public string Name { get; set; }
 
@@ -30,8 +30,8 @@ public class Substance
 
     public string LastUpdated { get; set; }
 
-    public string ViewLink { get; set; }
+    public string FactsheetURL { get; set; }
 
-    public string SubstanceInformationLink { get; set; }
+    public string SubstanceInformationPage { get; set; }
 
 }

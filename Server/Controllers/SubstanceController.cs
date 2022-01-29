@@ -13,7 +13,7 @@ public class SubstanceController : Controller
 
     [HttpGet]
     [Route("Get")]
-    public async Task<ActionResult<Substance>> Get(string id)
+    public async Task<ActionResult<Substance>> Get(Guid id)
     {
         Substance subs = await sBkr.Get(id);
         return Ok(subs);

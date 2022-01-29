@@ -2,18 +2,33 @@
 {
     public class BaseBroker
     {
-        public string ConnectionString;
+        public static string ConnectionString;
 
         public BaseBroker()
         {
-            //TODO: get from keyvault
-            ConnectionString = @"Server=localhost;Database=AuthorDB;Trusted_Connection=True";
+            //if (string.IsNullOrEmpty(ConnectionString))
+            //{
+            //    SecretClientOptions options = new()
+            //    {
+            //        Retry =
+            //        {
+            //            Delay= TimeSpan.FromSeconds(2),
+            //            MaxDelay = TimeSpan.FromSeconds(16),
+            //            MaxRetries = 5,
+            //            Mode = RetryMode.Exponential
+            //         }
+            //    };
+            //    var client = new SecretClient(new Uri("https://esdscomeditorkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
+            //    KeyVaultSecret secret = client.GetSecret("ConnectionString");
+            //    ConnectionString = secret.Value;
+            //}
         }
 
-        internal static Substance GetSubstanceFromReader(SqlDataReader reader)
+        internal static Substance GetSubstanceFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
+                Id                          = reader.GetGuid("Id"),
                 SubstanceId                 = reader["SubstanceId"] as string,               
                 Name                        = reader["Name"] as string,  
                 ECNumber                    = reader["ECNumber"] as string,
@@ -25,36 +40,37 @@
                 TonnageBandMin              = reader["TonnageBandMin"] as string,
                 TonnageBandMax              = reader["TonnageBandMax"] as string,
                 LastUpdated                 = reader["LastUpdated"] as string,
-                ViewLink                    = reader["ViewLink"] as string,
-                SubstanceInformationLink    = reader["SubstanceInformationLink"] as string,
+                FactsheetURL                = reader["FactsheetURL"] as string,
+                SubstanceInformationPage    = reader["SubstanceInformationPage"] as string
             };
         }
 
-        internal static Phrase GetPhraseFromReader(SqlDataReader reader)
+        internal static Phrase GetPhraseFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
+                Id          = reader.GetGuid("Id"),
                 StrucCode   = reader["StrucCode"] as string,
                 XPath       = reader["Xpath"] as string,
                 Region      = reader["Region"] as string,
-                English     = reader["English"] as string,
-                German      = reader["German"] as string,
                 OrigCode    = reader["OrigCode"] as string,
-                Origin      = reader["Origin"] as string,
-                Info        = reader["Info"] as string,
+                English     = reader["English"] as string,
+                German      = reader["German"] as string,  
                 RevDate     = reader["RevDate"] as string,
-                Source      = reader["Source"] as string
+                Source      = reader["Source"] as string,
+                Info        = reader["Info"] as string,
+                Origin      = reader["Origin"] as string
             };
         }
 
-        internal static User GetUserFromReader(SqlDataReader reader)
+        internal static User GetUserFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
                 Id              = reader.GetGuid("Id"),
-                Name            = reader["Name"] as string,
                 OrganizationId  = reader.GetGuid("OrganizationId"),
                 Email           = reader["Email"] as string,
+                Name            = reader["Name"] as string,  
                 Role            = reader.GetInt32("Role") ,
                 IsActive        = reader.GetBoolean("IsActive"),
                 CreatedDate     = reader.GetDateTime("CreatedDate"),
@@ -62,7 +78,7 @@
             };
         }
 
-        internal static Organization GetOrgFromReader(SqlDataReader reader)
+        internal static Organization GetOrgFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
@@ -76,7 +92,7 @@
             };
         }
 
-        internal static DatasheetFeed GetDatasheetFeedFromReader(SqlDataReader reader)
+        internal static DatasheetFeed GetDatasheetFeedFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
@@ -93,7 +109,7 @@
             };
         }
 
-        internal static Datasheet GetDatasheetFromReader(SqlDataReader reader)
+        internal static Datasheet GetDatasheetFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
@@ -111,7 +127,7 @@
             };
         }
 
-        internal static DatasheetFeedItem GetDatasheetFeedItemFromReader(SqlDataReader reader)
+        internal static DatasheetFeedItem GetDatasheetFeedItemFromReader(NpgsqlDataReader reader)
         {
             return new()
             {
