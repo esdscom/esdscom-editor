@@ -8,9 +8,13 @@ public interface IDatasheetFeedItemBroker
     Task<bool> Delete(Guid datasheetId, Guid datasheetFeedId);
 }
 
-public class DatasheetFeedItemBroker : BaseBroker, IDatasheetFeedItemBroker
+public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
 {
-    public DatasheetFeedItemBroker() {}
+    private static string ConnectionString;
+    public DatasheetFeedItemBroker() 
+    {
+        ConnectionString = DBUtils.GetConnectionString();    
+    }
 
     public DatasheetFeedItemBroker(string testConnectionString)
     {
@@ -41,7 +45,7 @@ public class DatasheetFeedItemBroker : BaseBroker, IDatasheetFeedItemBroker
 
             while (reader.Read())
             {
-                dsfi = GetDatasheetFeedItemFromReader(reader);
+                dsfi = DBUtils.GetDatasheetFeedItemFromReader(reader);
             }
             await reader.CloseAsync();
         }
@@ -75,7 +79,7 @@ public class DatasheetFeedItemBroker : BaseBroker, IDatasheetFeedItemBroker
 
             while (reader.Read())
             {
-                dsfiList.Add(GetDatasheetFeedItemFromReader(reader));
+                dsfiList.Add(DBUtils.GetDatasheetFeedItemFromReader(reader));
             }
             await reader.CloseAsync();
         }

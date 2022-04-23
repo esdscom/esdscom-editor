@@ -6,13 +6,16 @@ public interface IPhraseBroker
     Task<List<Phrase>> GetListByPrefix(string strucCodePrefix);
 }
 
-public class PhraseBroker : BaseBroker , IPhraseBroker
+public class PhraseBroker : IPhraseBroker
 {
     private readonly IMemoryCache cache;
+
+    private static string ConnectionString;
 
     public PhraseBroker(IMemoryCache _cache)
     {
         cache = _cache;
+        ConnectionString = DBUtils.GetConnectionString();
     }
 
     public PhraseBroker(IMemoryCache _cache, string testConnectionString)
@@ -107,7 +110,7 @@ public class PhraseBroker : BaseBroker , IPhraseBroker
 
             while (reader.Read())
             {
-                phraseList.Add(GetPhraseFromReader(reader));
+                phraseList.Add(DBUtils.GetPhraseFromReader(reader));
             }
             await reader.CloseAsync();
 

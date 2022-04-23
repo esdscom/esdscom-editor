@@ -8,9 +8,14 @@ public interface IOrganizationBroker
     Task<bool> Delete(Guid orgId);
 }
 
-public class OrganizationBroker : BaseBroker, IOrganizationBroker
+public class OrganizationBroker : IOrganizationBroker
 {
-    public OrganizationBroker() {}
+    private readonly string ConnectionString;
+
+    public OrganizationBroker() 
+    {
+        ConnectionString = DBUtils.GetConnectionString();
+    }
 
     public OrganizationBroker(string testConnectionString)
     {
@@ -39,7 +44,7 @@ public class OrganizationBroker : BaseBroker, IOrganizationBroker
 
             while (reader.Read())
             {
-                org = GetOrgFromReader(reader);
+                org = DBUtils.GetOrgFromReader(reader);
             }
             await reader.CloseAsync();
         }

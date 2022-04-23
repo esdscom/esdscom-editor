@@ -9,13 +9,18 @@ public interface IDatasheetBroker
     Task<Datasheet> GetMetadataOnly(Guid dsId);
 }
 
-public class DatasheetBroker : BaseBroker, IDatasheetBroker
+public class DatasheetBroker : IDatasheetBroker
 {
     //  Throughout these Broker classes the Postgres standard positional parameters are used
     //  instead of the more ADO-friendly syntax such as .AddParameter or .AddParameterWithValue
     //  this is to reduce the work NpgSQL has to do around parsing the query commands
-   
-    public DatasheetBroker() { }
+
+    private static string ConnectionString;
+
+    public DatasheetBroker() 
+    {
+        ConnectionString = DBUtils.GetConnectionString();
+    }
 
     public DatasheetBroker(string testConnectionString)
     {
@@ -50,7 +55,7 @@ public class DatasheetBroker : BaseBroker, IDatasheetBroker
 
             while (reader.Read())
             {
-                ds = GetDatasheetFromReader(reader);
+                ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
         }
@@ -92,7 +97,7 @@ public class DatasheetBroker : BaseBroker, IDatasheetBroker
 
             while (reader.Read())
             {
-                ds = GetDatasheetFromReader(reader);
+                ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
         }
@@ -130,7 +135,7 @@ public class DatasheetBroker : BaseBroker, IDatasheetBroker
 
             while (reader.Read())
             {
-                dsList.Add(GetDatasheetFromReader(reader));
+                dsList.Add(DBUtils.GetDatasheetFromReader(reader));
             }
 
             await reader.CloseAsync();

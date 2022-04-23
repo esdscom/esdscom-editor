@@ -1,27 +1,30 @@
 ﻿namespace eSDSCom.Editor.Server.Brokers
 {
-    public class BaseBroker
+    public static class DBUtils
     {
-        public static string ConnectionString;
-
-        public BaseBroker()
+        public static string ConnString;
+       
+        public static string GetConnectionString()
         {
-            //if (string.IsNullOrEmpty(ConnectionString))
-            //{
-            //    SecretClientOptions options = new()
-            //    {
-            //        Retry =
-            //        {
-            //            Delay= TimeSpan.FromSeconds(2),
-            //            MaxDelay = TimeSpan.FromSeconds(16),
-            //            MaxRetries = 5,
-            //            Mode = RetryMode.Exponential
-            //         }
-            //    };
-            //    var client = new SecretClient(new Uri("https://esdscomeditorkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
-            //    KeyVaultSecret secret = client.GetSecret("ConnectionString");
-            //    ConnectionString = secret.Value;
-            //}
+            if (string.IsNullOrEmpty(ConnString))
+            {
+                SecretClientOptions options = new()
+                {
+                    Retry =
+                    {
+                        Delay= TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                     }
+                };
+                var client = new SecretClient(new Uri("https://esdscomeditorkeyvault02.vault.azure.net/"), new DefaultAzureCredential(), options);
+                KeyVaultSecret secret = client.GetSecret("ConnectionString");
+                ConnString = secret.Value;
+            }
+
+
+            return ConnString;
         }
 
         internal static Substance GetSubstanceFromReader(NpgsqlDataReader reader)

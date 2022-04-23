@@ -15,13 +15,16 @@ public interface ISubstanceBroker
     Task<List<Substance>> GetAll();
 }
 
-public class SubstanceBroker : BaseBroker, ISubstanceBroker
+public class SubstanceBroker : ISubstanceBroker
 {
     private readonly IMemoryCache cache;
+    private static string ConnectionString;
+
 
     public SubstanceBroker(IMemoryCache _cache)
     {
         cache = _cache;
+        ConnectionString = DBUtils.GetConnectionString();
     }
 
     public SubstanceBroker(IMemoryCache _cache, string testConnectionString)
@@ -180,7 +183,7 @@ public class SubstanceBroker : BaseBroker, ISubstanceBroker
 
             while (reader.Read())
             {
-                subsList.Add(GetSubstanceFromReader(reader));
+                subsList.Add(DBUtils.GetSubstanceFromReader(reader));
             }
             await reader.CloseAsync();
 

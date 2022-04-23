@@ -9,9 +9,13 @@ public interface IUserBroker
     Task<bool> Delete(Guid id);
 }
 
-public class UserBroker : BaseBroker, IUserBroker
+public class UserBroker : IUserBroker
 {
-    public UserBroker() {}
+    private static string ConnectionString;
+    public UserBroker() 
+    {
+       ConnectionString = DBUtils.GetConnectionString();
+    }
 
     public UserBroker(string testConnectionString)
     {
@@ -40,7 +44,7 @@ public class UserBroker : BaseBroker, IUserBroker
 
             while (reader.Read())
             {
-                user = GetUserFromReader(reader);
+                user = DBUtils.GetUserFromReader(reader);
             }
             await reader.CloseAsync();
         }
@@ -79,7 +83,7 @@ public class UserBroker : BaseBroker, IUserBroker
 
             while (reader.Read())
             {
-                userList.Add(GetUserFromReader(reader));
+                userList.Add(DBUtils.GetUserFromReader(reader));
             }
             await reader.CloseAsync();
         }

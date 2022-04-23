@@ -10,9 +10,14 @@ public interface IDatasheetFeedBroker
     Task<bool> Delete(Guid dsfId);
 }
 
-public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
+public class DatasheetFeedBroker :  IDatasheetFeedBroker
 {
-    public DatasheetFeedBroker() { }
+    private static string ConnectionString;
+
+    public DatasheetFeedBroker() 
+    {
+        ConnectionString = DBUtils.GetConnectionString();
+    }
     public DatasheetFeedBroker(string testConnectionString)
     {
         ConnectionString = testConnectionString;
@@ -45,7 +50,7 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
             while (reader.Read())
             {
-                dsf = GetDatasheetFeedFromReader(reader);
+                dsf = DBUtils.GetDatasheetFeedFromReader(reader);
             }
 
             await reader.CloseAsync();
@@ -85,7 +90,7 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
             while (reader.Read())
             {
-                dsfList.Add(GetDatasheetFeedFromReader(reader));
+                dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
         }
@@ -125,7 +130,7 @@ public class DatasheetFeedBroker : BaseBroker, IDatasheetFeedBroker
 
             while (reader.Read())
             {
-                dsfList.Add(GetDatasheetFeedFromReader(reader));
+                dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
         }
