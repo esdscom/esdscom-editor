@@ -1,7 +1,5 @@
 ﻿@page "/Documents/EditDocument/{IsNew:bool}"
 
-@inject AppData appData
-@inject AppSettings appSettings
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -91,7 +89,7 @@
                 OrganizationId = AppState.User.OrganizationId,
                 UserId = AppState.User.Id,
                 UserName = AppState.User.Name,
-                DatasheetString = appData.StarterDocument.OuterXml,
+                DatasheetString = AppState.StarterDocument.OuterXml,
                 Status = 1,
                 Regions = Utils.GetRegions()
             };

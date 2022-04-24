@@ -1,7 +1,5 @@
 ﻿@page "/Test"
 
-@inject AppData appData
-@inject AppSettings appSettings
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -70,7 +68,7 @@
 
             foreach (XmlNode node in nodes)
             {
-                BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+                BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
 
                 b.OpenElement(10, "div");
                 b.AddContent(20,node.Name);

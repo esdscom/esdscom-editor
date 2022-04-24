@@ -1,9 +1,4 @@
-﻿@inject AppData appData
-@inject AppSettings appSettings
-
-@using Syncfusion.Blazor.Popups
-
-
+﻿@using Syncfusion.Blazor.Popups
 
 <div id="target">
 
@@ -145,11 +140,11 @@
             strPhraseCodeNode = PhraseCodeNode.InnerText;
             strFullTextNode = FullTextNode.InnerText;
             strPhraseIdAttr = PhraseIdAttr.Value;
-            strPhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion; // PhraseCatalogueIdAttr.Value;
+            strPhraseCatalogueIdAttr = AppState.ESDSPhraCVersion; // PhraseCatalogueIdAttr.Value;
 
             strDelimiterNode = DelimiterNode.InnerText;
             strMergePhraseIdAttr = MergePhraseIdAttr.Value;
-            strMergePhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion; // MergePhraseCatalogueIdAttr.Value;
+            strMergePhraseCatalogueIdAttr = AppState.ESDSPhraCVersion; // MergePhraseCatalogueIdAttr.Value;
             strMergePhraseNoAttr = MergePhraseNoAttr.Value;
             strMergeListItemNoAttr = MergeListItemNoAttr.Value;
         }

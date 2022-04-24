@@ -1,6 +1,4 @@
-﻿@inject AppData appData
-
-<div class="row">
+﻿<div class="row">
     <div class="col">        
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
         <br />
@@ -14,6 +12,8 @@
 
 @code 
 {
+    [CascadingParameter] public AppState AppState { get; set; }
+
     [Parameter] public XmlNode Node { get; set; }
 
     [Parameter] public BaseEntity Entity { get; set; }

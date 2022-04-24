@@ -1,7 +1,5 @@
 ﻿@page "/Documents/Sections/SectionMaster/{NodeName}"
 
-@inject AppData appData
-@inject AppSettings appSettings
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -13,7 +11,7 @@
 
         @foreach (XmlNode node in nodes)
         {
-            BaseEntity entity = appData.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+            BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
 
             if (entity is not null)
             {
@@ -88,8 +86,6 @@
         {
             nodes = activeNode.ChildNodes;
         }
-
-       // AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
 
         CurrentEditContext = new EditContext(activeNode);
     }

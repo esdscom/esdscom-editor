@@ -1,9 +1,5 @@
 ﻿@page "/TestPage2"
 
-
-@inject AppData appData
-@inject AppSettings appSettings
-
 @using Syncfusion.Blazor.Popups
 
 <div class="container-fluid">
@@ -120,7 +116,7 @@
         XmlNode Node2 = Node1.SelectSingleNode("TradeProductIdentity");
         Node = Node2.SelectSingleNode("ProductDefinition");
 
-        Entity = appData.SchemaElements.Where(s => s.NodeName == Node.Name).FirstOrDefault();
+        Entity = AppState.SchemaElements.Where(s => s.NodeName == Node.Name).FirstOrDefault();
 
         if (Entity is not null)
         {
@@ -154,12 +150,12 @@
             strPhraseCodeNode = PhraseCodeNode.InnerText;
             strFullTextNode = FullTextNode.InnerText;
             strPhraseIdAttr = PhraseIdAttr.Value;
-            strPhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion;
+            strPhraseCatalogueIdAttr = AppState.ESDSPhraCVersion;
 
             strDelimiterNode = DelimiterNode.InnerText;
 
             strMergePhraseIdAttr = MergePhraseIdAttr.Value is null ? "" : MergePhraseIdAttr.Value;
-            strMergePhraseCatalogueIdAttr = appSettings.ESDSPhraCVersion;
+            strMergePhraseCatalogueIdAttr = AppState.ESDSPhraCVersion;
             strMergePhraseNoAttr = MergePhraseNoAttr.Value;
             strMergeListItemNoAttr = MergeListItemNoAttr.Value;
         }

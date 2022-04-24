@@ -1,6 +1,4 @@
-﻿@inject AppData appData
-      
-<button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+﻿<button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
 <br />
 <InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
 

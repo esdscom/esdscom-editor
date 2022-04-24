@@ -3,7 +3,6 @@
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Grids
 
-@inject AppData appData
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -86,12 +85,12 @@
 
     private async Task SetPhraseList()
     {
-        if (appData.Phrases.Count == 0)
+        if (AppState.Phrases.Count == 0)
         {
-            appData.Phrases = await dMgr.GetAllPhrasesAsync();
+            AppState.Phrases = await dMgr.GetAllPhrasesAsync();
         }
 
-        phraseList = appData.Phrases;
+        phraseList = AppState.Phrases;
     }
 
     private async Task SetPhraseCount(ChangeEventArgs e)

@@ -2,30 +2,29 @@
 
 @using eSDSCom.Editor.Client.Models
 
-@inject AppSettings appSettings
-
 <h5>eSDScom Info</h5>
 
 <table class="table table-bordered table-striped">
 <tr>
     <td>eSDSxml Version</td>
-    <td>@appSettings.ESDSXmlVersion</td>
+    <td>@AppState.ESDSXmlVersion</td>
 </tr>
 <tr>
     <td>eSDSphrac Catalogue Name</td>
-    <td>@appSettings.ESDSphracCatalogueName</td>
+    <td>@AppState.ESDSphracCatalogueName</td>
 </tr>
 <tr>
     <td>eSDSphrac Version</td>
-    <td>@appSettings.ESDSPhraCVersion</td>
+    <td>@AppState.ESDSPhraCVersion</td>
 </tr>
 <tr>
     <td>eSDSphrac Phrase Catalogue Id </td>
-    <td>@appSettings.ESDSphracPhraseCatalogueId</td>
+    <td>@AppState.ESDSphracPhraseCatalogueId</td>
 </tr>
 </table>
 
 
-@code {
-
+@code
+{
+        [CascadingParameter] public AppState AppState { get; set; }
 }

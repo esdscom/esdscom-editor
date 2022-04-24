@@ -1,7 +1,5 @@
 ﻿@page "/Documents/EditDocumentSet/{IsNew:bool}"
 
-@inject AppData appData
-@inject AppSettings appSettings
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -98,7 +96,7 @@
 
     private XmlNode GetDefaultInfoSection()
     {
-        XmlDocument xDoc = appData.StarterDocument;
+        XmlDocument xDoc = AppState.StarterDocument;
 
         XmlNode infoNode = xDoc.DocumentElement.SelectSingleNode("InformationFromExportingSystem");
 
@@ -130,22 +128,6 @@
     private void Info()
     {
         nav.NavigateTo("/Documents/InformationFromExportingSystemPage");
-    }
-
-    //private void AddNewDocument()
-    //{
-    //    nav.NavigateTo("/Documents/EditDocument");
-    //}
-
-    //private void AddExistingDocument()
-    //{
-    //    nav.NavigateTo("/Documents/ListDocuments");
-    //}
-
-    //private void ShowLinkedDocuments()
-    //{
-    //    nav.NavigateTo("/Documents/ListDocumentsInSet");
-    //}
-    
+    }  
 
 }

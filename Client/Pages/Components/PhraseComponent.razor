@@ -1,7 +1,6 @@
 ﻿@using Syncfusion.Blazor
 @using Syncfusion.Blazor.Grids
 
-@inject AppData appData
 @inject NavigationManager nav
 @inject HttpClient api
 
@@ -142,7 +141,7 @@
 
     private void SetPhraseList()
     {
-        phraseList = appData.Phrases;
+        phraseList = AppState.Phrases;
     }
 
     private void SetCore()
