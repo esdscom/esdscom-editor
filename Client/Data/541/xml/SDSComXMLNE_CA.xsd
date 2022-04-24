@@ -37,7 +37,12 @@ In theory, WHMIS is based on GHS revision 5 and then rolled back to be "compatib
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="Whmis2015ClassCategoryEnum">
-        <xs:union memberTypes="eSDScom:Whmis2015ClassCategoryEnumRestr eSDScom:Whmis2015ClassCategoryEnumExt"/>
+		<xs:annotation>
+			<xs:documentation>Modified due to xml parsing error in Visual Studio</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="string">
+			<xs:enumeration value="Placeholder"/>
+		</xs:restriction>
     </xs:simpleType>
     <xs:complexType name="ClassificationCA">
         <xs:sequence>
