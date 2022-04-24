@@ -107,7 +107,7 @@
         }
     }
 
-     //--------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
 
     private List<Substance> _subsList = new();
     public List<Substance> SubstanceList
@@ -123,7 +123,7 @@
         }
     }
 
-   //--------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
 
     private Substance _subs;
     public Substance ActiveSubstance
@@ -171,7 +171,7 @@
         }
     }
 
-     //--------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------
 
     private string _backToUrlText = string.Empty;
     public string BackToURLText
@@ -203,6 +203,138 @@
         }
     }
 
-   
+    //--------------------------------------------------------------------------------------
 
+    private List<BaseEntity> _schemaElements;
+    public List<BaseEntity> SchemaElements
+    {
+        get
+        {
+            return _schemaElements;
+        }
+        set
+        {
+            _schemaElements = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private List<ElementEnum> _enumItems;
+    public List<ElementEnum> EnumItems
+    {
+        get
+        {
+            return _enumItems;
+        }
+        set
+        {
+            _enumItems = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private XmlDocument _starterDocument;
+    public XmlDocument StarterDocument
+    {
+        get
+        {
+            return _starterDocument;
+        }
+        set
+        {
+            _starterDocument = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private List<Phrase> _phrases;
+    public List<Phrase> Phrases
+    {
+        get
+        {
+            return _phrases;
+        }
+        set
+        {
+            _phrases = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private List<Region> _regions;
+    public List<Region> Regions
+    {
+        get
+        {
+            return _regions;
+        }
+        set
+        {
+            _regions = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _eSDSphracCatalogueName;
+    public string ESDSphracCatalogueName
+    {
+        get
+        {
+            return _eSDSphracCatalogueName;
+        }
+        set
+        {
+            _eSDSphracCatalogueName = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _eSDSPhraCVersion;
+    public string ESDSPhraCVersion
+    {
+        get
+        {
+            return _eSDSPhraCVersion;
+        }
+        set
+        {
+            _eSDSPhraCVersion = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _eSDSphracPhraseCatalogueId;
+    public string ESDSphracPhraseCatalogueId
+    {
+        get
+        {
+            return _eSDSphracPhraseCatalogueId;
+        }
+        set
+        {
+            _eSDSphracPhraseCatalogueId = value;
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
+
+    private string _eSDSXmlVersion;
+    public string ESDSXmlVersion
+    {
+        get
+        {
+            return _eSDSXmlVersion;
+        }
+        set
+        {
+            _eSDSXmlVersion = value;
+        }
+    }
 }

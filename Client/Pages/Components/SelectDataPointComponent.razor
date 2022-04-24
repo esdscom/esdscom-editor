@@ -1,22 +1,22 @@
-﻿@inject AppData appData
-
-    <div class="form-group">        
-        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
-        <br />
-        <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname" style="width:25%" >
-            @foreach (var value in enumValueArray)
-            {               
-                <option value="@value">@value</option>
-            }
-        </InputSelect>
-    </div>
-
-<div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+﻿<div class="form-group">
+    <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+    <br />
+    <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname" style="width:25%">
+        @foreach (var value in enumValueArray)
+        {
+            <option value="@value">@value</option>
+        }
+    </InputSelect>
 </div>
 
-@code 
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+</div>
+
+@code
 {
+    [CascadingParameter] public AppState AppState { get; set; }
+
     [Parameter] public XmlNode Node { get; set; }
     [Parameter] public BaseEntity Entity { get; set; }
 
@@ -35,9 +35,9 @@
 
         string noOptions = "No options available";
 
-        bHideHelp = true;        
+        bHideHelp = true;
 
-        elementEnum = appData.EnumItems.Where(e => e.Name == Entity.Type).FirstOrDefault();
+        elementEnum = AppState.EnumItems.Where(e => e.Name == Entity.Type).FirstOrDefault();
 
         if (elementEnum is not null)
         {
@@ -51,7 +51,7 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments =  $"{Entity.Comments} {Entity.TypeComments} Possible Values: {(elementEnum == null ?  noOptions :  elementEnum.Values)}";
+            comments = $"{Entity.Comments} {Entity.TypeComments} Possible Values: {(elementEnum == null ? noOptions : elementEnum.Values)}";
             occurs = Utils.GetOccursText(Entity.Occurs);
         }
         else

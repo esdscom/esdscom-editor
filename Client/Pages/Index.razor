@@ -4,7 +4,6 @@
 
 @inject HttpClient api
 @inject NavigationManager nav
-@inject AppData appData
 
 @if (IsLoading)
 {
@@ -34,27 +33,25 @@ else
 
         dMgr = new(api);
 
-        if (appData.StarterDocument is null)
+        if (AppState.StarterDocument is null)
         {
-            appData.StarterDocument = Utils.ReadXMLStarterResource();
+            AppState.StarterDocument = Utils.ReadXMLStarterResource();
         }
 
         Guid userGuid = Guid.Parse("35984ABA-E95C-4591-82FF-0E38A2D1FECD");
         Guid orgGuid = Guid.Parse("60D03E92-ED1E-47A6-83BF-8D56ED3561AF");
 
-        // HttpResponseMessage response;
+        //var newUser = new User()
+        //    {
+        //        Id = userGuid,
+        //        Email = "tester@test.com",
+        //        Name = "a test user",
+        //        Role = 1,
+        //        OrganizationId = orgGuid,
+        //        IsActive = true
+        //    };
 
-        @* var newUser = new User()
-            {
-            Id =  userGuid,
-            Email = "tester@test.com",
-            Name = "a test user",
-            Role = 1,
-            OrganizationId = orgGuid,
-            IsActive = true
-            };
-
-            await dMgr.AddUserAsync(newUser);*@
+        //await dMgr.AddUserAsync(newUser);
 
         try
         {
@@ -65,31 +62,36 @@ else
             Console.Write(ex.Message);
         }
 
-            //-------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------
         // create a new organization
 
-@*        XmlDocument xDocIES = Utils.ReadInfoExpSysResource();
+        //XmlDocument xDocIES = Utils.ReadInfoExpSysResource();
 
-        AppState.Organization = new()
-            {
-                Id = orgGuid,
-                Name = "Test Organization",
-                Address = "123 Smith Street, Omaha, Ne. 22222",
-                OrganizationType = "Commercial",
-                InfoExSys = xDocIES.OuterXml
-            };        
+        //AppState.Organization = new()
+        //    {
+        //        Id = orgGuid,
+        //        Name = "Test Organization",
+        //        Address = "123 Smith Street, Omaha, Ne. 22222",
+        //        OrganizationType = "Commercial",
+        //        InfoExSys = xDocIES.OuterXml
+        //    };
 
-            AppState.Organization = await dMgr.AddOrganizationAsync(AppState.Organization);*@
+        //AppState.Organization = await dMgr.AddOrganizationAsync(AppState.Organization);
 
         //-----------------------------------------------------------------------------------------------
 
-        AppState.Organization = await dMgr.GetOrganizationAsync(orgGuid);
+        if (AppState.Organization is null)
+        {
+            AppState.Organization = await dMgr.GetOrganizationAsync(orgGuid);
+            AppState.Organization.InfoExSysXDoc = new();
+            AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
+        }
 
-        AppState.Organization.InfoExSysXDoc = new();
-        AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
-
-        Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
-        AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
+        if (AppState.ActiveDatasheet is null)
+        {
+            Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
+            AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
+        }
 
         //AppState.Organization = await api.GetFromJsonAsync<Organization>($"organization/get?id={"60D03E92-ED1E-47A6-83BF-8D56ED3561AF".ToLower()}");
         //XmlDocument xDoc = new();
@@ -98,29 +100,29 @@ else
 
         BuildCardItems();
 
-        if (appData.SchemaElements is null)
+        if (AppState.SchemaElements is null)
         {
-            appData.SchemaElements = Utils.GetSchemaElements();
+            AppState.SchemaElements = Utils.GetSchemaElements();
         }
 
-        if (appData.EnumItems is null)
+        if (AppState.EnumItems is null)
         {
-            appData.EnumItems = Utils.GetSchemaEnums();
+            AppState.EnumItems = Utils.GetSchemaEnums();
         }
 
-        if (appData.Regions is null)
+        if (AppState.Regions is null)
         {
-            appData.Regions = Utils.GetRegions();
+            AppState.Regions = Utils.GetRegions();
         }
 
         IsLoading = false;
 
-        AppState.StatusBarMessage = "Authoring tool is ready for use.";
+        AppState.StatusBarMessage = "editing tool is ready for use.";
     }
 
     private List<CardItem> BuildCardItems()
     {
-        
+
         CardItem docSets = new()
             {
                 Title = "Document Set List",
@@ -130,8 +132,8 @@ else
             };
         itemList.Add(docSets);
 
-         //this should always be done in the context of one or more docusment sets
-@*        CardItem docAdd = new()
+        //this should always be done in the context of one or more docusment sets
+        @*        CardItem docAdd = new()
             {
                 Title = "Create a new Datasheet",
                 Comment = "Create a new Datasheet for authoring",
@@ -140,8 +142,8 @@ else
             };
         itemList.Add(docAdd!);*@
 
-       
-         CardItem docSetAdd = new()
+
+        CardItem docSetAdd = new()
             {
                 Title = "Create a new Document Set",
                 Comment = "Create a new Document set for authoring",
@@ -162,7 +164,7 @@ else
         itemList.Add(docList);
 
 
-     
+
 
         CardItem substances = new()
             {
@@ -182,10 +184,10 @@ else
             };
         itemList.Add(phrasebrowser);
 
-      
+
 
         // column 3
-        
+
         CardItem orginfo = new()
             {
                 Title = "My Organization",
@@ -213,7 +215,7 @@ else
             };
         itemList.Add(export);
 
-       
+
 
         return itemList;
     }

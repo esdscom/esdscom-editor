@@ -157,7 +157,7 @@ public static class Utils
         try
         {
             var myAssembly = Assembly.GetExecutingAssembly();
-            string name = $"eSDSCom.Editor.Client.Data.5.0.0-starter.xml";
+            string name = $"eSDSCom.Editor.Client.Data.5.4.1-starter.xml";
             using Stream stream = myAssembly.GetManifestResourceStream(name);
             xDoc.Load(stream);
         }

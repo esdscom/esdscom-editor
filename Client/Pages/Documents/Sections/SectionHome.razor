@@ -1,8 +1,6 @@
 ﻿@page "/Documents/Sections/SectionHome"
 
-
 @inject NavigationManager nav
-@inject AppData appData
 
 
 @if (IsLoading)
@@ -35,7 +33,7 @@ else
 
         try
         {
-            XmlDocument xDoc = appData.StarterDocument;
+            XmlDocument xDoc = AppState.StarterDocument;
             datasheetNodes = xDoc.DocumentElement.SelectSingleNode("Datasheet");
 
             //should never be here without these attributes being complete and current
@@ -48,7 +46,5 @@ else
         {
             Console.Write(ex.StackTrace);
         }
-
     }
-
 }

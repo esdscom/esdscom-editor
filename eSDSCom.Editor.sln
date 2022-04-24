@@ -16,10 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		To Do.txt = To Do.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xsdNavigator", "xsdNavigator\xsdNavigator.csproj", "{6F5D353C-3A65-40BA-AFD8-B86FEB4D47B7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixXml", "FixXml\FixXml.csproj", "{69F8AC86-91D8-49D7-B4DF-0AB4F34D19F5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,14 +38,6 @@ Global
 		{E3FD5CB0-6093-4DE9-AC8B-59FA10251859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3FD5CB0-6093-4DE9-AC8B-59FA10251859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3FD5CB0-6093-4DE9-AC8B-59FA10251859}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F5D353C-3A65-40BA-AFD8-B86FEB4D47B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F5D353C-3A65-40BA-AFD8-B86FEB4D47B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F5D353C-3A65-40BA-AFD8-B86FEB4D47B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F5D353C-3A65-40BA-AFD8-B86FEB4D47B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69F8AC86-91D8-49D7-B4DF-0AB4F34D19F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69F8AC86-91D8-49D7-B4DF-0AB4F34D19F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69F8AC86-91D8-49D7-B4DF-0AB4F34D19F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69F8AC86-91D8-49D7-B4DF-0AB4F34D19F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
