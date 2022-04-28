@@ -57,7 +57,7 @@
     [CascadingParameter] public AppState AppState { get; set; }
 
     private List<DatasheetFeed> docSetList = new();
-    private DataManager dMgr;
+    private AppDataService dMgr;
 
     protected override async Task OnInitializedAsync()
     {

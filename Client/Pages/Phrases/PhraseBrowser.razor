@@ -6,11 +6,11 @@
 @inject NavigationManager nav
 @inject HttpClient api
 
-<PageHeader Title="List of Phrases" />
+<PageHeader Title="Phrase  List" />
 
 <SfDialog Target="#target" Width="700px" ShowCloseIcon="true" @bind-Visible="Visibility">
     <DialogTemplates>
-        <Header> Substance Details </Header>
+        <Header> Phrase Details </Header>
         <Content>
             <PhraseDetail SelectedPhrase="@selectedPhrase" />
         </Content>
@@ -63,13 +63,13 @@
 
     int phraseCount { get; set; } = 10;
     string selected { get; set; }
-    DataManager dMgr;
+    AppDataService dMgr;
     bool Visibility { get; set; } = false;
     Phrase selectedPhrase = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await base.OnInitializedAsync();
+        base.OnInitialized();
 
         dMgr = new(api);
 
@@ -78,25 +78,25 @@
 
         AppState.StatusBarMessage = $"Fetching phrases ...";
 
-        await SetPhraseList();
+        SetPhraseList();
 
         AppState.StatusBarMessage = $"Total phrases available: {phraseList.Count}";
     }
 
-    private async Task SetPhraseList()
+    private void SetPhraseList()
     {
-        if (AppState.Phrases.Count == 0)
+        if (AppState.Phrases is null)
         {
-            AppState.Phrases = await dMgr.GetAllPhrasesAsync();
+            AppState.Phrases = Utils.GetPhrases();
         }
 
         phraseList = AppState.Phrases;
     }
 
-    private async Task SetPhraseCount(ChangeEventArgs e)
+    private void SetPhraseCount(ChangeEventArgs e)
     {
         phraseCount = int.Parse(e.Value.ToString());
-        await SetPhraseList();
+        SetPhraseList();
     }
 
     public void RowSelectHandler(RowSelectEventArgs<Phrase> args)

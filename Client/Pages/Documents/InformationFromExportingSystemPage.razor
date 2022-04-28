@@ -44,7 +44,7 @@
 
         if (orgInfoExpSys is null)
         {
-            orgInfoExpSys = Utils.ReadInfoExpSysResource();
+            orgInfoExpSys = Utils.GetInfoExpSysXml();
         }       
 
         if (orgInfoExpSys.HasChildNodes)
@@ -57,7 +57,7 @@
 
     private async Task SaveAsync()
     {
-        DataManager dMgr = new(api);
+        AppDataService dMgr = new(api);
         AppState.Organization = await dMgr.UpdateOrganizationAsync(org);
         nav.NavigateTo("/");
     }

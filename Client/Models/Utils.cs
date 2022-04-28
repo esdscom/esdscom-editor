@@ -2,7 +2,6 @@
 
 public static class Utils
 {
-
     #region base entities operations
 
     /// <summary>
@@ -25,7 +24,7 @@ public static class Utils
                 Comments = s.Doc,
                 Type = string.IsNullOrEmpty(s.Type) ? s.Type : s.Type.Replace("eSDScom:", string.Empty)
             }
-        ); ;
+        ); 
         });
 
         return returnList;
@@ -78,10 +77,27 @@ public static class Utils
         return regionList;
     }
 
+
+    public static List<Region> GetRegionsFromString(string selectedRegions)
+    {
+        List<Region> retRegions = new();
+
+        List<Region> regions = GetRegions();
+
+        var regionArray = selectedRegions.Split(",");
+
+        foreach (var region in regionArray)
+        {
+            var reg = regions.First(r => r.Suffix == region);
+            retRegions.Add(reg);
+        }
+        return retRegions;
+    }
+
     public static List<Phrase> GetPhrases()
-    {        
+    {
         var phraseList = ReadPhraseResource();
-       
+
         return phraseList;
     }
 
@@ -150,7 +166,7 @@ public static class Utils
         return list;
     }
 
-    public static XmlDocument ReadXMLStarterResource()
+    public static XmlDocument GetDocumentSetXml()
     {
         XmlDocument xDoc = new();
 
@@ -170,7 +186,29 @@ public static class Utils
         return xDoc;
     }
 
-    public static XmlDocument ReadInfoExpSysResource()
+    public static XmlDocument GetDatasheetXml()
+    {
+        XmlDocument xDoc = new();
+
+        try
+        {
+            var myAssembly = Assembly.GetExecutingAssembly();
+            string name = $"eSDSCom.Editor.Client.Data.5.4.1-starter.xml";
+            using Stream stream = myAssembly.GetManifestResourceStream(name);
+            xDoc.Load(stream);
+            string dataSheetXML = xDoc.DocumentElement.SelectSingleNode("Datasheet").OuterXml;
+            xDoc.LoadXml(dataSheetXML);
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.StackTrace);
+            throw;
+        }
+
+        return xDoc;
+    }
+
+    public static XmlDocument GetInfoExpSysXml()
     {
         XmlDocument xDoc = new();
 

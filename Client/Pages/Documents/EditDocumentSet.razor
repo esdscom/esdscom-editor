@@ -51,7 +51,7 @@
 
     User appUser;
     DatasheetFeed datasheetFeed = new();
-    DataManager dMgr;
+    AppDataService dMgr;
     EditContext editContext;
     string title;
 
@@ -96,7 +96,7 @@
 
     private XmlNode GetDefaultInfoSection()
     {
-        XmlDocument xDoc = AppState.StarterDocument;
+        XmlDocument xDoc = AppState.DocumentSetXml;
 
         XmlNode infoNode = xDoc.DocumentElement.SelectSingleNode("InformationFromExportingSystem");
 

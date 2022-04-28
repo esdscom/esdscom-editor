@@ -36,7 +36,36 @@
             </InputSelect>
         </div>
 
-        @*<RegionCheckboxGroup DatasheetRegions="@datasheet.Regions" OnRegionsSelected="RegionSelectionHandler"/>*@
+          <div class="row pb-3">
+            <div class="col">
+                <span>Region(s) included:</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9">
+                <div class="form-group">
+                    <ul>
+                        @foreach (Region item in allRegions)
+                        {
+                            if (item.IsSelected)
+                            {
+                                <li>
+                                    <input type="checkbox" id="@item.Suffix" checked @onchange="eventArgs => { CheckboxClicked(item.Suffix, eventArgs.Value); }" />
+                                    <label for="@item.Suffix">@item.Name</label>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <input type="checkbox" id="@item.Suffix" @onchange="eventArgs => { CheckboxClicked(item.Suffix, eventArgs.Value); }" />
+                                    <label for="@item.Suffix">@item.Name</label>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
 
          <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler"/>
 
@@ -57,6 +86,16 @@
     </div>
 </EditForm>
 
+<style>
+
+    ul {
+        column-count: 3;
+        column-gap: 2rem;
+        list-style: none;
+    }
+
+</style>
+
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
@@ -64,10 +103,12 @@
     [Parameter] public bool IsNew { get; set; }
 
     Datasheet datasheet;
-    DataManager dMgr;
+    AppDataService dMgr;
 
     string title;
     string materialType = "Mixture";
+    List<Region> allRegions = new();
+    List<string> selectedRegions = new();
 
     List<string> materialTypeList = new()
         {
@@ -79,20 +120,22 @@
     {
         base.OnInitialized();
 
+        allRegions = Utils.GetRegions();       
+
         dMgr = new(api);
 
         if (IsNew)
         {
             datasheet = new()
-            {
-                Id = Guid.NewGuid(),
-                OrganizationId = AppState.User.OrganizationId,
-                UserId = AppState.User.Id,
-                UserName = AppState.User.Name,
-                DatasheetString = AppState.StarterDocument.OuterXml,
-                Status = 1,
-                Regions = Utils.GetRegions()
-            };
+                {
+                    Id = Guid.NewGuid(),
+                    OrganizationId = AppState.User.OrganizationId,
+                    UserId = AppState.User.Id,
+                    UserName = AppState.User.Name,
+                    DatasheetString = Utils.GetDatasheetXml().OuterXml,
+                    Status = 1,
+                    Regions = new()
+                };
 
             title = "Add a new Datasheet";
             AppState.StatusBarMessage = "Adding a new Datasheet";
@@ -101,14 +144,17 @@
         {
             datasheet = AppState.ActiveDatasheet;
 
-            if (!string.IsNullOrEmpty(datasheet.RegionsString))
+            foreach (var item in allRegions)
             {
-                List<string> selectedRegions = datasheet.RegionsString.Split(",").ToList();
-                foreach (Region region in datasheet.Regions)
+                if (datasheet.RegionsString.Contains(item.Suffix))
                 {
-                    region.IsSelected = selectedRegions.Any(r => r == region.Suffix);                    
+                    selectedRegions.Add(item.Suffix);
+                    item.IsSelected = true;
                 }
             }
+
+            datasheet.DatasheetXDoc = new();
+            datasheet.DatasheetXDoc.LoadXml(datasheet.DatasheetString);
 
             title = $"Editing Datasheet {datasheet.Name}";
             AppState.StatusBarMessage = $"Editing the Datasheet {datasheet.Name}";
@@ -120,14 +166,16 @@
     {
         if (IsNew)
         {
+            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
+
             AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(datasheet);
 
             DatasheetFeedItem dsfi = new()
-            { 
-                DatasheetId = AppState.ActiveDatasheet.Id,
-                DatasheetFeedId = AppState.ActiveDatasheetFeed.Id,
-                UserId = AppState.User.Id
-            };
+                {
+                    DatasheetId = AppState.ActiveDatasheet.Id,
+                    DatasheetFeedId = AppState.ActiveDatasheetFeed.Id,
+                    UserId = AppState.User.Id
+                };
             await dMgr.AddDatasheetFeedItemAsync(dsfi);
 
             //refresh the collection
@@ -138,24 +186,38 @@
         }
         else
         {
+            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
             AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
             AppState.StatusBarMessage = "Updated Datasheet";
             nav.NavigateTo("/Documents/ListDocuments");
         }
     }
 
-    private void GoToSections()
+    void GoToSections()
     {
         nav.NavigateTo("/Documents/Sections/SectionHome");
-    }   
-
-    private void StatusSelectionHandler(int status)
-    {
-        datasheet.Status = status;   
     }
 
-    private void RegionSelectionHandler(List<Region> regions)
+    void StatusSelectionHandler(int status)
     {
-        datasheet.Regions = regions;   
+        datasheet.Status = status;
+    }
+
+    void CheckboxClicked(string regionSuffix, object checkedValue)
+    {
+        if ((bool)checkedValue)
+        {
+            if (!selectedRegions.Contains(regionSuffix))
+            {
+                selectedRegions.Add(regionSuffix);
+            }
+        }
+        else
+        {
+            if (selectedRegions.Contains(regionSuffix))
+            {
+                selectedRegions.Remove(regionSuffix);
+            }
+        }
     }
 }

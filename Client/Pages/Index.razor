@@ -20,7 +20,7 @@ else
 
     private bool IsLoading = true;
     private List<CardItem> itemList = new();
-    private DataManager dMgr;
+    private AppDataService dMgr;
 
 
     protected override async Task OnInitializedAsync()
@@ -33,9 +33,10 @@ else
 
         dMgr = new(api);
 
-        if (AppState.StarterDocument is null)
+        //this includes the XML for the datasheetFeed, Info Exp sys and a list of datasheet
+        if (AppState.DocumentSetXml is null)
         {
-            AppState.StarterDocument = Utils.ReadXMLStarterResource();
+            AppState.DocumentSetXml = Utils.GetDocumentSetXml();
         }
 
         Guid userGuid = Guid.Parse("35984ABA-E95C-4591-82FF-0E38A2D1FECD");
@@ -178,7 +179,7 @@ else
         CardItem phrasebrowser = new()
             {
                 Title = "Phrase Browser",
-                Comment = "Search the list of EUPHRAC phrases",
+                Comment = "Search the list of eSDSphrac phrases",
                 ActionLink = "/Phrases/PhraseBrowser",
                 ImageURL = "images/phrase.jpg"
             };

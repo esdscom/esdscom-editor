@@ -33,11 +33,8 @@ else
 
         try
         {
-            XmlDocument xDoc = AppState.StarterDocument;
+            XmlDocument xDoc = AppState.DocumentSetXml;
             datasheetNodes = xDoc.DocumentElement.SelectSingleNode("Datasheet");
-
-            //should never be here without these attributes being complete and current
-            //AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
 
             IsLoading = false;
 

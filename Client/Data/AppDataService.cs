@@ -1,6 +1,6 @@
 ﻿namespace eSDSCom.Editor.Client.Data;
 
-public class DataManager
+public class AppDataService
 {
     //  this class interacts with the api (in the server projecT)  for the entire application.
     //  sending an item to the db with a complex item in it, so those complex items - XML elements - 
@@ -8,7 +8,7 @@ public class DataManager
 
 
     private HttpClient api;
-    public DataManager(HttpClient _api)
+    public AppDataService(HttpClient _api)
     {
         api = _api;
     }
@@ -197,15 +197,6 @@ public class DataManager
     public async Task<Substance> GetSubstanceAsync(Guid substanceId)
     {
         return await api.GetFromJsonAsync<Substance>($"substance/getbyguid?substanceId={substanceId}");
-    }
-
-    #endregion
-
-    #region Phrases
-
-    public async Task<List<Phrase>> GetAllPhrasesAsync()
-    {
-        return await api.GetFromJsonAsync<List<Phrase>>($"phrase/getall");
     }
 
     #endregion
