@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-secondary">Save</button>
             <button id="btnInfo" type="button" class="btn btn-info" @onclick="GoToInfo">Information from Exporting System</button>                      
         </div>
 
@@ -51,7 +51,7 @@
     </div>
      <div class="row">
         <div class="col-12">
-            <button type="button" @onclick="AddUser">Add User</button>
+            <button type="button" class="btn btn-secondary" @onclick="AddUser">Add User</button>
         </div>
     </div>
     <div class="row">
@@ -67,7 +67,7 @@
                     <Template Context="userContext">
                         @{
                             User user = (userContext as User);
-                            <SfButton CssClass="e-link" OnClick="@(() => EditUser(user.Id))">View/Edit</SfButton>
+                            <SfButton CssClass="e-link text-white" OnClick="@(() => EditUser(user.Id))">View/Edit</SfButton>
                         }
                     </Template>
                 </GridColumn>

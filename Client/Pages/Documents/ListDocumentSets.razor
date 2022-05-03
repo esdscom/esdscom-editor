@@ -16,7 +16,7 @@
             
              <div class="row">
                  <div class="col">
-                     <SfButton CssClass="btn btn-primary" OnClick="@AddDocSet">Add new Document set</SfButton>
+                     <SfButton CssClass="btn btn-secondary" OnClick="@AddDocSet">Add new Document set</SfButton>
                  </div>
              </div>
 
@@ -42,8 +42,8 @@
 							<Template Context="docSetContext">
 								@{
                                     DatasheetFeed docSet = (docSetContext as DatasheetFeed);
-									<SfButton CssClass="e-link" OnClick="@(async () => await ViewDocSet(docSet.Id))">Edit</SfButton>
-                                    <SfButton CssClass="e-link" OnClick="@(async () => await ViewLinks(docSet.Id))">Linked Datasheets</SfButton>
+									<SfButton CssClass="e-link text-white" OnClick="@(async () => await ViewDocSet(docSet.Id))">Edit</SfButton>
+                                    <SfButton CssClass="e-link text-white" OnClick="@(async () => await ViewLinks(docSet.Id))">Linked Datasheets</SfButton>
 								}											
 							</Template>
 						</GridColumn>

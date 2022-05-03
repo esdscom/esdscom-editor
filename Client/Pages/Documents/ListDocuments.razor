@@ -6,18 +6,18 @@
 
 @inject NavigationManager nav
 @inject HttpClient api
-@*
-    TODO: add filter for this user only*@
 
-<PageHeader Title="@pageTitle"/>
+@* TODO: add filter for this user only*@
 
-<div class="content-wrapper">
+<div class="container-fluid">
+
+    <PageHeader Title="@pageTitle"/>
 
     @if (ShowAdd)
     {
         <div class="row">
             <div class="col">
-                <SfButton CssClass="btn btn-primary" OnClick="@AddDatasheetToSet">Add new Datasheet</SfButton>
+                <SfButton CssClass="btn btn-secondary" OnClick="@AddDatasheetToSet">Add new Datasheet</SfButton>
             </div>
         </div>
     }
@@ -44,10 +44,10 @@
                             Datasheet doc = (docContext as Datasheet);
                             <div class="row">
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Edit</SfButton>
+                                    <SfButton CssClass="e-link text-white" OnClick="@(() => EditDoc(doc.Id))">Edit</SfButton>
                                 </div>
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => CopyDoc(doc.Id))">Copy</SfButton>
+                                    <SfButton CssClass="e-link text-white" OnClick="@(() => CopyDoc(doc.Id))">Copy</SfButton>
                                 </div>
                             </div>
                         }

@@ -1,35 +1,39 @@
 ﻿@page "/"
 
-@using Syncfusion.Blazor.Spinner
-
 @inject HttpClient api
 @inject NavigationManager nav
 
-@if (IsLoading)
-{
-    <SfSpinner @bind-Visible="IsLoading" Label="Please wait while your data is set up...."></SfSpinner>
-}
-else
-{
-    <CardSet CardItemList="itemList" />
+<div class="container-fluid">
 
-    <button type="button" class="btn btn-link" @onclick="GoAbout">About</button>
-}
+    @if (IsLoading)
+    {
+        <Spinner/>
+    }
+    else
+    {
+        <CardSet CardItemList="itemList" />
+
+        <button type="button" class="btn btn-secondary" @onclick="GoAbout">About</button>
+    }
+
+</div>
 
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private bool IsLoading = true;
-    private List<CardItem> itemList = new();
-    private AppDataService dMgr;
-
+    bool IsLoading = true;
+    List<CardItem> itemList = new();
+    AppDataService dMgr;
 
     protected override async Task OnInitializedAsync()
     {
         @*        #if DEBUG
-            Thread.Sleep(10000);
-            #endif*@
+        Thread.Sleep(10000);
+
+         vh-100 vw-100
+
+        #endif*@
 
         await base.OnInitializedAsync();
 
@@ -129,18 +133,18 @@ else
                 Title = "Document Set List",
                 Comment = "List of Document sets managed by my organization",
                 ActionLink = "/Documents/ListDocumentSets",
-                ImageURL = "images/documentset.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(docSets);
 
         //this should always be done in the context of one or more docusment sets
         @*        CardItem docAdd = new()
-            {
-                Title = "Create a new Datasheet",
-                Comment = "Create a new Datasheet for authoring",
-                ActionLink = "/Documents/EditDocument/true",
-                ImageURL = "images/document.jpg"
-            };
+        {
+        Title = "Create a new Datasheet",
+        Comment = "Create a new Datasheet for authoring",
+        ActionLink = "/Documents/EditDocument/true",
+        ImageURL = "images/document.jpg"
+        };
         itemList.Add(docAdd!);*@
 
 
@@ -149,7 +153,7 @@ else
                 Title = "Create a new Document Set",
                 Comment = "Create a new Document set for authoring",
                 ActionLink = "/Documents/EditDocumentSet/true",
-                ImageURL = "images/documentset.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(docSetAdd!);
 
@@ -160,7 +164,7 @@ else
                 Title = "Datasheet List",
                 Comment = "List of Datasheets managed by my organization",
                 ActionLink = "/Documents/ListDocuments",
-                ImageURL = "images/document.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(docList);
 
@@ -181,7 +185,7 @@ else
                 Title = "Phrase Browser",
                 Comment = "Search the list of eSDSphrac phrases",
                 ActionLink = "/Phrases/PhraseBrowser",
-                ImageURL = "images/phrase.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(phrasebrowser);
 
@@ -231,9 +235,9 @@ else
         nav.NavigateTo("/TestPage2");
     }
 
-     private void GoAbout()
+    private void GoAbout()
     {
         nav.NavigateTo("/AppInfo");
     }
 
-}
+        }

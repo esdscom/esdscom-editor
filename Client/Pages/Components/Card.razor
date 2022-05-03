@@ -1,10 +1,9 @@
-﻿
-@inject NavigationManager nav
+﻿@inject NavigationManager nav
 
-<div class="card border-dark mb-3">
-	<div class="card-header">
+<div class="card border-white mb-3 bg-dark text-white">
+	<div class="card-header lightbackground">
 		<div class="float-right">
-			<p>@CardItem!.Title </p>
+			<span>@CardItem!.Title </span>
 		</div>
 		@if (hasImage)
 		{
@@ -15,9 +14,9 @@
 	</div>
 	
 	<div class="card-body">
-		<p class="card-text"> @CardItem!.Comment</p>
+		<span class="card-text"> @CardItem!.Comment</span>
 		<hr />
-		<button type="button" class="btn btn-primary" @onclick="@FollowActionLink">Go</button>
+		<button type="button" class="btn btn-secondary" @onclick="@FollowActionLink">Go</button>
 	</div>
 	
 </div>

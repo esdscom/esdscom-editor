@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div class="col">        
-        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <button type="button" class="btn btn-link text-white" @onclick="ToggleHelp">@displayname</button>
         <br />
         <InputDate class="form-control" @bind-Value="selectedDate" @oninput="@((e) => DateTimeChanged(e))" DisplayName="@displayname" style="width:25%" />
     </div>
