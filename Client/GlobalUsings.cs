@@ -14,5 +14,5 @@ global using System.Xml.Serialization;
 global using eSDSCom.Editor.Client.Models;
 global using eSDSCom.Editor.Shared.DocumentElements;
 global using eSDSCom.Editor.Shared.Models;
-global using eSDSCom.Editor.Client.Data;
+global using eSDSCom.Editor.Client.Services;
 

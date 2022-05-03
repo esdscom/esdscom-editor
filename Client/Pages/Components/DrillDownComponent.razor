@@ -1,0 +1,61 @@
+﻿@inject NavigationManager nav
+
+<div class="row p-3">
+    <div class="col">
+        <button type="button" class="btn btn-link m-2" @onclick="ToggleHelp">@displayname</button>
+        <button type="button" class="btn btn-primary" @onclick="GoToComplexType">Go</button>
+    </div>
+</div>
+
+<div hidden="@bHideHelp" class="row">
+    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+</div>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public XmlNode Node { get; set; }
+
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    string comments;
+    string occurs;
+    string displayname;
+    bool bHideHelp;
+    string xPath;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        bHideHelp = true;
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+            
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+
+        xPath = XmlUtils.GetFullXPath(Node);
+    }
+
+    private void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
+    }
+
+    private void GoToComplexType()
+    {
+        nav.NavigateTo($"/Documents/Sections/SectionMaster/{xPath}");
+        StateHasChanged();
+    }
+
+
+}

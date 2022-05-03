@@ -1,4 +1,4 @@
-﻿namespace eSDSCom.Editor.Client.Data;
+﻿namespace eSDSCom.Editor.Client.Services;
 
 public class AppDataService
 {
@@ -68,7 +68,7 @@ public class AppDataService
     #region Organizations
 
     public async Task<Organization> AddOrganizationAsync(Organization organization)
-    {       
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("organization/add", organization);
         return await response.Content.ReadFromJsonAsync<Organization>();
     }
@@ -80,7 +80,7 @@ public class AppDataService
     }
 
     public async Task<Organization> GetOrganizationAsync(Guid organizationId)
-    {        
+    {
         Organization org = await api.GetFromJsonAsync<Organization>($"organization/get?id={organizationId}");
         return org;
     }
@@ -91,7 +91,7 @@ public class AppDataService
     #region Datasheets
 
     public async Task<Datasheet> AddDatasheetAsync(Datasheet datasheet)
-    {    
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheet/add", datasheet);
         Datasheet ds = await response.Content.ReadFromJsonAsync<Datasheet>();
         return ds;
@@ -157,7 +157,7 @@ public class AppDataService
     #region DatasheetFeeds
 
     public async Task<DatasheetFeed> AddDatasheetFeedAsync(DatasheetFeed datasheetFeed)
-    {        
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheetfeed/add", datasheetFeed);
         return await response.Content.ReadFromJsonAsync<DatasheetFeed>();
     }
@@ -169,7 +169,7 @@ public class AppDataService
     }
 
     public async Task<DatasheetFeedItem> AddDatasheetFeedItemAsync(DatasheetFeedItem dsfi)
-    {        
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheetfeeditem/add", dsfi);
         return await response.Content.ReadFromJsonAsync<DatasheetFeedItem>();
     }

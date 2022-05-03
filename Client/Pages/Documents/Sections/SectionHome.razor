@@ -24,8 +24,8 @@ else
 
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private bool IsLoading = true;
-    private XmlNode datasheetNodes;
+    bool IsLoading = true;
+    XmlNode datasheetNodes;
 
     protected override void OnInitialized()
     {

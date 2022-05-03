@@ -7,22 +7,4 @@
     <div class="content px-4">
         @Body
     </div>
-     <div class="app-footer px-4">
-        @if (showFooter)
-        {
-            <StatusBar/>
-        }
-    </div>
 </div>
-
-@code
-{
-    bool showFooter = false;
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-
-        if (firstRender) showFooter = true;        
-    }
-}

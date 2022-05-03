@@ -12,6 +12,8 @@
 else
 {
     <CardSet CardItemList="itemList" />
+
+    <button type="button" class="btn btn-link" @onclick="GoAbout">About</button>
 }
 
 @code
@@ -39,6 +41,11 @@ else
             AppState.DocumentSetXml = Utils.GetDocumentSetXml();
         }
 
+        AppState.ESDSphracCatalogueName = "eSDScomphrac";
+        AppState.ESDSphracPhraseCatalogueId = "1";
+        AppState.ESDSPhraCVersion = "5.0";
+        AppState.ESDSXmlVersion = "5.4.1";
+
         Guid userGuid = Guid.Parse("35984ABA-E95C-4591-82FF-0E38A2D1FECD");
         Guid orgGuid = Guid.Parse("60D03E92-ED1E-47A6-83BF-8D56ED3561AF");
 
@@ -54,14 +61,7 @@ else
 
         //await dMgr.AddUserAsync(newUser);
 
-        try
-        {
-            AppState.User = await dMgr.GetUserAsync(userGuid);
-        }
-        catch (Exception ex)
-        {
-            Console.Write(ex.Message);
-        }
+        AppState.User = await dMgr.GetUserAsync(userGuid);
 
         //-------------------------------------------------------------------------------------------
         // create a new organization
@@ -88,11 +88,11 @@ else
             AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
         }
 
-        if (AppState.ActiveDatasheet is null)
-        {
-            Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
-            AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
-        }
+        //if (AppState.ActiveDatasheet is null)
+        //{
+        //    Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
+        //    AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
+        //}
 
         //AppState.Organization = await api.GetFromJsonAsync<Organization>($"organization/get?id={"60D03E92-ED1E-47A6-83BF-8D56ED3561AF".ToLower()}");
         //XmlDocument xDoc = new();
@@ -231,5 +231,9 @@ else
         nav.NavigateTo("/TestPage2");
     }
 
+     private void GoAbout()
+    {
+        nav.NavigateTo("/AppInfo");
+    }
 
 }

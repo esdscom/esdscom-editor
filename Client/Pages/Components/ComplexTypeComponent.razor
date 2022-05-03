@@ -24,8 +24,6 @@
 {
     foreach (XmlNode node in nodes)
     {
-        Console.WriteLine($"in complex...node: {node.Name}");
-
         BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
 
         if (entity is not null)
@@ -50,20 +48,34 @@
                 }
                 else if (node.HasChildNodes)
                 {
-                    <ComplexTypeComponent Node="@node" Entity="@entity" />
+                    // show a Go button insted of recursing through the nodes - the recursion levels are so many
+                    // that it causes performance problems (and huge pages)
+                    <DrillDownComponent Node="@node" Entity="@entity" />
                 }
                 else
                 {
-                    Console.WriteLine($"entity not handled: {entity.DisplayName}");
+                    if (entity.Type == "CasNo")
+                    {
+                        <TextDataPointComponent Node="@node" Entity="@entity" />
+                    }
+                    else
+                    {
+                        Console.WriteLine($"entity not handled: {entity.DisplayName}");
+                    }
                 }
                 <hr />
             }
             else if (node.HasChildNodes)
             {
-                <ComplexTypeComponent Node="@node" Entity="@entity" />
+                <DrillDownComponent Node="@node" Entity="@entity" />
             }
             else
             {
+                @if (entity != null)
+                {
+                    string badEntity = entity.DisplayName;
+                    Console.Write($"Bad Entity: {badEntity}");
+                }
                 <span>BaseEntity Type Property is null</span>
                 <hr />
             }
@@ -92,18 +104,18 @@
 
         try
         {
-            Console.WriteLine($"first loop: name: {Node.Name}");
+            //Console.WriteLine($"first loop: name: {Node.Name}");
 
             if (Node.HasChildNodes)
             {
                 nodes = Node.ChildNodes;
-                Console.WriteLine($"child node count: {nodes.Count}");
+                //  Console.WriteLine($"child node count: {nodes.Count}");
             }
         }
         catch (Exception ex)
         {
             Console.Write(ex.Message);
         }
-    }  
+    }
 
 }

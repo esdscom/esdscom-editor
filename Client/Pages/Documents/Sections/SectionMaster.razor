@@ -1,4 +1,4 @@
-﻿@page "/Documents/Sections/SectionMaster/{NodeName}"
+﻿@page "/Documents/Sections/SectionMaster/{*NodeName}"
 
 @inject NavigationManager nav
 @inject HttpClient api
@@ -18,6 +18,7 @@
     [Parameter] public string NodeName { get; set; }
     [Parameter] public string EntityType { get; set; }
 
+
     public EditContext CurrentEditContext { get; set; }
 
     private XmlNode activeNode;
@@ -26,12 +27,23 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+    }
 
-        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (NodeName.Contains(@"/"))  //this hack is needed because blazor router strips // from front of xpath for some reason 
+        {
+            NodeName = @$"//{NodeName}";   
+        }
+
+        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);  
 
         entity = AppState.SchemaElements.Where(s => s.NodeName == activeNode.Name).FirstOrDefault();
 
         CurrentEditContext = new EditContext(activeNode);
+
     }
 
     private async Task SaveAsync()

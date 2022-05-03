@@ -1,4 +1,4 @@
-﻿namespace eSDSCom.Editor.Client.Models;
+﻿namespace eSDSCom.Editor.Client.Services;
 
 public static class Utils
 {
@@ -24,7 +24,7 @@ public static class Utils
                 Comments = s.Doc,
                 Type = string.IsNullOrEmpty(s.Type) ? s.Type : s.Type.Replace("eSDScom:", string.Empty)
             }
-        ); 
+        );
         });
 
         return returnList;
@@ -125,7 +125,7 @@ public static class Utils
 
     private static List<Phrase> ReadPhraseResource()
     {
-        PhraseList list = new ();
+        PhraseList list = new();
         List<Phrase> returnList = new();
         try
         {
@@ -324,19 +324,19 @@ public static class Utils
             return retVal;
         }
 
-        if ((min == "1") && (max == "1"))
+        if (min == "1" && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
         }
 
-        if ((string.IsNullOrEmpty(min)) && (max == "1"))
+        if (string.IsNullOrEmpty(min) && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
         }
 
-        if ((min == "1") && (max == "1"))
+        if (min == "1" && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
@@ -345,13 +345,13 @@ public static class Utils
         //============================================================================================
         //  RequiredOneOrMore conditions
 
-        if (string.IsNullOrEmpty(min) && (max == "unbounded"))
+        if (string.IsNullOrEmpty(min) && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.RequiredOnceOrMore;
             return retVal;
         }
 
-        if ((min == "1") && (max == "unbounded"))
+        if (min == "1" && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.RequiredOnceOrMore;
             return retVal;
@@ -361,13 +361,13 @@ public static class Utils
         //============================================================================================
         //  OptionalZeroOrOne conditions
 
-        if ((min == "0") && (max == "1"))
+        if (min == "0" && max == "1")
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrOne;
             return retVal;
         }
 
-        if ((min == "0") && string.IsNullOrEmpty(max))
+        if (min == "0" && string.IsNullOrEmpty(max))
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrOne;
             return retVal;
@@ -376,7 +376,7 @@ public static class Utils
         //============================================================================================
         //  OptionalZeroOrMore conditions
 
-        if ((min == "0") && (max == "unbounded"))
+        if (min == "0" && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrMore;
             return retVal;
@@ -395,7 +395,7 @@ public static class Utils
         return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
     }
 
-    public static string GetStatusText (int status)
+    public static string GetStatusText(int status)
     {
         return status switch
         {
