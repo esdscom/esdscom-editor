@@ -2,7 +2,7 @@
 <br />
 <InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
 
-<div hidden="@bHideHelp" class="row">
+<div hidden="@bHideHelp">
     <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
 </div>
 

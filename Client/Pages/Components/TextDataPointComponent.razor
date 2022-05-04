@@ -1,16 +1,20 @@
 ﻿<div class="row">
-    <div class="col">        
+    <div class="col">
         <button type="button" class="btn btn-secondary" @onclick="ToggleHelp">@displayname</button>
-        <br />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
         <InputText class="form-control" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
     </div>
 </div>
 
-<div hidden="@bHideHelp" class="row">
-    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
 </div>
 
-@code 
+@code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
@@ -28,15 +32,15 @@
     {
         base.OnInitialized();
 
-        bHideHelp = true;      
+        bHideHelp = true;
 
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
             occurs = Utils.GetOccursText(Entity.Occurs);
             maxLength = 128;   //get length from type
-            // add regex pattern property of Node
+                               // add regex pattern property of Node
         }
         else
         {

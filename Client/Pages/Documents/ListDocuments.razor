@@ -71,7 +71,7 @@
     {
         dMgr = new(api);
 
-        AppState.StatusBarMessage = "Fetching Datasheets ...";
+        AppState.StatusBarMessage = "fetching Datasheets ...";
 
         if (nav.Uri.Contains("ListDocumentsInSet"))
         {       
@@ -96,7 +96,7 @@
             ShowAdd = false;
         }
 
-        AppState.StatusBarMessage = $"Total Datasheets available: {docList.Count}";
+        AppState.StatusBarMessage = $"total Datasheets available: {docList.Count}";
     }
 
     private void EditDoc(Guid dsId)

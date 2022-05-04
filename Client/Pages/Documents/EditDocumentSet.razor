@@ -7,9 +7,9 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-     <PageHeader Title="@title"/>
-
-    <div class="container-fluid">       
+    <div class="container-fluid">   
+        
+         <PageHeader Title="@title"/>
 
         <div class="form-group">
             <label for="itName">Document Set Name</label>
@@ -84,7 +84,7 @@
         {
             datasheetFeed = AppState.ActiveDatasheetFeed; 
             title = $"Edit Document set {datasheetFeed.Name}";
-            AppState.StatusBarMessage = "Viewing/editing";
+            AppState.StatusBarMessage = "viewing/editing";
             //backToURL = "/Documents/ListDocumentSets";
         }  
     } 
@@ -113,12 +113,12 @@
         if (IsNew)
         {
             AppState.ActiveDatasheetFeed = await dMgr.AddDatasheetFeedAsync(datasheetFeed);
-            AppState.StatusBarMessage = "Added Document Set";
+            AppState.StatusBarMessage = "added Document set";
         }
         else
         {
             AppState.ActiveDatasheetFeed = await dMgr.UpdateDatasheetFeedAsync(datasheetFeed);
-            AppState.StatusBarMessage = "Updated Document Set";
+            AppState.StatusBarMessage = "updated Document set";
         }
         Close();
     }

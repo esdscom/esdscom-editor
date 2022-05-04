@@ -5,9 +5,13 @@
 
 <EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
 
+    <div class="container-fluid">
+
         <ComplexTypeComponent Node="@activeNode" Entity="@entity" />
 
         <button type="submit" class="btn btn-secondary">Save</button>
+
+    </div>
 
 </EditForm>
 
@@ -33,12 +37,12 @@
     {
         base.OnParametersSet();
 
-        if (NodeName.Contains(@"/"))  //this hack is needed because blazor router strips // from front of xpath for some reason 
+        if (NodeName.Contains(@"/"))  //this hack is needed because blazor router strips // from front of xpath for some reason
         {
-            NodeName = @$"//{NodeName}";   
+            NodeName = @$"//{NodeName}";
         }
 
-        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);  
+        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);
 
         entity = AppState.SchemaElements.Where(s => s.NodeName == activeNode.Name).FirstOrDefault();
 
@@ -52,7 +56,7 @@
 
         AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(AppState.ActiveDatasheet);
 
-        AppState.StatusBarMessage = "Document Saved";
+        AppState.StatusBarMessage = "Datasheet saved";
 
         nav.NavigateTo("/Documents/Sections/SectionHome");
     }

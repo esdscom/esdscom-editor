@@ -1,12 +1,22 @@
-﻿<button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
-<br />
-<InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
+﻿
+<div class="row">
+    <div class="col">
 
-<div hidden="@bHideHelp" class="row">
-    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+    </div>
 </div>
 
-@code 
+<div class="row">
+    <div class="col">
+        <InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
+    </div>
+</div>
+
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+</div>
+
+@code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
@@ -32,7 +42,7 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
             occurs = Utils.GetOccursText(Entity.Occurs);
         }
         else
@@ -41,7 +51,7 @@
         }
     }
 
-    private void SetValue (ChangeEventArgs args)
+    private void SetValue(ChangeEventArgs args)
     {
         Node.InnerText = args.Value.ToString();
     }

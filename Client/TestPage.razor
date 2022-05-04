@@ -167,7 +167,7 @@
     private async Task SaveAsync()
     {
         AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(AppState.ActiveDatasheet);
-        AppState.StatusBarMessage = "Document Saved";
+        AppState.StatusBarMessage = "Datasheet Saved";
         nav.NavigateTo("/Documents/Sections/SectionHome");
     }
 }

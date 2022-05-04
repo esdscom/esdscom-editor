@@ -9,7 +9,13 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title"/>       
+        <PageHeader Title="@title"/>   
+        
+         <div class="row">          
+            <div class="col d-flex float-right">
+                <button type="button" class="btn btn-secondary" @onclick="GoToSections">Edit Sections</button>
+            </div>         
+        </div>
 
       @*  <div class="form-group">
             <label for="ddLanguage">Language</label>
@@ -138,7 +144,7 @@
                 };
 
             title = "Add a new Datasheet";
-            AppState.StatusBarMessage = "Adding a new Datasheet";
+            AppState.StatusBarMessage = "adding a new Datasheet";
         }
         else
         {
@@ -157,7 +163,7 @@
             datasheet.DatasheetXDoc.LoadXml(datasheet.DatasheetString);
 
             title = $"Editing Datasheet {datasheet.Name}";
-            AppState.StatusBarMessage = $"Editing the Datasheet {datasheet.Name}";
+            AppState.StatusBarMessage = $"editing the Datasheet {datasheet.Name}";
         }
     }
 
@@ -181,14 +187,14 @@
             //refresh the collection
             AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.ActiveDatasheet.OrganizationId, AppState.ActiveDatasheetFeed.Id);
 
-            AppState.StatusBarMessage = $"Added Datasheet and linked to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
+            AppState.StatusBarMessage = $"added Datasheet and linked to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
             nav.NavigateTo("/Documents/ListDocumentsInSet");
         }
         else
         {
             datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
             AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
-            AppState.StatusBarMessage = "Updated Datasheet";
+            AppState.StatusBarMessage = "updated Datasheet";
             nav.NavigateTo("/Documents/ListDocuments");
         }
     }

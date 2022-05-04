@@ -1,13 +1,15 @@
 ﻿@inject NavigationManager nav
 
-<div class="row p-3">
-    <div class="col">
+<div class="row">
+    <div class="col-2">
         <button type="button" class="btn btn-link m-2" @onclick="ToggleHelp">@displayname</button>
+    </div>
+    <div class="col-10">
         <button type="button" class="btn btn-secondary" @onclick="GoToComplexType">Go</button>
     </div>
 </div>
 
-<div hidden="@bHideHelp" class="row">
+<div hidden="@bHideHelp">
     <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
 </div>
 
