@@ -13,7 +13,7 @@
     {
         <CardSet CardItemList="itemList" />
 
-        <button type="button" class="btn btn-secondary" @onclick="GoAbout">About</button>
+        <button type="button" class="btn btn-link" @onclick="GoAbout">About</button>
     }
 
 </div>
@@ -133,31 +133,18 @@
                 Title = "Document Set List",
                 Comment = "List of Document sets managed by my organization",
                 ActionLink = "/Documents/ListDocumentSets",
-                ImageURL = "images/doc.png"
+                ImageURL = "images/docset.png"
             };
         itemList.Add(docSets);
-
-        //this should always be done in the context of one or more docusment sets
-        @*        CardItem docAdd = new()
-        {
-        Title = "Create a new Datasheet",
-        Comment = "Create a new Datasheet for authoring",
-        ActionLink = "/Documents/EditDocument/true",
-        ImageURL = "images/document.jpg"
-        };
-        itemList.Add(docAdd!);*@
-
 
         CardItem docSetAdd = new()
             {
                 Title = "Create a new Document Set",
                 Comment = "Create a new Document set for authoring",
                 ActionLink = "/Documents/EditDocumentSet/true",
-                ImageURL = "images/doc.png"
+                ImageURL = "images/docset.png"
             };
         itemList.Add(docSetAdd!);
-
-        //Column 2
 
         CardItem docList = new()
             {
@@ -167,9 +154,6 @@
                 ImageURL = "images/doc.png"
             };
         itemList.Add(docList);
-
-
-
 
         CardItem substances = new()
             {
@@ -188,10 +172,6 @@
                 ImageURL = "images/doc.png"
             };
         itemList.Add(phrasebrowser);
-
-
-
-        // column 3
 
         CardItem orginfo = new()
             {
@@ -219,8 +199,6 @@
                 ImageURL = "images/organization.png"
             };
         itemList.Add(export);
-
-
 
         return itemList;
     }
