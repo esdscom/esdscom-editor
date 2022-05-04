@@ -1,19 +1,12 @@
 ﻿@inject NavigationManager nav
 
 <div class="container-fluid">
-    <div class="row align-items-center bg-gray">
-        <div class="col-4 d-flex align-items-center justify-content-start">
-            @*<img class="float-left" src="images/logo.jpg" width="50" height="50" />*@
-            <h4 class="float-left"> eSDSCom editor </h4>
-        </div>
+    <div class="row d-flex align-items-center bg-secondary">
         <div class="col-2">
-            <button type="button" class="btn btn-link float-left" @onclick="GoHome">Home</button>
-        </div>
-        <div class="col-4">
-            <p class="float-right"> @helloMessage </p>
-        </div>
-        <div class="col-2">
-            <button type="button" class="btn btn-link float-right" @onclick="ShowAbout">About</button>
+            <button type="button" class="btn btn-link text-white float-left" @onclick="GoHome">eSDSCom editor</button>
+        </div>   
+        <div class="col-10 border-dark">
+            <span class="float-right text-white">@AppState.StatusBarMessage </span>
         </div>
     </div>
 </div>
@@ -21,28 +14,6 @@
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
-
-    private string helloMessage;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-
-        if (AppState.User is not null)
-        {
-            helloMessage = $"Hello {AppState.User.Email}";
-        }
-    }
-
-    private void ShowAbout()
-    {
-        nav.NavigateTo("/AppInfo");
-    }
 
     private void GoHome()
     {

@@ -2,30 +2,33 @@
 
 @inject NavigationManager nav
 
+<div class="container-fluid">
 
-@if (IsLoading)
-{
-    <p>Please wait while your data is set up....</p>
-}
-else
-{
-    <PageHeader Title="Document Sections" />
+    @if (IsLoading)
+    {
+        <p>Please wait while your data is set up....</p>
+    }
+    else
+    {
+        <PageHeader Title="Document Sections" />
 
-    <div class="card-columns">
-        @foreach (XmlNode node in datasheetNodes.ChildNodes)
-        {
-            <SectionCard Node="@node" />
-        }
-    </div>
-}
+        <div class="card-columns">
+            @foreach (XmlNode node in datasheetNodes.ChildNodes)
+            {
+                <SectionCard Node="@node" />
+            }
+        </div>
+    }
+
+</div>
 
 @code
 {
 
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private bool IsLoading = true;
-    private XmlNode datasheetNodes;
+    bool IsLoading = true;
+    XmlNode datasheetNodes;
 
     protected override void OnInitialized()
     {
@@ -33,11 +36,8 @@ else
 
         try
         {
-            XmlDocument xDoc = AppState.StarterDocument;
+            XmlDocument xDoc = AppState.DocumentSetXml;
             datasheetNodes = xDoc.DocumentElement.SelectSingleNode("Datasheet");
-
-            //should never be here without these attributes being complete and current
-            //AppState.StatusBarMessage = $"Document:{AppState.ActiveDatasheet.Name} (Id:{AppState.ActiveDatasheet.OrganizationIdentifier}), last updated: {AppState.ActiveDatasheet.UpdatedDate.ToLongDateString()}";
 
             IsLoading = false;
 

@@ -1,4 +1,4 @@
-﻿namespace eSDSCom.Editor.Client.Models;
+﻿namespace eSDSCom.Editor.Client.Services;
 
 public static class XmlUtils
 {
@@ -38,6 +38,29 @@ public static class XmlUtils
         XmlDocument doc = new();
         doc.LoadXml(xmlData);
         return doc;
+    }
+
+    public static string GetFullXPath(XmlNode node)
+    {
+        string xPath = string.Empty;
+
+        while (node != null)
+        {
+            switch (node.NodeType)
+            {
+                case XmlNodeType.Element:
+                    xPath = $"{node.Name}/{xPath}";
+                    node = node.ParentNode;
+                    break;
+                case XmlNodeType.Document:
+                    xPath = $@"//{xPath}";
+                    return xPath.TrimEnd(@"/".ToCharArray());
+                default:
+                    throw new ArgumentException("Only elements and attributes are supported");
+            }
+        }
+
+        return xPath.TrimEnd(@"/".ToCharArray()); ;
     }
 }
 

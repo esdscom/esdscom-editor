@@ -6,8 +6,6 @@
 @inject NavigationManager nav
 @inject HttpClient api
 
-<PageHeader Title="List of Substances"/>
-
 <SfDialog Target="#target" Width="500px" ShowCloseIcon="true" @bind-Visible="Visibility">
     <DialogTemplates>
         <Header> Substance Details </Header>
@@ -17,7 +15,10 @@
     </DialogTemplates>
 </SfDialog>
 
-<div class="content-wrapper">
+<div class="container-fluid">
+
+    <PageHeader Title="List of Substances"/>
+
     <div class="row">
         <div class="col-3">
             <label>Display:</label>
@@ -61,7 +62,7 @@
     private int substanceCount { get; set; } = 20;
     private Substance selectedSubstance = new();
     private bool Visibility { get; set; } = false;
-    private DataManager dMgr;
+    private AppDataService dMgr;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,11 +73,11 @@
         AppState.BackToURL = string.Empty;
         AppState.BackToURLText = string.Empty;
 
-        AppState.StatusBarMessage = $"Fetching substances ...";
+        AppState.StatusBarMessage = $"fetching substances ...";
 
         await SetSubstanceList();
 
-        AppState.StatusBarMessage = $"Total substances available: {substanceList.Count}";
+        AppState.StatusBarMessage = $"total substances available: {substanceList.Count}";
     }
 
     private async Task SetSubstanceList()

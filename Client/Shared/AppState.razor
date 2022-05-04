@@ -1,11 +1,6 @@
-﻿@using eSDSCom.Editor.Shared.DocumentElements
-@using eSDSCom.Editor.Shared.Models
-
-<CascadingValue Value="this">
+﻿<CascadingValue Value="this">
     @ChildContent
 </CascadingValue>
-
-
 
 @code
 {
@@ -236,7 +231,7 @@
     //--------------------------------------------------------------------------------------
 
     private XmlDocument _starterDocument;
-    public XmlDocument StarterDocument
+    public XmlDocument DocumentSetXml
     {
         get
         {

@@ -1,6 +1,6 @@
-﻿namespace eSDSCom.Editor.Client.Data;
+﻿namespace eSDSCom.Editor.Client.Services;
 
-public class DataManager
+public class AppDataService
 {
     //  this class interacts with the api (in the server projecT)  for the entire application.
     //  sending an item to the db with a complex item in it, so those complex items - XML elements - 
@@ -8,7 +8,7 @@ public class DataManager
 
 
     private HttpClient api;
-    public DataManager(HttpClient _api)
+    public AppDataService(HttpClient _api)
     {
         api = _api;
     }
@@ -68,7 +68,7 @@ public class DataManager
     #region Organizations
 
     public async Task<Organization> AddOrganizationAsync(Organization organization)
-    {       
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("organization/add", organization);
         return await response.Content.ReadFromJsonAsync<Organization>();
     }
@@ -80,7 +80,7 @@ public class DataManager
     }
 
     public async Task<Organization> GetOrganizationAsync(Guid organizationId)
-    {        
+    {
         Organization org = await api.GetFromJsonAsync<Organization>($"organization/get?id={organizationId}");
         return org;
     }
@@ -91,7 +91,7 @@ public class DataManager
     #region Datasheets
 
     public async Task<Datasheet> AddDatasheetAsync(Datasheet datasheet)
-    {    
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheet/add", datasheet);
         Datasheet ds = await response.Content.ReadFromJsonAsync<Datasheet>();
         return ds;
@@ -157,7 +157,7 @@ public class DataManager
     #region DatasheetFeeds
 
     public async Task<DatasheetFeed> AddDatasheetFeedAsync(DatasheetFeed datasheetFeed)
-    {        
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheetfeed/add", datasheetFeed);
         return await response.Content.ReadFromJsonAsync<DatasheetFeed>();
     }
@@ -169,7 +169,7 @@ public class DataManager
     }
 
     public async Task<DatasheetFeedItem> AddDatasheetFeedItemAsync(DatasheetFeedItem dsfi)
-    {        
+    {
         HttpResponseMessage response = await api.PostAsJsonAsync("datasheetfeeditem/add", dsfi);
         return await response.Content.ReadFromJsonAsync<DatasheetFeedItem>();
     }
@@ -197,15 +197,6 @@ public class DataManager
     public async Task<Substance> GetSubstanceAsync(Guid substanceId)
     {
         return await api.GetFromJsonAsync<Substance>($"substance/getbyguid?substanceId={substanceId}");
-    }
-
-    #endregion
-
-    #region Phrases
-
-    public async Task<List<Phrase>> GetAllPhrasesAsync()
-    {
-        return await api.GetFromJsonAsync<List<Phrase>>($"phrase/getall");
     }
 
     #endregion

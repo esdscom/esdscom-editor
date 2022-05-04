@@ -55,7 +55,7 @@
     [Parameter] public bool IsNew { get; set; }
 
     private User user = new();
-    private DataManager dMgr;
+    private AppDataService dMgr;
     private bool IsAdmin;
 
     protected override async Task OnInitializedAsync()

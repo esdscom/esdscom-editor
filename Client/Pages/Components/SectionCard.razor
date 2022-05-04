@@ -1,11 +1,11 @@
 ﻿@inject NavigationManager nav
 
-<div class="card border-dark mb-3">
+<div class="card border-primary mb-3">
 	<div class="card-header">
-		<p>@displayName</p>
+		<span>@displayName</span>
 	</div>
 	<div class="card-body">
-		<p class="card-text"> @comments</p>
+		<span class="card-text"> @comments</span>
 		<hr />
 		<button type="button" class="btn btn-primary" @onclick="FollowActionLink">Go</button>
 	</div>
@@ -32,7 +32,6 @@
 		}
 
         base.OnInitialized();
-
     }
 
 	private void FollowActionLink()

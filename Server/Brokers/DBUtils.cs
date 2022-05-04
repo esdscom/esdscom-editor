@@ -19,7 +19,8 @@
                      }
                 };
                 var client = new SecretClient(new Uri("https://esdscomeditorkeyvault02.vault.azure.net/"), new DefaultAzureCredential(), options);
-                KeyVaultSecret secret = client.GetSecret("ConnectionString");
+               // KeyVaultSecret secret = client.GetSecret("ConnectionString");
+                KeyVaultSecret secret = client.GetSecret("LocalConnectionString");
                 ConnString = secret.Value;
             }
 

@@ -1,51 +1,93 @@
 ﻿<h5>@Node.LocalName</h5>
 
-@foreach (XmlNode node in nodes)
+@if (Entity.Type is not null)
 {
-    BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
-
-    if (entity is not null)
+    if (Entity.Type.EndsWith("Enum"))
     {
-        if (entity.Type is not null)
-        {
-            if (entity.Type.EndsWith("Enum"))
-            {
-                <SelectDataPointComponent Node="@node" Entity="@entity" />
-            }
-            else if (entity.Type.StartsWith("string"))
-            {
-                <TextDataPointComponent Node="@node" Entity="@entity" />
-            }
-            else if (entity.Type.ToLower() == "xs:date")
-            {
-                <DateDataPointComponent Node="@node" Entity="@entity" />
-            }
-            else if (node.HasChildNodes)
-            {
-                <ComplexTypeComponent Node="@node" Entity="@entity"/>
-            }
-            <hr />
-        }
-        else if (node.HasChildNodes)
-        {
-            <span>Null entity type but has children: Complex type: @node.Name</span>
-            <br />
-            <hr />
-        }
-        else
-        {
-            <span>BaseEntity Type Property is null: @node.Name</span>
-            <hr />
-        }
+        <SelectDataPointComponent Node="@Node" Entity="@Entity" />
     }
-    else
+    else if (Entity.Type == "Phrase")
     {
-        <span> BaseEntity is null: @node.Name </span>
-        <br />
-        <hr />
+        <PhraseComponent Node="@Node" Entity="@Entity" />
+    }
+    else if (Entity.Type.StartsWith("string"))
+    {
+        <TextDataPointComponent Node="@Node" Entity="@Entity" />
+    }
+    else if (Entity.Type.ToLower() == "xs:date")
+    {
+        <DateDataPointComponent Node="@Node" Entity="@Entity" />
     }
 }
 
+@if (nodes is not null)
+{
+    foreach (XmlNode node in nodes)
+    {
+        BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+        if (entity is not null)
+        {
+            if (entity.Type is not null)
+            {
+                if (entity.Type.EndsWith("Enum"))
+                {
+                    <SelectDataPointComponent Node="@node" Entity="@entity" />
+                }
+                else if (entity.Type == "Phrase")
+                {
+                    <PhraseComponent Node="@node" Entity="@entity" />
+                }
+                else if (entity.Type.StartsWith("string"))
+                {
+                    <TextDataPointComponent Node="@node" Entity="@entity" />
+                }
+                else if (entity.Type.ToLower() == "xs:date")
+                {
+                    <DateDataPointComponent Node="@node" Entity="@entity" />
+                }
+                else if (node.HasChildNodes)
+                {
+                    // show a Go button insted of recursing through the nodes - the recursion levels are so many
+                    // that it causes performance problems (and huge pages)
+                    <DrillDownComponent Node="@node" Entity="@entity" />
+                }
+                else
+                {
+                    if (entity.Type == "CasNo")
+                    {
+                        <TextDataPointComponent Node="@node" Entity="@entity" />
+                    }
+                    else
+                    {
+                        Console.WriteLine($"entity not handled: {entity.DisplayName}");
+                    }
+                }
+                <hr />
+            }
+            else if (node.HasChildNodes)
+            {
+                <DrillDownComponent Node="@node" Entity="@entity" />
+            }
+            else
+            {
+                @if (entity != null)
+                {
+                    string badEntity = entity.DisplayName;
+                    Console.Write($"Bad Entity: {badEntity}");
+                }
+                <span>BaseEntity Type Property is null</span>
+                <hr />
+            }
+        }
+        else
+        {
+            <span> BaseEntity is null </span>
+            <br />
+            <hr />
+        }
+    }
+}
 
 @code
 {
@@ -56,16 +98,24 @@
 
     private XmlNodeList nodes;
 
-
     protected override void OnInitialized()
     {
-        base.OnInitialized(); 
+        base.OnInitialized();
 
-        if (Node.HasChildNodes)
+        try
         {
-            nodes = Node.ChildNodes;
+            //Console.WriteLine($"first loop: name: {Node.Name}");
+
+            if (Node.HasChildNodes)
+            {
+                nodes = Node.ChildNodes;
+                //  Console.WriteLine($"child node count: {nodes.Count}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.Message);
         }
     }
-   
-}
 
+}

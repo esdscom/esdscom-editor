@@ -1,42 +1,54 @@
 ﻿@page "/"
 
-@using Syncfusion.Blazor.Spinner
-
 @inject HttpClient api
 @inject NavigationManager nav
 
-@if (IsLoading)
-{
-    <SfSpinner @bind-Visible="IsLoading" Label="Please wait while your data is set up...."></SfSpinner>
-}
-else
-{
-    <CardSet CardItemList="itemList" />
-}
+<div class="container-fluid">
+
+    @if (IsLoading)
+    {
+        <Spinner/>
+    }
+    else
+    {
+        <CardSet CardItemList="itemList" />
+
+        <button type="button" class="btn btn-link" @onclick="GoAbout">About</button>
+    }
+
+</div>
 
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private bool IsLoading = true;
-    private List<CardItem> itemList = new();
-    private DataManager dMgr;
-
+    bool IsLoading = true;
+    List<CardItem> itemList = new();
+    AppDataService dMgr;
 
     protected override async Task OnInitializedAsync()
     {
         @*        #if DEBUG
-            Thread.Sleep(10000);
-            #endif*@
+        Thread.Sleep(10000);
+
+         vh-100 vw-100
+
+        #endif*@
 
         await base.OnInitializedAsync();
 
         dMgr = new(api);
 
-        if (AppState.StarterDocument is null)
+        //this includes the XML for the datasheetFeed, Info Exp sys and a list of datasheet
+        if (AppState.DocumentSetXml is null)
         {
-            AppState.StarterDocument = Utils.ReadXMLStarterResource();
+            AppState.DocumentSetXml = Utils.GetDocumentSetXml();
         }
+
+        AppState.ESDSphracCatalogueName = "eSDScomphrac";
+        AppState.ESDSphracPhraseCatalogueId = "1";
+        AppState.ESDSPhraCVersion = "5.0";
+        AppState.ESDSXmlVersion = "5.4.1";
 
         Guid userGuid = Guid.Parse("35984ABA-E95C-4591-82FF-0E38A2D1FECD");
         Guid orgGuid = Guid.Parse("60D03E92-ED1E-47A6-83BF-8D56ED3561AF");
@@ -53,14 +65,7 @@ else
 
         //await dMgr.AddUserAsync(newUser);
 
-        try
-        {
-            AppState.User = await dMgr.GetUserAsync(userGuid);
-        }
-        catch (Exception ex)
-        {
-            Console.Write(ex.Message);
-        }
+        AppState.User = await dMgr.GetUserAsync(userGuid);
 
         //-------------------------------------------------------------------------------------------
         // create a new organization
@@ -87,11 +92,11 @@ else
             AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
         }
 
-        if (AppState.ActiveDatasheet is null)
-        {
-            Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
-            AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
-        }
+        //if (AppState.ActiveDatasheet is null)
+        //{
+        //    Guid testDocId = Guid.Parse("492305f6-fd4c-4844-8d24-ebe377bec26b");
+        //    AppState.ActiveDatasheet = await dMgr.GetDatasheetAsync(orgGuid, testDocId);
+        //}
 
         //AppState.Organization = await api.GetFromJsonAsync<Organization>($"organization/get?id={"60D03E92-ED1E-47A6-83BF-8D56ED3561AF".ToLower()}");
         //XmlDocument xDoc = new();
@@ -128,43 +133,27 @@ else
                 Title = "Document Set List",
                 Comment = "List of Document sets managed by my organization",
                 ActionLink = "/Documents/ListDocumentSets",
-                ImageURL = "images/documentset.jpg"
+                ImageURL = "images/docset.png"
             };
         itemList.Add(docSets);
-
-        //this should always be done in the context of one or more docusment sets
-        @*        CardItem docAdd = new()
-            {
-                Title = "Create a new Datasheet",
-                Comment = "Create a new Datasheet for authoring",
-                ActionLink = "/Documents/EditDocument/true",
-                ImageURL = "images/document.jpg"
-            };
-        itemList.Add(docAdd!);*@
-
 
         CardItem docSetAdd = new()
             {
                 Title = "Create a new Document Set",
                 Comment = "Create a new Document set for authoring",
                 ActionLink = "/Documents/EditDocumentSet/true",
-                ImageURL = "images/documentset.jpg"
+                ImageURL = "images/docset.png"
             };
         itemList.Add(docSetAdd!);
-
-        //Column 2
 
         CardItem docList = new()
             {
                 Title = "Datasheet List",
                 Comment = "List of Datasheets managed by my organization",
                 ActionLink = "/Documents/ListDocuments",
-                ImageURL = "images/document.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(docList);
-
-
-
 
         CardItem substances = new()
             {
@@ -178,15 +167,11 @@ else
         CardItem phrasebrowser = new()
             {
                 Title = "Phrase Browser",
-                Comment = "Search the list of EUPHRAC phrases",
+                Comment = "Search the list of eSDSphrac phrases",
                 ActionLink = "/Phrases/PhraseBrowser",
-                ImageURL = "images/phrase.jpg"
+                ImageURL = "images/doc.png"
             };
         itemList.Add(phrasebrowser);
-
-
-
-        // column 3
 
         CardItem orginfo = new()
             {
@@ -215,8 +200,6 @@ else
             };
         itemList.Add(export);
 
-
-
         return itemList;
     }
 
@@ -230,5 +213,9 @@ else
         nav.NavigateTo("/TestPage2");
     }
 
+    private void GoAbout()
+    {
+        nav.NavigateTo("/AppInfo");
+    }
 
-}
+        }

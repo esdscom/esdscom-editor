@@ -7,9 +7,9 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-     <PageHeader Title="@title"/>
-
-    <div class="container-fluid">       
+    <div class="container-fluid">   
+        
+         <PageHeader Title="@title"/>
 
         <div class="form-group">
             <label for="itName">Document Set Name</label>
@@ -30,13 +30,13 @@
 
         <div class="row">
             <div class="col-2">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>  
             <div class="col-2">
-                <button type="button" class="btn btn-info" @onclick="Info">Information from Exporting System</button>
+                <button type="button" class="btn btn-info" @onclick="Info">Info from Exporting System</button>
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-warning" @onclick="Close">Cancel</button>
+                <button type="button" class="btn btn-secondary" @onclick="Close">Cancel</button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
 
     User appUser;
     DatasheetFeed datasheetFeed = new();
-    DataManager dMgr;
+    AppDataService dMgr;
     EditContext editContext;
     string title;
 
@@ -84,7 +84,7 @@
         {
             datasheetFeed = AppState.ActiveDatasheetFeed; 
             title = $"Edit Document set {datasheetFeed.Name}";
-            AppState.StatusBarMessage = "Viewing/editing";
+            AppState.StatusBarMessage = "viewing/editing";
             //backToURL = "/Documents/ListDocumentSets";
         }  
     } 
@@ -96,7 +96,7 @@
 
     private XmlNode GetDefaultInfoSection()
     {
-        XmlDocument xDoc = AppState.StarterDocument;
+        XmlDocument xDoc = AppState.DocumentSetXml;
 
         XmlNode infoNode = xDoc.DocumentElement.SelectSingleNode("InformationFromExportingSystem");
 
@@ -113,12 +113,12 @@
         if (IsNew)
         {
             AppState.ActiveDatasheetFeed = await dMgr.AddDatasheetFeedAsync(datasheetFeed);
-            AppState.StatusBarMessage = "Added Document Set";
+            AppState.StatusBarMessage = "added Document set";
         }
         else
         {
             AppState.ActiveDatasheetFeed = await dMgr.UpdateDatasheetFeedAsync(datasheetFeed);
-            AppState.StatusBarMessage = "Updated Document Set";
+            AppState.StatusBarMessage = "updated Document set";
         }
         Close();
     }

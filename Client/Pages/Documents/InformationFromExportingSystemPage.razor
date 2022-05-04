@@ -3,20 +3,29 @@
 @inject NavigationManager nav
 @inject HttpClient api
 
-<PageHeader Title = "@title"/>
 
-<EditForm EditContext = "CurrentEditContext" OnValidSubmit="SaveAsync"> 
-     <DataAnnotationsValidator />
-     <ValidationSummary />
+<EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    @foreach (XmlNode node in nodes)
-    {
-        BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+    <div class="container-fluid">
 
-        <ComplexTypeComponent Node="@node" Entity="@entity"/>         
-    }
+        <PageHeader Title="@title" />
 
-    <button type="submit" class="btn btn-primary">Save</button>
+        @foreach (XmlNode node in nodes)
+        {
+            BaseEntity entity = AppState.SchemaElements.Where(s => s.NodeName == node.Name).FirstOrDefault();
+
+            <ComplexTypeComponent Node="@node" Entity="@entity" />
+        }
+        <div class="row">
+
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
+    </div>
 
 </EditForm>
 
@@ -32,20 +41,20 @@
     private Organization org;
 
     protected override void OnInitialized()
-    {     
+    {
         base.OnInitialized();
 
         org = AppState.Organization;
 
         title = $"Information From Exporting System for {org.Name}";
-        AppState.StatusBarMessage = "Ready";
+        AppState.StatusBarMessage = "ready";
 
         orgInfoExpSys = org.InfoExSysXDoc;
 
         if (orgInfoExpSys is null)
         {
-            orgInfoExpSys = Utils.ReadInfoExpSysResource();
-        }       
+            orgInfoExpSys = Utils.GetInfoExpSysXml();
+        }
 
         if (orgInfoExpSys.HasChildNodes)
         {
@@ -57,7 +66,7 @@
 
     private async Task SaveAsync()
     {
-        DataManager dMgr = new(api);
+        AppDataService dMgr = new(api);
         AppState.Organization = await dMgr.UpdateOrganizationAsync(org);
         nav.NavigateTo("/");
     }

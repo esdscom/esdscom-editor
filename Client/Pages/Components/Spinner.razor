@@ -1,0 +1,25 @@
+﻿<div class="appspinner">
+    <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status"></div>
+    <span class="pt-2 text-primary">@Text</span>
+</div>
+
+
+<style>
+
+    .appspinner 
+    {
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+
+@code
+{
+    [Parameter] public string Text { get; set; } = "Loading data...please wait";
+
+
+}

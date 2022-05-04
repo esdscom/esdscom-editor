@@ -6,12 +6,12 @@
 
 @inject NavigationManager nav
 @inject HttpClient api
-@*
-    TODO: add filter for this user only*@
 
-<PageHeader Title="@pageTitle"/>
+@* TODO: add filter for this user only*@
 
-<div class="content-wrapper">
+<div class="container-fluid">
+
+    <PageHeader Title="@pageTitle"/>
 
     @if (ShowAdd)
     {
@@ -63,7 +63,7 @@
     [CascadingParameter] public AppState AppState { get; set; }
 
     List<Datasheet> docList = new();
-    DataManager dMgr;
+    AppDataService dMgr;
     string pageTitle = string.Empty;
     bool ShowAdd = false;
 
@@ -71,7 +71,7 @@
     {
         dMgr = new(api);
 
-        AppState.StatusBarMessage = "Fetching Datasheets ...";
+        AppState.StatusBarMessage = "fetching Datasheets ...";
 
         if (nav.Uri.Contains("ListDocumentsInSet"))
         {       
@@ -96,7 +96,7 @@
             ShowAdd = false;
         }
 
-        AppState.StatusBarMessage = $"Total Datasheets available: {docList.Count}";
+        AppState.StatusBarMessage = $"total Datasheets available: {docList.Count}";
     }
 
     private void EditDoc(Guid dsId)

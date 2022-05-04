@@ -1,17 +1,24 @@
-﻿<div class="form-group">
-    <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
-    <br />
-    <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname" style="width:25%">
-        @foreach (var value in enumValueArray)
-        {
-            <option value="@value">@value</option>
-        }
-    </InputSelect>
+﻿
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+            <br />
+            <InputSelect class="form-control" @bind-Value="@Node.InnerText" @onchange="ChangeValue" DisplayName="@displayname" style="width:25%">
+                @foreach (var value in enumValueArray)
+                {
+                    <option value="@value">@value</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div hidden="@bHideHelp">
+            <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+        </div>
+
+    </div>
 </div>
 
-<div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
-</div>
 
 @code
 {

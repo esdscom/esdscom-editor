@@ -4,64 +4,49 @@
 @inject NavigationManager nav
 @inject HttpClient api
 
-<div class="container-fluid">
-    <div class="row">
-         <div class="col-6">
-             <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save and Close</button>
-         </div>
-         <div class="col-6">
-             <button type="button" class="btn btn-danger" @onclick="Close">Cancel</button>
-         </div>
+<div class="row">
+    <div class="col-6">
+        <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save</button>
     </div>
-    <div class="row">
-        <div class="col-3">
-            <input id="chkCore" type="checkbox" checked="@CorePhrases" @onclick="@SetCore" />
-            <label for="chkCore">Core Phrases</label>
-        </div>
-        <div class="col-3">
-            <input id="chkES" type="checkbox" checked="@ESPhrases" @onclick="@SetES" />
-            <label for="chkES">Exposure Scenario Phrases</label>
-        </div>
-        <div class="col-3">
-            <label>Display:</label>
-            <select @onchange="@SetPhraseCount">
-                <option value=10 selected>10</option>
-                <option value=20>20</option>
-                <option value=50>50</option>
-                <option value=100>100</option>
-            </select>
-        </div>
-        <div class="col-3">
-            @occursText
-        </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <label>Display:</label>
+        <select @onchange="@SetPhraseCount">
+            <option value=10 selected>10</option>
+            <option value=20>20</option>
+            <option value=50>50</option>
+            <option value=100>100</option>
+        </select>
     </div>
-
-    <div class="row">
-        <div class="col-12">
-            @selected
-        </div>
+    <div class="col-6">
+        @occursText
     </div>
+</div>
 
-    <div class="row">
-
-        <SfGrid @ref="@Grid" DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
-                AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
-            <GridPageSettings PageSize="10" />
-            <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
-            <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
-            <GridColumns>
-                @if (showCheckboxes)
-                {
-                    <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
-                }
-                <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
-                <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
-                <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
-            </GridColumns>
-        </SfGrid>
-
+<div class="row">
+    <div class="col">
+        @selected
     </div>
+</div>
 
+<div class="row">
+
+    <SfGrid @ref="@Grid" DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
+            AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
+        <GridPageSettings PageSize="10" />
+        <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
+        <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
+        <GridColumns>
+            @if (showCheckboxes)
+            {
+                <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
+            }
+            <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
+        </GridColumns>
+    </SfGrid>
 
 </div>
 

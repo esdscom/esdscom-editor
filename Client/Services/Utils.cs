@@ -1,8 +1,7 @@
-﻿namespace eSDSCom.Editor.Client.Models;
+﻿namespace eSDSCom.Editor.Client.Services;
 
 public static class Utils
 {
-
     #region base entities operations
 
     /// <summary>
@@ -25,7 +24,7 @@ public static class Utils
                 Comments = s.Doc,
                 Type = string.IsNullOrEmpty(s.Type) ? s.Type : s.Type.Replace("eSDScom:", string.Empty)
             }
-        ); ;
+        );
         });
 
         return returnList;
@@ -78,10 +77,27 @@ public static class Utils
         return regionList;
     }
 
+
+    public static List<Region> GetRegionsFromString(string selectedRegions)
+    {
+        List<Region> retRegions = new();
+
+        List<Region> regions = GetRegions();
+
+        var regionArray = selectedRegions.Split(",");
+
+        foreach (var region in regionArray)
+        {
+            var reg = regions.First(r => r.Suffix == region);
+            retRegions.Add(reg);
+        }
+        return retRegions;
+    }
+
     public static List<Phrase> GetPhrases()
-    {        
+    {
         var phraseList = ReadPhraseResource();
-       
+
         return phraseList;
     }
 
@@ -109,7 +125,7 @@ public static class Utils
 
     private static List<Phrase> ReadPhraseResource()
     {
-        PhraseList list = new ();
+        PhraseList list = new();
         List<Phrase> returnList = new();
         try
         {
@@ -150,7 +166,7 @@ public static class Utils
         return list;
     }
 
-    public static XmlDocument ReadXMLStarterResource()
+    public static XmlDocument GetDocumentSetXml()
     {
         XmlDocument xDoc = new();
 
@@ -170,7 +186,29 @@ public static class Utils
         return xDoc;
     }
 
-    public static XmlDocument ReadInfoExpSysResource()
+    public static XmlDocument GetDatasheetXml()
+    {
+        XmlDocument xDoc = new();
+
+        try
+        {
+            var myAssembly = Assembly.GetExecutingAssembly();
+            string name = $"eSDSCom.Editor.Client.Data.5.4.1-starter.xml";
+            using Stream stream = myAssembly.GetManifestResourceStream(name);
+            xDoc.Load(stream);
+            string dataSheetXML = xDoc.DocumentElement.SelectSingleNode("Datasheet").OuterXml;
+            xDoc.LoadXml(dataSheetXML);
+        }
+        catch (Exception ex)
+        {
+            Console.Write(ex.StackTrace);
+            throw;
+        }
+
+        return xDoc;
+    }
+
+    public static XmlDocument GetInfoExpSysXml()
     {
         XmlDocument xDoc = new();
 
@@ -286,19 +324,19 @@ public static class Utils
             return retVal;
         }
 
-        if ((min == "1") && (max == "1"))
+        if (min == "1" && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
         }
 
-        if ((string.IsNullOrEmpty(min)) && (max == "1"))
+        if (string.IsNullOrEmpty(min) && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
         }
 
-        if ((min == "1") && (max == "1"))
+        if (min == "1" && max == "1")
         {
             retVal = Enums.DataPointOccurence.RequiredExactlyOnce;
             return retVal;
@@ -307,13 +345,13 @@ public static class Utils
         //============================================================================================
         //  RequiredOneOrMore conditions
 
-        if (string.IsNullOrEmpty(min) && (max == "unbounded"))
+        if (string.IsNullOrEmpty(min) && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.RequiredOnceOrMore;
             return retVal;
         }
 
-        if ((min == "1") && (max == "unbounded"))
+        if (min == "1" && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.RequiredOnceOrMore;
             return retVal;
@@ -323,13 +361,13 @@ public static class Utils
         //============================================================================================
         //  OptionalZeroOrOne conditions
 
-        if ((min == "0") && (max == "1"))
+        if (min == "0" && max == "1")
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrOne;
             return retVal;
         }
 
-        if ((min == "0") && string.IsNullOrEmpty(max))
+        if (min == "0" && string.IsNullOrEmpty(max))
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrOne;
             return retVal;
@@ -338,7 +376,7 @@ public static class Utils
         //============================================================================================
         //  OptionalZeroOrMore conditions
 
-        if ((min == "0") && (max == "unbounded"))
+        if (min == "0" && max == "unbounded")
         {
             retVal = Enums.DataPointOccurence.OptionalZeroOrMore;
             return retVal;
@@ -357,7 +395,7 @@ public static class Utils
         return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
     }
 
-    public static string GetStatusText (int status)
+    public static string GetStatusText(int status)
     {
         return status switch
         {
