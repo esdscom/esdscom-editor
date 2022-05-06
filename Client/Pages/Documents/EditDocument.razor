@@ -9,44 +9,48 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title"/>   
-        
-         <div class="row">          
-            <div class="col d-flex float-right">
-                <button type="button" class="btn btn-link" @onclick="GoToSections">Edit Sections</button>
-            </div>         
-        </div>
+        <PageHeader Title="@title" />
 
-      @*  <div class="form-group">
-            <label for="ddLanguage">Language</label>
-            <InputSelect id="ddLanguage" class="form-control col-sm-2" @bind-Value="@languageName">
-                @foreach (string langName in languageList)
-                {
-                    <option value="@langName">@langName</option>
-                }
-            </InputSelect>
+        @*  <div class="form-group">
+        <label for="ddLanguage">Language</label>
+        <InputSelect id="ddLanguage" class="form-control col-sm-2" @bind-Value="@languageName">
+        @foreach (string langName in languageList)
+        {
+        <option value="@langName">@langName</option>
+        }
+        </InputSelect>
         </div>*@
 
-        <div class="form-group">
-            <label for="isName">Document Name</label>
-            <InputText id="isName" class="form-control" @bind-Value="@datasheet.Name" />
+        <div class="row">
+            <div class="col form-group">
+                <label for="isName">Document Name</label>
+                <InputText id="isName" class="form-control" @bind-Value="@datasheet.Name" />
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="ddMaterialType">Material Type</label>
-            <InputSelect class="form-control col-sm-1" id="ddMaterialType" @bind-Value="@materialType" width="50">
-                @foreach (string materialTypeName in materialTypeList)
-                {
-                    <option value="@materialTypeName">@materialTypeName</option>
-                }
-            </InputSelect>
+        <div class="row">
+            <div class="col-6 form-group">
+                <div class="form-group">
+                    <label for="ddMaterialType">Material Type</label>
+                    <InputSelect class="form-group" id="ddMaterialType" @bind-Value="@materialType" width="100">
+                        @foreach (string materialTypeName in materialTypeList)
+                        {
+                            <option value="@materialTypeName">@materialTypeName</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="col-6">
+                <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler" />
+            </div>
         </div>
 
-          <div class="row pb-3">
+        <div class="row pb-3">
             <div class="col">
                 <span>Region(s) included:</span>
             </div>
         </div>
+
         <div class="row">
             <div class="col-9">
                 <div class="form-group">
@@ -73,17 +77,22 @@
             </div>
         </div>
 
-         <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler"/>
-
-        <div class="form-group">
-            <label for="comments">Comments:</label>
-            <InputTextArea id="comments" class="form-control" @bind-Value="@datasheet.Comments" rows="5" cols="30"/>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <InputTextArea id="comments" class="form-control" @bind-Value="@datasheet.Comments" rows="3" cols="30" />
+                </div>
+            </div>
         </div>
 
-        <div class="row">          
-            <div class="col">
+        <div class="row">
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary">Save</button>
-            </div>      
+            </div>
+             <div class="col-10">
+                <button type="button" class="btn btn-primary" @onclick="GoToSections">Edit Sections</button>
+            </div>
         </div>
 
     </div>
@@ -92,7 +101,7 @@
 <style>
 
     ul {
-        column-count: 3;
+        column-count: 4;
         column-gap: 2rem;
         list-style: none;
     }
@@ -123,7 +132,7 @@
     {
         base.OnInitialized();
 
-        allRegions = Utils.GetRegions();       
+        allRegions = Utils.GetRegions();
 
         dMgr = new(api);
 
@@ -198,7 +207,7 @@
 
     void GoToSections()
     {
-        nav.NavigateTo("/Documents/Sections/SectionHome");
+       
     }
 
     void StatusSelectionHandler(int status)

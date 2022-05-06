@@ -2,6 +2,7 @@
     <div class="col border border-info text-info">
         <span>@comments</span>
         <span>@occurs</span>
+        <span>@xpath</span>
     </div>
 </div>
 
@@ -9,13 +10,19 @@
 {
     [Parameter] public string Comments { get; set; }
     [Parameter] public string Occurs { get; set; }
+    [Parameter] public string XPath { get; set; } = "";
 
     MarkupString comments;
     MarkupString occurs;
+    MarkupString xpath;
 
     protected override void OnInitialized()
     {
         comments = (MarkupString)Comments;
         occurs = (MarkupString)Occurs;
+        if (!string.IsNullOrEmpty(XPath))
+        {
+            xpath = (MarkupString) $"eSDSphrac phrase group: {XPath}";
+        }
     }
 }

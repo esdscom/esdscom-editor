@@ -5,33 +5,38 @@
 @inject HttpClient api
 
 <div class="row">
-    <div class="col-6">
-        <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save</button>
+    <div class="col-2">    
+        <OccursComponent OccursText= "@occurs"/>
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
     </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <label>Display:</label>
-        <select @onchange="@SetPhraseCount">
-            <option value=10 selected>10</option>
-            <option value=20>20</option>
-            <option value=50>50</option>
-            <option value=100>100</option>
-        </select>
-    </div>
-    <div class="col-6">
-        @occursText
+    <div class="col-10">
+        <button type="button" class="btn btn-primary" @onclick="SetEditMode">Edit</button>
     </div>
 </div>
 
-<div class="row">
+<div hidden="@bHideHelp">   
+     <div class="row">
+        <div class="col">
+             <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" XPath="@xPath" />
+        </div>
+    </div>   
+</div>
+
+<div class="row m-2">
     <div class="col">
         @selected
     </div>
 </div>
 
-<div class="row">
+<div class="row"  hidden="@(!bEditMode)">
+    <div class="col">
+        <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save</button>
+    </div>
+</div>
 
+<div class="row" hidden="@(!bEditMode)">
+       
+    <div class="col">
     <SfGrid @ref="@Grid" DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
             AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
         <GridPageSettings PageSize="10" />
@@ -47,7 +52,7 @@
             <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
         </GridColumns>
     </SfGrid>
-
+    </div>
 </div>
 
 @code
@@ -70,21 +75,42 @@
     bool CorePhrases = true;
     bool ESPhrases = true;
     int phraseCount { get; set; } = 10;
-    MarkupString occursText;
     bool showCheckboxes = true;
+
+    string comments;
+    string occurs;
+    string displayname;
+    bool bHideHelp;
+    bool bEditMode;
+    string xPath;
 
     string selected { get; set; }
 
     protected override void OnInitialized()
     {
-        Entity.Occurs = Enums.DataPointOccurence.OptionalZeroOrMore;
+        base.OnInitialized();
 
-        occursText = (MarkupString)Utils.GetOccursText(Entity.Occurs, true);
+        displayname = Entity.DisplayName;
 
-        SetPhraseList();
+        xPath = XmlUtils.GetFullXPath(Node);
+
+        SetPhraseList(xPath);
+
+        if (Entity is not null)
+        {
+            displayname = Entity.DisplayName;
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
+            occurs = Utils.GetOccursText(Entity.Occurs);
+        }
+        else
+        {
+            displayname = "entity Not found!!!";
+        }
+
+        bHideHelp = true;
     }
 
-    private SelectionType GetSelectionType()
+    SelectionType GetSelectionType()
     {
         if (Entity.Occurs == Enums.DataPointOccurence.OptionalZeroOrOne || Entity.Occurs == Enums.DataPointOccurence.RequiredExactlyOnce)
         {
@@ -112,7 +138,13 @@
         StateHasChanged();
     }
 
-    private string DisplaySelectedPhrases()
+
+    void SetEditMode()
+    {
+        bEditMode = !bEditMode;
+    }
+
+    string DisplaySelectedPhrases()
     {
         selected = string.Empty;
 
@@ -124,36 +156,30 @@
         return selected;
     }
 
-    private void SetPhraseList()
+    void SetPhraseList(string xPath)
     {
-        phraseList = AppState.Phrases;
+        if (!string.IsNullOrEmpty(xPath))
+        {
+            phraseList = AppState.Phrases.Where(p => p.XPath == xPath).ToList();
+        }
+        else
+        {
+            Console.WriteLine($"No XPATH!: {Entity.DisplayName}");
+        }
     }
-
-    private void SetCore()
-    {
-        CorePhrases = !CorePhrases;
-        SetPhraseList();
-    }
-
-    private void SetES()
-    {
-        ESPhrases = !ESPhrases;
-        SetPhraseList();
-    }
-
-    private void SetPhraseCount(ChangeEventArgs e)
-    {
-        phraseCount = int.Parse(e.Value.ToString());
-        SetPhraseList();
-    }
-
-    private async Task SavePhrases()
+   
+    async Task SavePhrases()
     {
         await OnPhrasesSaved.InvokeAsync(selectedPhraseList);
     }
 
-    private async Task Close()
+    async Task Close()
     {
         await OnCancel.InvokeAsync();
+    }
+
+    void ToggleHelp()
+    {
+        bHideHelp = !bHideHelp;
     }
 }

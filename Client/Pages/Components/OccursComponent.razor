@@ -1,0 +1,40 @@
+﻿<span class="@dotClass"></span>
+
+<style>
+
+    .optionaldot {
+        height: 25px;
+        width: 25px;
+        background-color: slategray;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .requireddot {
+        height: 25px;
+        width: 25px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+</style>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public string OccursText { get; set; }
+
+    string dotClass = "optionaldot";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (OccursText.ToLower().Contains("required"))
+        {
+            dotClass = "requireddot";
+        }
+    }
+}

@@ -120,6 +120,11 @@
             AppState.Regions = Utils.GetRegions();
         }
 
+        if (AppState.Phrases is null)
+        {
+            AppState.Phrases = Utils.GetPhrases();
+        }
+
         IsLoading = false;
 
         AppState.StatusBarMessage = "editing tool is ready for use.";

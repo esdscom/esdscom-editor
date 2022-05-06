@@ -1,16 +1,18 @@
 ﻿<div class="row">
     <div class="col">
+        <OccursComponent OccursText= "@occurs"/>
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
     </div>
 </div>
 
 <div class="row">
     <div class="col">
-        <InputText class="form-control" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
+        <InputText class="form-control" style="@widthStyle" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
     </div>
 </div>
 
 <div hidden="@bHideHelp">
+    <span class="text-info m-2">Maximum length: @maxLength</span>
     <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
 </div>
 
@@ -22,11 +24,12 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private string comments;
-    private string occurs;
-    private string displayname;
-    private bool bHideHelp;
-    private int maxLength = 128;
+    string comments;
+    string occurs;
+    string displayname;
+    bool bHideHelp;
+    int maxLength;
+    string widthStyle;  
 
     protected override void OnInitialized()
     {
@@ -39,17 +42,54 @@
             displayname = Entity.DisplayName;
             comments = $"{Entity.Comments} {Entity.TypeComments}";
             occurs = Utils.GetOccursText(Entity.Occurs);
-            maxLength = 128;   //get length from type
-                               // add regex pattern property of Node
+            maxLength = GetLength(Entity.Type);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
+
+        switch (maxLength)
+        {
+            case int m when ( m <=50):
+                widthStyle = "width: 40%";
+                break;
+            case int m when ( m > 50 && m <= 200):
+                widthStyle = "width: 70%";
+                break;
+            default:
+                widthStyle = "width: 100%";
+                break;
+        }
     }
 
-    public void ToggleHelp()
+    void ToggleHelp()
     {
         bHideHelp = !bHideHelp;
+    }
+
+    int GetLength(string entityType)
+    {
+        int retVal = 0;
+
+        if (entityType.ToLower().Contains("string"))
+        {
+            string tmp = entityType.Replace("string", "");
+            bool ok = int.TryParse(tmp, out int elemLength);
+            if (ok)
+            {
+                retVal = elemLength;
+            }
+            else
+            {
+                retVal = 50;
+            }
+        }
+        else
+        {
+            retVal = 50;
+        }
+
+        return retVal;
     }
 }

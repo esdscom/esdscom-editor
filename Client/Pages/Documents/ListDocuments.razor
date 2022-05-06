@@ -44,10 +44,10 @@
                             Datasheet doc = (docContext as Datasheet);
                             <div class="row">
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Edit</SfButton>
+                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Details</SfButton>
                                 </div>
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => CopyDoc(doc.Id))">Copy</SfButton>
+                                    <SfButton CssClass="e-link" OnClick="@(() => EditSections(doc.Id))">Edit Sections</SfButton>
                                 </div>
                             </div>
                         }
@@ -99,17 +99,23 @@
         AppState.StatusBarMessage = $"total Datasheets available: {docList.Count}";
     }
 
-    private void EditDoc(Guid dsId)
+    private void EditDoc(Guid docId)
     {
         AppState.BackToURL = "/Documents/ListDocuments";
         AppState.BackToURLText = "Back to Datasheet list";
-        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == dsId);       
+        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == docId);       
         nav.NavigateTo("/Documents/EditDocument/false");
     }
 
-    private void CopyDoc(Guid docId)
+    private void EditSections(Guid docId)
     {
-        nav.NavigateTo($"/Documents/DocumentCopy");
+        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == docId);     
+        AppState.ActiveDatasheet.DatasheetXDoc = new();
+        AppState.ActiveDatasheet.DatasheetXDoc.LoadXml(AppState.ActiveDatasheet.DatasheetString); 
+        
+        AppState.StatusBarMessage = $"editing the Datasheet {AppState.ActiveDatasheet.Name}";
+
+        nav.NavigateTo("/Documents/Sections/SectionHome");
     }
 
     private void AddDatasheetToSet()
