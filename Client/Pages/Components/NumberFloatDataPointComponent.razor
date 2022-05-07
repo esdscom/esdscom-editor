@@ -1,7 +1,6 @@
 ﻿
 <div class="row">
     <div class="col">
-
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
     </div>
 </div>
@@ -13,7 +12,7 @@
 </div>
 
 <div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
 @code
@@ -24,11 +23,11 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private string comments;
-    private string occurs;
-    private string displayname;
-    private bool bHideHelp;
-    private float nodeValue = 0;
+    public Dictionary<string, object> HelpItems { get; set; } = new();
+
+    string displayname;
+    bool bHideHelp;
+    float nodeValue = 0;
 
     protected override void OnInitialized()
     {
@@ -42,13 +41,15 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
         }
         else
         {
             displayname = "entity Not found!!!";
         }
+
+       
     }
 
     private void SetValue(ChangeEventArgs args)

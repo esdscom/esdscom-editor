@@ -1,16 +1,24 @@
-﻿<button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
-<br />
-<InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
-
-<div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+﻿<div class="row">
+    <div class="col">
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <br />
+        <InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
+    </div>
 </div>
 
-@code 
+<div hidden="@bHideHelp">
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
+</div>
+
+@code
 {
+    [CascadingParameter] public AppState AppState { get; set; }
+
     [Parameter] public XmlNode Node { get; set; }
 
     [Parameter] public BaseEntity Entity { get; set; }
+
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
     private string comments;
     private string occurs;
@@ -30,16 +38,21 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments =  $"{Entity.Comments} {Entity.TypeComments}";
+            comments = $"{Entity.Comments} {Entity.TypeComments}";
             occurs = Utils.GetOccursText(Entity.Occurs);
+
+            HelpItems.Add("Comments", comments);
+            HelpItems.Add("Occurs", occurs);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
+
+       
     }
 
-    private void SetValue (ChangeEventArgs args)
+    private void SetValue(ChangeEventArgs args)
     {
         Node.InnerText = args.Value.ToString();
     }

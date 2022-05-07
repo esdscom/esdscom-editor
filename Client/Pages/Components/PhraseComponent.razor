@@ -5,21 +5,20 @@
 @inject HttpClient api
 
 <div class="row">
-    <div class="col-2">    
-        <OccursComponent OccursText= "@occurs"/>
+    <div class="col-2">
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
     </div>
     <div class="col-10">
-        <button type="button" class="btn btn-primary" @onclick="SetEditMode">Edit</button>
+        <button type="button" class="btn btn-primary" @onclick="SetEditMode">Select Phrases</button>
     </div>
 </div>
 
-<div hidden="@bHideHelp">   
-     <div class="row">
+<div hidden="@bHideHelp">
+    <div class="row">
         <div class="col">
-             <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" XPath="@xPath" />
+            <DataPointCommentsComponent HelpItems="@HelpItems" />
         </div>
-    </div>   
+    </div>
 </div>
 
 <div class="row m-2">
@@ -28,30 +27,30 @@
     </div>
 </div>
 
-<div class="row"  hidden="@(!bEditMode)">
+<div class="row" hidden="@(!bEditMode)">
     <div class="col">
         <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save</button>
     </div>
 </div>
 
 <div class="row" hidden="@(!bEditMode)">
-       
+
     <div class="col">
-    <SfGrid @ref="@Grid" DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
-            AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
-        <GridPageSettings PageSize="10" />
-        <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
-        <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
-        <GridColumns>
-            @if (showCheckboxes)
-            {
-                <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
-            }
-            <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
-            <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
-        </GridColumns>
-    </SfGrid>
+        <SfGrid DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
+                AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
+            <GridPageSettings PageSize="10" />
+            <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
+            <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
+            <GridColumns>
+                @if (showCheckboxes)
+                {
+                    <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
+                }
+                <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
+            </GridColumns>
+        </SfGrid>
     </div>
 </div>
 
@@ -67,18 +66,13 @@
 
     [Parameter] public EventCallback OnCancel { get; set; }
 
-    SfGrid<Phrase> Grid;
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
     List<Phrase> phraseList;
     List<Phrase> selectedPhraseList = new();
 
-    bool CorePhrases = true;
-    bool ESPhrases = true;
     int phraseCount { get; set; } = 10;
     bool showCheckboxes = true;
-
-    string comments;
-    string occurs;
     string displayname;
     bool bHideHelp;
     bool bEditMode;
@@ -99,15 +93,17 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
+
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
+            HelpItems.Add("eSDSphrac phrase group", xPath);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
 
-        bHideHelp = true;
+        bHideHelp = true;       
     }
 
     SelectionType GetSelectionType()
@@ -167,7 +163,7 @@
             Console.WriteLine($"No XPATH!: {Entity.DisplayName}");
         }
     }
-   
+
     async Task SavePhrases()
     {
         await OnPhrasesSaved.InvokeAsync(selectedPhraseList);

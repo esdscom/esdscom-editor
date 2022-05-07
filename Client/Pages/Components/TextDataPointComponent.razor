@@ -1,6 +1,5 @@
 ﻿<div class="row">
     <div class="col">
-        <OccursComponent OccursText= "@occurs"/>
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
     </div>
 </div>
@@ -11,9 +10,8 @@
     </div>
 </div>
 
-<div hidden="@bHideHelp">
-    <span class="text-info m-2">Maximum length: @maxLength</span>
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+<div hidden="@bHideHelp">    
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
 @code
@@ -24,12 +22,12 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    string comments;
-    string occurs;
     string displayname;
     bool bHideHelp;
     int maxLength;
-    string widthStyle;  
+    string widthStyle;
+
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -40,9 +38,11 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
             maxLength = GetLength(Entity.Type);
+
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
+            HelpItems.Add("Maximum Length", maxLength);
         }
         else
         {
@@ -51,16 +51,16 @@
 
         switch (maxLength)
         {
-            case int m when ( m <=50):
+            case int m when (m <= 50):
                 widthStyle = "width: 40%";
                 break;
-            case int m when ( m > 50 && m <= 200):
+            case int m when (m > 50 && m <= 200):
                 widthStyle = "width: 70%";
                 break;
             default:
                 widthStyle = "width: 100%";
                 break;
-        }
+        }       
     }
 
     void ToggleHelp()

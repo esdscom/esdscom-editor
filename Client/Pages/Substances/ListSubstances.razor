@@ -54,15 +54,22 @@
 
 </div>
 
+@if (ShowSpinner)
+{
+    <Spinner/>
+}
+
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; } 
 
-    private List<Substance> substanceList = new();
-    private int substanceCount { get; set; } = 20;
-    private Substance selectedSubstance = new();
-    private bool Visibility { get; set; } = false;
-    private AppDataService dMgr;
+    List<Substance> substanceList = new();
+    int substanceCount { get; set; } = 20;
+    Substance selectedSubstance = new();
+    bool Visibility { get; set; } = false;
+    bool ShowSpinner;
+    AppDataService dMgr;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -82,12 +89,16 @@
 
     private async Task SetSubstanceList()
     {
+        ShowSpinner = true;
+
         if (AppState.SubstanceList.Count == 0)
         {
             AppState.SubstanceList = await dMgr.GetAllSubstancesAsync();
         }
 
         substanceList = AppState.SubstanceList;
+
+        ShowSpinner = false;
     }
 
     private async Task SetSubstanceCount(ChangeEventArgs e)

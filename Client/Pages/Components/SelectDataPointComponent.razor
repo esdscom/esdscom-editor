@@ -1,5 +1,4 @@
-﻿
-<div class="row">
+﻿<div class="row">
     <div class="col">
         <div class="form-group">
             <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
@@ -13,7 +12,7 @@
         </div>
 
         <div hidden="@bHideHelp">
-            <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+            <DataPointCommentsComponent HelpItems="@HelpItems" />
         </div>
 
     </div>
@@ -27,13 +26,12 @@
     [Parameter] public XmlNode Node { get; set; }
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private string comments;
-    private string occurs;
-    private string displayname;
-    private bool bHideHelp;
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
-    private ElementEnum elementEnum = new();
-    private string[] enumValueArray;
+    string displayname;
+    bool bHideHelp;
+    ElementEnum elementEnum = new();
+    string[] enumValueArray;
 
 
     protected override void OnInitialized()
@@ -58,13 +56,13 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments} Possible Values: {(elementEnum == null ? noOptions : elementEnum.Values)}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments} Possible Values: {(elementEnum == null ? noOptions : elementEnum.Values)}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
         }
         else
         {
             displayname = "Entity not found!!!";
-        }
+        }       
     }
 
     void ChangeValue(ChangeEventArgs e)

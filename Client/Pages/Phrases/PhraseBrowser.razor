@@ -54,6 +54,11 @@
 
 </div>
 
+@if (ShowSpinner)
+{
+    <Spinner/>
+}
+
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
@@ -64,7 +69,8 @@
     int phraseCount { get; set; } = 10;
     string selected { get; set; }
     AppDataService dMgr;
-    bool Visibility { get; set; } = false;
+    bool Visibility;
+    bool ShowSpinner;
     Phrase selectedPhrase = new();
 
     protected override void OnInitialized()
@@ -85,12 +91,16 @@
 
     private void SetPhraseList()
     {
+        ShowSpinner = true;
+
         if (AppState.Phrases is null)
         {
             AppState.Phrases = Utils.GetPhrases();
         }
 
         phraseList = AppState.Phrases;
+
+        ShowSpinner = false;
     }
 
     private void SetPhraseCount(ChangeEventArgs e)

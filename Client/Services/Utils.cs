@@ -280,11 +280,11 @@ public static class Utils
     {
         string occurs = occursValue switch
         {
-            Enums.DataPointOccurence.RequiredExactlyOnce => "<p class='text-danger'> Required - exactly one value </p>",
-            Enums.DataPointOccurence.OptionalZeroOrOne => "<p class='text-info'> Optional -  zero or one values </p>",
-            Enums.DataPointOccurence.RequiredOnceOrMore => "<p class='text-danger'> Required - one or more values </p>",
-            Enums.DataPointOccurence.OptionalZeroOrMore => "<p class='text-info'> Optional -  zero or more values </p>",
-            _ => "<p class='text-danger'> *** No occur setting has been defined *** </p>",
+            Enums.DataPointOccurence.RequiredExactlyOnce => "Required - exactly one value",
+            Enums.DataPointOccurence.OptionalZeroOrOne => "Optional -  zero or one values",
+            Enums.DataPointOccurence.RequiredOnceOrMore => "Required - one or more values",
+            Enums.DataPointOccurence.OptionalZeroOrMore => "Optional -  zero or more values",
+            _ => "*** No occur setting has been defined *** ",
         };
 
         if (IsPhrase)
