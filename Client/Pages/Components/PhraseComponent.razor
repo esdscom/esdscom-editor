@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-2">
-        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@Utils.SplitCamelCase(displayname)</button>
     </div>
     <div class="col-10">
         <button type="button" class="btn btn-primary" @onclick="SetEditMode">Select Phrases</button>
@@ -28,30 +28,32 @@
 </div>
 
 <div class="row" hidden="@(!bEditMode)">
-    <div class="col">
+    <div class="col-2">
         <button type="button" class="btn btn-primary" @onclick="SavePhrases">Save</button>
+    </div>
+    <div class="col-10">
+        <span>@phraseSelectionMessage</span>
     </div>
 </div>
 
-<div class="row" hidden="@(!bEditMode)">
+<div style="height:480px;" hidden="@(!bEditMode)">
 
-    <div class="col">
-        <SfGrid DataSource="@phraseList" EnableVirtualization="true" AllowPaging="true" AllowSorting="true"
-                AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30">
-            <GridPageSettings PageSize="10" />
-            <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
-            <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
-            <GridColumns>
-                @if (showCheckboxes)
-                {
-                    <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
-                }
-                <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
-                <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
-                <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
-            </GridColumns>
-        </SfGrid>
-    </div>
+    <SfGrid DataSource="@phraseList" AllowPaging="true" Height="100%" Width="100%" AllowSorting="true" 
+            AllowFiltering="true" AllowTextWrap="true" AllowSelection="true" RowHeight="30" Toolbar="@(new List<string>() { "Search" })">
+        <GridPageSettings PageSize="10" />
+        <GridEvents RowSelected="RowSelection" TValue="Phrase" RowDeselected="RowDeselection" />
+        <GridSelectionSettings Type="@GetSelectionType()" PersistSelection="true"></GridSelectionSettings>
+        <GridColumns>
+            @if (showCheckboxes)
+            {
+                <GridColumn Type="ColumnType.CheckBox" AllowFiltering="false" AllowSorting="false" Width="60"></GridColumn>
+            }
+            <GridColumn Field=@nameof(Phrase.StrucCode) HeaderText="Structure Code" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Phrase.Region) HeaderText="Region" Width="100"></GridColumn>
+            <GridColumn Field=@nameof(Phrase.English) HeaderText="English" TextAlign="TextAlign.Left" Width="450"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+
 </div>
 
 @code
@@ -62,21 +64,24 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    [Parameter] public EventCallback<List<Phrase>> OnPhrasesSaved { get; set; }
+    // [Parameter] public EventCallback<List<Phrase>> OnPhrasesSaved { get; set; }
 
-    [Parameter] public EventCallback OnCancel { get; set; }
+    //  [Parameter] public EventCallback OnCancel { get; set; }
 
     public Dictionary<string, object> HelpItems { get; set; } = new();
 
     List<Phrase> phraseList;
     List<Phrase> selectedPhraseList = new();
 
-    int phraseCount { get; set; } = 10;
+    // int phraseCount { get; set; } = 10;
     bool showCheckboxes = true;
     string displayname;
     bool bHideHelp;
     bool bEditMode;
     string xPath;
+    string sectionName;
+    string sectionPrefix;
+    string phraseSelectionMessage;
 
     string selected { get; set; }
 
@@ -88,22 +93,29 @@
 
         xPath = XmlUtils.GetFullXPath(Node);
 
-        SetPhraseList(xPath);
-
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
 
             HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
             HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
-            HelpItems.Add("eSDSphrac phrase group", xPath);
+            HelpItems.Add("eSDSxml element path", xPath);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
 
-        bHideHelp = true;       
+        sectionName = AppState.ActiveSectionName;
+        sectionPrefix = $"01.{Utils.GetSectionNumber(sectionName)}";
+
+        SetPhraseList(xPath);
+
+        selected = Node.InnerText;
+
+        bHideHelp = true;
+
+
     }
 
     SelectionType GetSelectionType()
@@ -157,22 +169,35 @@
         if (!string.IsNullOrEmpty(xPath))
         {
             phraseList = AppState.Phrases.Where(p => p.XPath == xPath).ToList();
+
+            phraseSelectionMessage = $"Showing phrases for eSDSxml element: {xPath}";
+            if (phraseList.Count == 0)
+            {
+                phraseList = AppState.Phrases.Where(p => p.StrucCode.StartsWith(sectionPrefix)).ToList();
+                phraseSelectionMessage = $"Showing phrases for section prefix: {@sectionPrefix}";
+            }
         }
         else
         {
+            phraseList = AppState.Phrases;
+            phraseSelectionMessage = "Showing all phrases";
             Console.WriteLine($"No XPATH!: {Entity.DisplayName}");
         }
     }
 
-    async Task SavePhrases()
+    void SavePhrases()
     {
-        await OnPhrasesSaved.InvokeAsync(selectedPhraseList);
+        string phraseText = "";
+        selectedPhraseList.ForEach((p) => { phraseText += $", {p.English}"; });
+        phraseText = phraseText.TrimStart(",".ToCharArray()).Trim(); 
+        Node.InnerText = phraseText;        
+        SetEditMode();
     }
 
-    async Task Close()
-    {
-        await OnCancel.InvokeAsync();
-    }
+    //async Task Close()
+    //{
+    //    await OnCancel.InvokeAsync();
+    //}
 
     void ToggleHelp()
     {

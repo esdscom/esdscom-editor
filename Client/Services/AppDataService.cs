@@ -99,8 +99,15 @@ public class AppDataService
 
     public async Task<Datasheet> UpdateDatasheetAsync(Datasheet datasheet)
     {
+        datasheet.DatasheetString = datasheet.DatasheetXDoc.OuterXml;
+        datasheet.DatasheetXDoc = null;
+
         HttpResponseMessage response = await api.PutAsJsonAsync("datasheet/update", datasheet);
         Datasheet ds = await response.Content.ReadFromJsonAsync<Datasheet>();
+
+        ds.DatasheetXDoc = new();
+        ds.DatasheetXDoc.LoadXml(ds.DatasheetString);
+
         return ds;
     }
 

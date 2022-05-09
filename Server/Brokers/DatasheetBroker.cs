@@ -207,7 +207,7 @@ public class DatasheetBroker : IDatasheetBroker
                                 DATASHEETDOC = $5,
                                 COMMENTS = $6,
                                 REGIONSSTRING = $7
-                            WHERE ID =$8 ";
+                            WHERE ID = $8 ";
 
             using NpgsqlCommand cmd = new(sql, dbConn)
             {
