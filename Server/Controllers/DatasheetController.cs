@@ -7,11 +7,13 @@ namespace eSDSCom.Editor.Server.Controllers;
 public class DatasheetController : Controller
 {
     private readonly DatasheetBroker dBkr;
+    private IConfiguration Configuration;
 
-
-    public DatasheetController()
+    public DatasheetController(IConfiguration _configuration)
     {
-        dBkr = new DatasheetBroker();
+        Configuration = _configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        dBkr = new DatasheetBroker(connString);
     }
 
     [HttpGet]

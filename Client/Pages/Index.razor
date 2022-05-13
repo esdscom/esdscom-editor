@@ -27,14 +27,7 @@
     AppDataService dMgr;
 
     protected override async Task OnInitializedAsync()
-    {
-        @*        #if DEBUG
-        Thread.Sleep(10000);
-
-         vh-100 vw-100
-
-        #endif*@
-
+    {  
         await base.OnInitializedAsync();
 
         dMgr = new(api);
@@ -145,7 +138,7 @@
         CardItem docSetAdd = new()
             {
                 Title = "Create a new Document Set",
-                Comment = "Create a new Document set for authoring",
+                Comment = "Create a new Document set for editing",
                 ActionLink = "/Documents/EditDocumentSet/true",
                 ImageURL = "images/docset.png"
             };

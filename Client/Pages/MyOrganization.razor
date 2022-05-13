@@ -90,9 +90,6 @@
     {
         await base.OnInitializedAsync();
 
-        AppState.BackToURL = string.Empty;
-        AppState.BackToURLText = string.Empty;
-
         dMgr = new(api);
 
         userList = await dMgr.GetUserListForOrganizationAsync(AppState.User.OrganizationId);
@@ -105,17 +102,13 @@
     }
 
     private void AddUser()
-    {
-        AppState.BackToURL = "/MyOrganization";
-        AppState.BackToURLText = "Back to my organization";
+    {        
         AppState.EditUserGuid = Guid.Empty;
         nav.NavigateTo($"/AddEditUser/true");
     }
 
     private void GoToInfo()
     {     
-        AppState.BackToURL = "/MyOrganization";
-        AppState.BackToURLText = "Back to my organization";
         nav.NavigateTo($"/Documents/InformationFromExportingSystemPage");
     }
 

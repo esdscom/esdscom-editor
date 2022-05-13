@@ -14,14 +14,10 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
 {
     private static string ConnectionString;
 
-    public DatasheetFeedBroker() 
+    public DatasheetFeedBroker(string connString) 
     {
-        ConnectionString = DBUtils.GetConnectionString();
-    }
-    public DatasheetFeedBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
-    }
+        ConnectionString = connString;
+    }   
 
     public async Task<DatasheetFeed> Get(Guid organizationId, Guid dsfId)
     {

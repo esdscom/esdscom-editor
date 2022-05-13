@@ -10,7 +10,7 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title" />
+        <PageHeader Title="@title" BackToURL="backToUrl" />
 
         @foreach (XmlNode node in nodes)
         {
@@ -35,10 +35,11 @@
 
     public EditContext CurrentEditContext { get; set; }
 
-    private XmlDocument orgInfoExpSys;
-    private XmlNodeList nodes;
-    private string title;
-    private Organization org;
+    XmlDocument orgInfoExpSys;
+    XmlNodeList nodes;
+    string title;
+    Organization org;
+    string backToUrl;
 
     protected override void OnInitialized()
     {
@@ -62,13 +63,15 @@
         }
 
         CurrentEditContext = new EditContext(orgInfoExpSys);
+
+        backToUrl = "/Documents/EditDocumentSet";
     }
 
     private async Task SaveAsync()
     {
         AppDataService dMgr = new(api);
         AppState.Organization = await dMgr.UpdateOrganizationAsync(org);
-        nav.NavigateTo("/");
+        nav.NavigateTo(backToUrl);
     }
 }
 

@@ -12,14 +12,9 @@ public class OrganizationBroker : IOrganizationBroker
 {
     private readonly string ConnectionString;
 
-    public OrganizationBroker() 
+    public OrganizationBroker(string connString)
     {
-        ConnectionString = DBUtils.GetConnectionString();
-    }
-
-    public OrganizationBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<Organization> Get(Guid orgId)

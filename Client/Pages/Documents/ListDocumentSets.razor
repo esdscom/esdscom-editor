@@ -48,55 +48,52 @@
     </div>
 </div>
 
+@if(ShowSpinner)
+{
+    <Spinner/>
+}
+
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
-    private List<DatasheetFeed> docSetList = new();
-    private AppDataService dMgr;
+    List<DatasheetFeed> docSetList = new();
+    AppDataService dMgr;
+    bool ShowSpinner;
+
 
     protected override async Task OnInitializedAsync()
     {
-        AppState.BackToURL = string.Empty;
-        AppState.BackToURLText = string.Empty;
-        dMgr = new(api);
+        ShowSpinner = true;
 
-        AppState.StatusBarMessage = "fetching Document sets ...";
+        dMgr = new(api);
 
         docSetList = await dMgr.GetDatasheetFeedListForOrganizationAsync(AppState.User.OrganizationId);
 
+        ShowSpinner = false;
+        
         AppState.StatusBarMessage = $"total Document sets available: {docSetList.Count}";
-
     }
 
     private void AddDocSet()
     {
-        AppState.BackToURL = "/Documents/ListDocumentSets";
-        AppState.BackToURLText = "Back to Document set list";
         nav.NavigateTo($"/Documents/EditDocumentSet/true");
     }
 
     private async Task ViewDocSet(Guid dsSetId)
     {
-        AppState.BackToURL = "/Documents/ListDocumentSets";
-        AppState.BackToURLText = "Back to Document set list";
         AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.User.OrganizationId, dsSetId);
         nav.NavigateTo($"/Documents/EditDocumentSet/false");
     }
 
     private async Task ViewLinks(Guid dsSetId)
     {
-        AppState.BackToURL = "/Documents/ListDocumentSets";
-        AppState.BackToURLText = "Back to Document set list";
         AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.User.OrganizationId, dsSetId);
         nav.NavigateTo($"/Documents/ListDocumentsInSet");
     }
 
     private void CopyDocSet(Guid dsSetId)
-    {
-        AppState.BackToURL = "/Documents/ListDocumentSets";
-        AppState.BackToURLText = "Back to Document set list";
+    {        
         nav.NavigateTo($"/Documents/DocumentSetCopy");
     }
-
 }

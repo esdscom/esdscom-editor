@@ -9,7 +9,7 @@
 
     <div class="container-fluid">   
         
-         <PageHeader Title="@title"/>
+         <PageHeader Title="@title" BackToURL="@backToURL"/>
 
         <div class="form-group">
             <label for="itName">Document Set Name</label>
@@ -54,6 +54,7 @@
     AppDataService dMgr;
     EditContext editContext;
     string title;
+    string backToURL;
 
     protected override void OnInitialized()
     {
@@ -68,7 +69,7 @@
         if (IsNew)
         {
             title = "Add a Document Set";
-            //backToURL = "/";
+            backToURL = "/";
             //TODO:  Populate default Info section
             datasheetFeed = new()
                 {
@@ -85,7 +86,7 @@
             datasheetFeed = AppState.ActiveDatasheetFeed; 
             title = $"Edit Document set {datasheetFeed.Name}";
             AppState.StatusBarMessage = "viewing/editing";
-            //backToURL = "/Documents/ListDocumentSets";
+            backToURL = "/Documents/ListDocumentSets";
         }  
     } 
 
@@ -123,7 +124,7 @@
         Close();
     }
 
-    private void Close() => nav.NavigateTo("/Documents/ListDocumentSets");
+    private void Close() => nav.NavigateTo(backToURL);
 
     private void Info()
     {

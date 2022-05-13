@@ -12,14 +12,10 @@ public interface IUserBroker
 public class UserBroker : IUserBroker
 {
     private static string ConnectionString;
-    public UserBroker() 
+    
+    public UserBroker(string connString)
     {
-       ConnectionString = DBUtils.GetConnectionString();
-    }
-
-    public UserBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<User> Get(Guid id)

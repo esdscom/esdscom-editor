@@ -1,4 +1,5 @@
-﻿@page "/Documents/Sections/SectionHome"
+﻿@page "/Documents/Sections/SectionHome/ListDocuments"
+@page "/Documents/Sections/SectionHome/ListDocumentsInSet"
 
 @inject NavigationManager nav
 
@@ -10,7 +11,7 @@
     }
     else
     {
-        <PageHeader Title="Document Sections" />
+        <PageHeader Title="Document Sections" BackToURL="@backToUrl"/>
 
         <div class="card-columns">
             @foreach (XmlNode node in datasheetNodes.ChildNodes)
@@ -27,7 +28,8 @@
 
     [CascadingParameter] public AppState AppState { get; set; }
 
-    bool IsLoading = true;
+    string backToUrl;
+    bool IsLoading;
     XmlNode datasheetNodes;
 
     protected override void OnInitialized()
@@ -36,8 +38,19 @@
 
         try
         {
+            IsLoading = true;
+
             XmlDocument xDoc = AppState.DocumentSetXml;
             datasheetNodes = xDoc.DocumentElement.SelectSingleNode("Datasheet");
+
+            if (nav.Uri.Contains("ListDocumentsInSet"))
+            {
+                backToUrl = "/Documents/ListDocumentsInSet";
+            }
+            else
+            {
+                backToUrl = "/Documents/ListDocuments";
+            }
 
             IsLoading = false;
 

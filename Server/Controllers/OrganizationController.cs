@@ -8,10 +8,13 @@ namespace eSDSCom.Editor.Server.Controllers;
 public class OrganizationController : Controller
 {
     private readonly OrganizationBroker oBkr;
+    private IConfiguration Configuration;
 
-    public OrganizationController()
+    public OrganizationController(IConfiguration configuration)
     {
-        oBkr = new OrganizationBroker();
+        Configuration = configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        oBkr = new OrganizationBroker(connString);       
     }
 
     [HttpGet]

@@ -11,17 +11,11 @@ public class PhraseBroker : IPhraseBroker
     private readonly IMemoryCache cache;
 
     private static string ConnectionString;
-
-    public PhraseBroker(IMemoryCache _cache)
+  
+    public PhraseBroker(IMemoryCache _cache, string connString)
     {
         cache = _cache;
-        ConnectionString = DBUtils.GetConnectionString();
-    }
-
-    public PhraseBroker(IMemoryCache _cache, string testConnectionString)
-    {
-        cache = _cache;
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<Phrase> Get(string strucCode)

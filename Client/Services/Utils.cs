@@ -421,7 +421,6 @@ public static class Utils
             case "Composition":
                 retVal = "03";
                 break;
-                break;
             case "FirstAidMeasures":
                 retVal = "04";
                 break;

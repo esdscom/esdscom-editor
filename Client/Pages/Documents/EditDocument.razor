@@ -2,6 +2,7 @@
 
 @inject NavigationManager nav
 @inject HttpClient api
+@inject IJSRuntime js
 
 <EditForm Model="datasheet" OnValidSubmit="HandleValidSubmit" role="form">
     <DataAnnotationsValidator />
@@ -9,7 +10,7 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title" />
+        <PageHeader Title="@title" BackToURL="@backtoURL" />
 
         @*  <div class="form-group">
         <label for="ddLanguage">Language</label>
@@ -91,7 +92,7 @@
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
              <div class="col-10">
-                <button type="button" class="btn btn-primary" @onclick="GoToSections">Edit Sections</button>
+                <button type="button" class="btn btn-primary" @onclick="Cancel">Cancel</button>
             </div>
         </div>
 
@@ -116,7 +117,7 @@
 
     Datasheet datasheet;
     AppDataService dMgr;
-
+    string backtoURL;
     string title;
     string materialType = "Mixture";
     List<Region> allRegions = new();
@@ -128,9 +129,9 @@
             "Substance"
         };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
         allRegions = Utils.GetRegions();
 
@@ -168,18 +169,22 @@
             datasheet.DatasheetXDoc = new();
             datasheet.DatasheetXDoc.LoadXml(datasheet.DatasheetString);
 
+            materialType = datasheet.MaterialType;
+
             title = $"Editing Datasheet {datasheet.Name}";
             AppState.StatusBarMessage = $"editing the Datasheet {datasheet.Name}";
         }
+
     }
 
 
     private async Task HandleValidSubmit()
     {
-        if (IsNew)
-        {
-            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
+        datasheet.MaterialType = materialType;
+        datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
 
+        if (IsNew)
+        {   
             AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(datasheet);
 
             DatasheetFeedItem dsfi = new()
@@ -192,22 +197,22 @@
 
             //refresh the collection
             AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.ActiveDatasheet.OrganizationId, AppState.ActiveDatasheetFeed.Id);
-
-            AppState.StatusBarMessage = $"added Datasheet and linked to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
-            nav.NavigateTo("/Documents/ListDocumentsInSet");
+            AppState.StatusBarMessage = $"added Datasheet and linked it to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
+           backtoURL = "/Documents/ListDocumentsInSet";
         }
         else
         {
-            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
             AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
             AppState.StatusBarMessage = "updated Datasheet";
-            nav.NavigateTo("/Documents/ListDocuments");
+            backtoURL = "/Documents/ListDocuments";
         }
+
+        nav.NavigateTo(backtoURL);
     }
 
-    void GoToSections()
+    void Cancel()
     {
-       
+         nav.NavigateTo(backtoURL);
     }
 
     void StatusSelectionHandler(int status)
