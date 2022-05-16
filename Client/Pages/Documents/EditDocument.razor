@@ -91,7 +91,7 @@
             <div class="col-2">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
-             <div class="col-10">
+            <div class="col-10">
                 <button type="button" class="btn btn-primary" @onclick="Cancel">Cancel</button>
             </div>
         </div>
@@ -135,6 +135,8 @@
 
         allRegions = Utils.GetRegions();
 
+        backtoURL = "/Documents/ListDocuments";
+
         dMgr = new(api);
 
         if (IsNew)
@@ -174,7 +176,6 @@
             title = $"Editing Datasheet {datasheet.Name}";
             AppState.StatusBarMessage = $"editing the Datasheet {datasheet.Name}";
         }
-
     }
 
 
@@ -184,7 +185,7 @@
         datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
 
         if (IsNew)
-        {   
+        {
             AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(datasheet);
 
             DatasheetFeedItem dsfi = new()
@@ -198,13 +199,11 @@
             //refresh the collection
             AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.ActiveDatasheet.OrganizationId, AppState.ActiveDatasheetFeed.Id);
             AppState.StatusBarMessage = $"added Datasheet and linked it to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
-           backtoURL = "/Documents/ListDocumentsInSet";
         }
         else
         {
             AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
             AppState.StatusBarMessage = "updated Datasheet";
-            backtoURL = "/Documents/ListDocuments";
         }
 
         nav.NavigateTo(backtoURL);
@@ -212,7 +211,7 @@
 
     void Cancel()
     {
-         nav.NavigateTo(backtoURL);
+        nav.NavigateTo(backtoURL);
     }
 
     void StatusSelectionHandler(int status)

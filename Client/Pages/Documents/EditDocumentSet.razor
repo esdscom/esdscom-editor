@@ -101,9 +101,9 @@
 
         XmlNode infoNode = xDoc.DocumentElement.SelectSingleNode("InformationFromExportingSystem");
 
-        if (AppState.Organization.InfoExSys is not null)
+        if (AppState.Organization.InfoExSysString is not null)
         {
-            infoNode.InnerXml = AppState.Organization.InfoExSys;
+            infoNode.InnerXml = AppState.Organization.InfoExSysString;
         }
 
         return infoNode;

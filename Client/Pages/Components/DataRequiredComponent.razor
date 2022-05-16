@@ -1,0 +1,20 @@
+﻿<span class="@dotClass"></span>
+
+@code
+{
+    [CascadingParameter] public AppState AppState { get; set; }
+
+    [Parameter] public BaseEntity Entity { get; set; }
+
+    string dotClass = "optionaldot";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (Entity.Occurs == Enums.DataPointOccurence.RequiredExactlyOnce || Entity.Occurs == Enums.DataPointOccurence.RequiredOnceOrMore)
+        {
+            dotClass = "requireddot";
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿<div class="row">
     <div class="col">
+        <DataRequiredComponent Entity="@Entity"/>
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@Utils.SplitCamelCase(displayname)</button>
         <br />
         <InputDate class="form-control" @bind-Value="selectedDate" @oninput="@((e) => DateTimeChanged(e))" DisplayName="@displayname" style="width:25%" />
@@ -19,8 +20,8 @@
 
     public Dictionary<string, object> HelpItems { get; set; } = new();
 
-    private string displayname;
-    private bool bHideHelp;
+    string displayname;
+    bool bHideHelp;
 
     private DateTime selectedDate;
 
@@ -45,6 +46,7 @@
             displayname = "entity Not found!!!";
         }
 
+       
        
     }
 

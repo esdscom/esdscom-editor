@@ -3,14 +3,13 @@
 @inject NavigationManager nav
 @inject HttpClient api
 
-
 <EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title" BackToURL="backToUrl" />
+        <PageHeader Title="@title" BackToURL="@backToUrl" />
 
         @foreach (XmlNode node in nodes)
         {
@@ -18,8 +17,8 @@
 
             <ComplexTypeComponent Node="@node" Entity="@entity" />
         }
-        <div class="row">
 
+        <div class="row">
             <div class="col">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
@@ -64,7 +63,7 @@
 
         CurrentEditContext = new EditContext(orgInfoExpSys);
 
-        backToUrl = "/Documents/EditDocumentSet";
+        backToUrl = "/Documents/EditDocumentSet/false";
     }
 
     private async Task SaveAsync()

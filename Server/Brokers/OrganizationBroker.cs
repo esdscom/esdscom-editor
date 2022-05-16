@@ -75,7 +75,7 @@ public class OrganizationBroker : IOrganizationBroker
                     new() { Value = org.OrganizationType },
                     new() { Value = org.Name },
                     new() { Value = org.Address },
-                    new() { Value = org.InfoExSys },
+                    new() { Value = org.InfoExSysString },
                 }
             };
 
@@ -119,7 +119,7 @@ public class OrganizationBroker : IOrganizationBroker
                     new() { Value = org.OrganizationType },
                     new() { Value = org.Name },
                     new() { Value = org.Address },
-                    new() { Value = org.InfoExSys },
+                    new() { Value = org.InfoExSysString },
                     new() { Value = org.Id }
                 }
             };

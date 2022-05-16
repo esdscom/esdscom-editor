@@ -82,7 +82,7 @@
         {
             AppState.Organization = await dMgr.GetOrganizationAsync(orgGuid);
             AppState.Organization.InfoExSysXDoc = new();
-            AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSys);
+            AppState.Organization.InfoExSysXDoc.LoadXml(AppState.Organization.InfoExSysString);
         }
 
         //if (AppState.ActiveDatasheet is null)

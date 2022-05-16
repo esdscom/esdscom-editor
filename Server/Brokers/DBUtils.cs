@@ -66,7 +66,7 @@ public static class DBUtils
             Address             = reader["Address"] as string,
             CreatedDate         = reader.GetDateTime("CreatedDate"),
             UpdatedDate         = reader.GetDateTime("UpdatedDate"),
-            InfoExSys           = reader["InformationFromExportingSystem"] as string            
+            InfoExSysString           = reader["InformationFromExportingSystem"] as string            
         };
     }
 

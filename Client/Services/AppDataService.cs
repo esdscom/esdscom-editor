@@ -69,14 +69,30 @@ public class AppDataService
 
     public async Task<Organization> AddOrganizationAsync(Organization organization)
     {
+        organization.InfoExSysString = organization.InfoExSysXDoc.OuterXml;
+        organization.InfoExSysXDoc = null;
+
         HttpResponseMessage response = await api.PostAsJsonAsync("organization/add", organization);
-        return await response.Content.ReadFromJsonAsync<Organization>();
+        organization = await response.Content.ReadFromJsonAsync<Organization>();
+
+        organization.InfoExSysXDoc = new();
+        organization.InfoExSysXDoc.LoadXml(organization.InfoExSysString);
+
+        return organization;
     }
 
     public async Task<Organization> UpdateOrganizationAsync(Organization organization)
     {
+        organization.InfoExSysString = organization.InfoExSysXDoc.OuterXml;
+        organization.InfoExSysXDoc = null;
+
         HttpResponseMessage response = await api.PutAsJsonAsync("organization/update", organization);
-        return await response.Content.ReadFromJsonAsync<Organization>();
+        organization =  await response.Content.ReadFromJsonAsync<Organization>();
+
+        organization.InfoExSysXDoc = new();
+        organization.InfoExSysXDoc.LoadXml(organization.InfoExSysString);
+
+        return organization;
     }
 
     public async Task<Organization> GetOrganizationAsync(Guid organizationId)

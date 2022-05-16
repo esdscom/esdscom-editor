@@ -47,7 +47,7 @@ public class BaseTestData : IClassFixture<DatabaseFixture>
             Name = "A Test Organization",
             Address = "123 Smith Street",
             OrganizationType = "Org Type 1",
-            InfoExSys = "<InformationFromExportingSystem/>"
+            InfoExSysString = "<InformationFromExportingSystem/>"
         };
     }
 

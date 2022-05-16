@@ -59,9 +59,9 @@ a, .btn-link {
     color: white;
 }
 
-.blazor-error-boundary::after {
-    content: "An error has occurred."
-}
+    .blazor-error-boundary::after {
+        content: "An error has occurred."
+    }
 
 
 .form-control-inline {
@@ -76,4 +76,24 @@ a, .btn-link {
     bottom: 0;
     background-color: lightgray;
     text-align: left;
+}
+
+.optionaldot {
+    height: 15px;
+    width: 15px;
+    background-color: slategray;
+    border-radius: 50%;
+    display: inline-block;
+    align-content: center;
+    justify-content: center;
+}
+
+.requireddot {
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    align-content: center;
+    justify-content: center;
 }

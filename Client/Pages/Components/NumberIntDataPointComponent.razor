@@ -1,5 +1,6 @@
 ﻿<div class="row">
     <div class="col">
+         <DataRequiredComponent Entity="@Entity"/>
         <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
         <br />
         <InputNumber class="form-control" @bind-Value="@nodeValue" @oninput="@((e) => SetValue(e))" />
