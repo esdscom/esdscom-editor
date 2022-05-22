@@ -38,7 +38,7 @@
             AppState.DocumentSetXml = Utils.GetDocumentSetXml();
         }
 
-        AppState.ESDSphracCatalogueName = "eSDScomphrac";
+        AppState.ESDSphracCatalogueName = "eSDSphrac";
         AppState.ESDSphracPhraseCatalogueId = "1";
         AppState.ESDSPhraCVersion = "5.0";
         AppState.ESDSXmlVersion = "5.4.1";
@@ -125,7 +125,6 @@
 
     private List<CardItem> BuildCardItems()
     {
-
         CardItem docSets = new()
             {
                 Title = "Document Set List",
@@ -156,7 +155,7 @@
         CardItem substances = new()
             {
                 Title = "Substances",
-                Comment = "Search the list of provided Substances",
+                Comment = "Search the list of Substances",
                 ActionLink = "/Substances/ListSubstances",
                 ImageURL = "images/substance.png"
             };

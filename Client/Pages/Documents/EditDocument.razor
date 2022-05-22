@@ -30,18 +30,16 @@
         </div>
 
         <div class="row">
-            <div class="col-6 form-group">
-                <div class="form-group">
+            <div class="col-3 form-group">
                     <label for="ddMaterialType">Material Type</label>
-                    <InputSelect class="form-group" id="ddMaterialType" @bind-Value="@materialType" width="100">
+                    <InputSelect class="form-control" id="ddMaterialType" @bind-Value="@materialType">
                         @foreach (string materialTypeName in materialTypeList)
                         {
                             <option value="@materialTypeName">@materialTypeName</option>
                         }
                     </InputSelect>
-                </div>
             </div>
-            <div class="col-6">
+            <div class="col-9">
                 <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler" />
             </div>
         </div>
