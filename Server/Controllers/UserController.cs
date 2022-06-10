@@ -6,10 +6,14 @@ namespace eSDSCom.Editor.Server.Controllers;
 [Route("[controller]")]
 public class UserController : Controller
 {
-    private readonly UserBroker uBkr;
-    public UserController()
+    readonly UserBroker uBkr;
+    IConfiguration Configuration;
+
+    public UserController(IConfiguration configuration)
     {
-        uBkr = new UserBroker();
+        Configuration = configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        uBkr = new UserBroker(connString);        
     }
 
     [HttpGet]

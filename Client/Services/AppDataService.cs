@@ -69,14 +69,30 @@ public class AppDataService
 
     public async Task<Organization> AddOrganizationAsync(Organization organization)
     {
+        organization.InfoExSysString = organization.InfoExSysXDoc.OuterXml;
+        organization.InfoExSysXDoc = null;
+
         HttpResponseMessage response = await api.PostAsJsonAsync("organization/add", organization);
-        return await response.Content.ReadFromJsonAsync<Organization>();
+        organization = await response.Content.ReadFromJsonAsync<Organization>();
+
+        organization.InfoExSysXDoc = new();
+        organization.InfoExSysXDoc.LoadXml(organization.InfoExSysString);
+
+        return organization;
     }
 
     public async Task<Organization> UpdateOrganizationAsync(Organization organization)
     {
+        organization.InfoExSysString = organization.InfoExSysXDoc.OuterXml;
+        organization.InfoExSysXDoc = null;
+
         HttpResponseMessage response = await api.PutAsJsonAsync("organization/update", organization);
-        return await response.Content.ReadFromJsonAsync<Organization>();
+        organization =  await response.Content.ReadFromJsonAsync<Organization>();
+
+        organization.InfoExSysXDoc = new();
+        organization.InfoExSysXDoc.LoadXml(organization.InfoExSysString);
+
+        return organization;
     }
 
     public async Task<Organization> GetOrganizationAsync(Guid organizationId)
@@ -99,8 +115,15 @@ public class AppDataService
 
     public async Task<Datasheet> UpdateDatasheetAsync(Datasheet datasheet)
     {
+        datasheet.DatasheetString = datasheet.DatasheetXDoc.OuterXml;
+        datasheet.DatasheetXDoc = null;
+
         HttpResponseMessage response = await api.PutAsJsonAsync("datasheet/update", datasheet);
         Datasheet ds = await response.Content.ReadFromJsonAsync<Datasheet>();
+
+        ds.DatasheetXDoc = new();
+        ds.DatasheetXDoc.LoadXml(ds.DatasheetString);
+
         return ds;
     }
 

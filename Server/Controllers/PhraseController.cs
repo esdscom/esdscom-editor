@@ -5,9 +5,13 @@
 public class PhraseController : Controller
 {
     private readonly PhraseBroker pBkr;
-    public PhraseController(IMemoryCache cache)
+    private IConfiguration Configuration;
+
+    public PhraseController(IMemoryCache cache, IConfiguration configuration)
     {
-        pBkr = new(cache);
+        Configuration = configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        pBkr = new(cache, connString);       
     }
 
     [HttpGet]

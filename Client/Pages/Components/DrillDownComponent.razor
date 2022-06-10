@@ -10,7 +10,7 @@
 </div>
 
 <div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
 @code
@@ -21,8 +21,8 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    string comments;
-    string occurs;
+    public Dictionary<string, object> HelpItems { get; set; } = new();
+
     string displayname;
     bool bHideHelp;
     string xPath;
@@ -32,20 +32,21 @@
         base.OnInitialized();
 
         bHideHelp = true;
+        xPath = XmlUtils.GetFullXPath(Node);
 
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
-            
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
+            HelpItems.Add("eSDSphrac phrase group", xPath);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
 
-        xPath = XmlUtils.GetFullXPath(Node);
+        
     }
 
     private void ToggleHelp()

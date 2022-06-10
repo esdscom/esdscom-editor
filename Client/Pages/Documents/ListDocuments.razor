@@ -11,7 +11,7 @@
 
 <div class="container-fluid">
 
-    <PageHeader Title="@pageTitle"/>
+    <PageHeader Title="@pageTitle" BackToURL="@backToUrl"/>
 
     @if (ShowAdd)
     {
@@ -28,7 +28,8 @@
             <GridColumns>
                 <GridColumn Field=@nameof(Datasheet.Id) HeaderText="ID" Visible="false" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(Datasheet.Name) HeaderText="Name" Width="300"></GridColumn>
-                <GridColumn HeaderText="Status" Width="300">
+                <GridColumn Field=@nameof(Datasheet.MaterialType) HeaderText="Material Type" Width="100"></GridColumn>
+                <GridColumn HeaderText="Status" Width="100">
                     <Template Context="docContext">
                         @{
                             Datasheet doc = (docContext as Datasheet);
@@ -36,18 +37,18 @@
                         }
                     </Template>
                 </GridColumn>
-                <GridColumn Field=@nameof(Datasheet.UserName) HeaderText="Author" Width="300"></GridColumn>
-                <GridColumn Field=@nameof(Datasheet.CreatedDate) HeaderText="Created Date" Width="120"></GridColumn>
-                <GridColumn HeaderText="Actions" TextAlign="TextAlign.Center" Width="200">
+                <GridColumn Field=@nameof(Datasheet.UserName) HeaderText="Author" Width="100"></GridColumn>
+                <GridColumn Field=@nameof(Datasheet.CreatedDate) HeaderText="Created Date" Width="100"></GridColumn>
+                <GridColumn HeaderText="Actions" TextAlign="TextAlign.Center" Width="150">
                     <Template Context="docContext">
                         @{
                             Datasheet doc = (docContext as Datasheet);
                             <div class="row">
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Edit</SfButton>
+                                    <SfButton CssClass="e-link" OnClick="@(() => EditDoc(doc.Id))">Details</SfButton>
                                 </div>
                                 <div class="col-4">
-                                    <SfButton CssClass="e-link" OnClick="@(() => CopyDoc(doc.Id))">Copy</SfButton>
+                                    <SfButton CssClass="e-link" OnClick="@(() => EditSections(doc.Id))">Edit Sections</SfButton>
                                 </div>
                             </div>
                         }
@@ -58,6 +59,11 @@
     </div>
 </div>
 
+@if(ShowSpinner)
+{
+    <Spinner/>
+}
+
 @code
 {
     [CascadingParameter] public AppState AppState { get; set; }
@@ -65,57 +71,63 @@
     List<Datasheet> docList = new();
     AppDataService dMgr;
     string pageTitle = string.Empty;
-    bool ShowAdd = false;
+    bool ShowAdd;
+    bool ShowSpinner;
+    string backToUrl;
+    string sectionSuffix;
 
     protected override async Task OnInitializedAsync()
     {
         dMgr = new(api);
 
-        AppState.StatusBarMessage = "fetching Datasheets ...";
+        ShowSpinner = true;
 
         if (nav.Uri.Contains("ListDocumentsInSet"))
         {       
-            AppState.BackToURL = "/Documents/ListDocumentSets";
-            AppState.BackToURLText = "Back to Document set list";
+            backToUrl = "/Documents/ListDocumentSets";
+            sectionSuffix = "ListDocumentsInSet";
 
             foreach (var item in AppState.ActiveDatasheetFeed.DatasheetItems)
             {
                 docList.Add(item.Datasheet);
             }
-            
+
             pageTitle = $"Documents for my organization in Document set {AppState.ActiveDatasheetFeed.Name}";
             ShowAdd = true;
         }
         else
         {
-            AppState.BackToURL = string.Empty;
-            AppState.BackToURLText = string.Empty;
-
+            backToUrl = "/";
+            sectionSuffix = "ListDocuments";
             docList = await dMgr.GetDatasheetListForOrganizationAsync(AppState.User.OrganizationId);
             pageTitle = "Datasheets for my organization";
             ShowAdd = false;
         }
 
         AppState.StatusBarMessage = $"total Datasheets available: {docList.Count}";
+
+        ShowSpinner = false;
     }
 
-    private void EditDoc(Guid dsId)
+    private void EditDoc(Guid docId)
     {
-        AppState.BackToURL = "/Documents/ListDocuments";
-        AppState.BackToURLText = "Back to Datasheet list";
-        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == dsId);       
+        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == docId);       
         nav.NavigateTo("/Documents/EditDocument/false");
     }
 
-    private void CopyDoc(Guid docId)
+    private void EditSections(Guid docId)
     {
-        nav.NavigateTo($"/Documents/DocumentCopy");
+        AppState.ActiveDatasheet = docList.FirstOrDefault(d => d.Id == docId);     
+        AppState.ActiveDatasheet.DatasheetXDoc = new();
+        AppState.ActiveDatasheet.DatasheetXDoc.LoadXml(AppState.ActiveDatasheet.DatasheetString); 
+        
+        AppState.StatusBarMessage = $"editing the Datasheet {AppState.ActiveDatasheet.Name}";
+
+        nav.NavigateTo($"/Documents/Sections/SectionHome/{sectionSuffix}");
     }
 
     private void AddDatasheetToSet()
     {       
-        AppState.BackToURL = "/Documents/ListDocumentsInSet";
-        AppState.BackToURLText = "Back to Linked Datasheet list";
         nav.NavigateTo($"/Documents/EditDocument/true");
     }
 }

@@ -53,14 +53,14 @@ public static class XmlUtils
                     node = node.ParentNode;
                     break;
                 case XmlNodeType.Document:
-                    xPath = $@"//{xPath}";
+                    xPath = $@"//DatasheetFeed/{xPath}";
                     return xPath.TrimEnd(@"/".ToCharArray());
                 default:
                     throw new ArgumentException("Only elements and attributes are supported");
             }
         }
 
-        return xPath.TrimEnd(@"/".ToCharArray()); ;
+        return "" ;
     }
 }
 

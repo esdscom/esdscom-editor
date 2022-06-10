@@ -19,20 +19,12 @@ public class SubstanceBroker : ISubstanceBroker
 {
     private readonly IMemoryCache cache;
     private static string ConnectionString;
-
-
-    public SubstanceBroker(IMemoryCache _cache)
+   
+    public SubstanceBroker(IMemoryCache _cache, string connString)
     {
         cache = _cache;
-        ConnectionString = DBUtils.GetConnectionString();
+        ConnectionString = connString;
     }
-
-    public SubstanceBroker(IMemoryCache _cache, string testConnectionString)
-    {
-        cache = _cache;
-        ConnectionString = testConnectionString;
-    }
-
 
     public async Task<Substance> Get(Guid id)
     {
@@ -186,6 +178,7 @@ public class SubstanceBroker : ISubstanceBroker
                 subsList.Add(DBUtils.GetSubstanceFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
 
             cache.Set("AllSubstances", subsList);
         }

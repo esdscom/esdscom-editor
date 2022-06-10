@@ -17,15 +17,15 @@ public class DatasheetBroker : IDatasheetBroker
 
     private static string ConnectionString;
 
-    public DatasheetBroker() 
+    public DatasheetBroker(string connString) 
     {
-        ConnectionString = DBUtils.GetConnectionString();
+        ConnectionString = connString;
     }
 
-    public DatasheetBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
-    }
+    //public DatasheetBroker(string testConnectionString)
+    //{
+    //    ConnectionString = testConnectionString;
+    //}
 
     public async Task<Datasheet> Get(Guid organizationId, Guid dsId)
     {
@@ -58,6 +58,7 @@ public class DatasheetBroker : IDatasheetBroker
                 ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -78,7 +79,7 @@ public class DatasheetBroker : IDatasheetBroker
         {
             using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"SELECT   ds.Id, ds.ORGANIZATIONID, ds.USERID, ds.NAME, 
-                                    ds.CREATEDDATE, ds.UPDATEDDATE, ds.STATUS, ds.COMMENTS, '' as DatasheetDoc, ds.REGIONSSTRING,
+                                    ds.CREATEDDATE, ds.UPDATEDDATE, ds.STATUS, ds.COMMENTS, '' as DatasheetDoc, ds.REGIONSSTRING, ds.MATERIALTYPE
                                     u.NAME as USERNAME 
                             FROM DATASHEETS ds , USERS u
                             WHERE ds.USERID = u.ID
@@ -100,6 +101,7 @@ public class DatasheetBroker : IDatasheetBroker
                 ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -139,6 +141,7 @@ public class DatasheetBroker : IDatasheetBroker
             }
 
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -155,9 +158,9 @@ public class DatasheetBroker : IDatasheetBroker
         {
             using NpgsqlConnection dbConn = new(ConnectionString);
             string sql = @"INSERT INTO Datasheets
-                                (ID, ORGANIZATIONID, USERID, NAME, STATUS, DATASHEETDOC, COMMENTS, REGIONSSTRING)
+                                (ID, ORGANIZATIONID, USERID, NAME, STATUS, DATASHEETDOC, COMMENTS, REGIONSSTRING, MATERIALTYPE)
                             VALUES
-                                ($1, $2, $3, $4, $5, $6, $7, $8) ";
+                                ($1, $2, $3, $4, $5, $6, $7, $8, $9) ";
 
             using NpgsqlCommand cmd = new(sql, dbConn)
             {
@@ -170,7 +173,8 @@ public class DatasheetBroker : IDatasheetBroker
                     new() { Value = ds.Status },
                     new() { Value = ds.DatasheetString},
                     new() { Value = ds.Comments },
-                    new() { Value = ds.RegionsString }
+                    new() { Value = ds.RegionsString },
+                    new() { Value = ds.MaterialType }
                 }
             };
 
@@ -206,8 +210,9 @@ public class DatasheetBroker : IDatasheetBroker
                                 STATUS = $4,
                                 DATASHEETDOC = $5,
                                 COMMENTS = $6,
-                                REGIONSSTRING = $7
-                            WHERE ID =$8 ";
+                                REGIONSSTRING = $7,
+                                MATERIALTYPE = $8
+                            WHERE ID = $9 ";
 
             using NpgsqlCommand cmd = new(sql, dbConn)
             {
@@ -220,6 +225,7 @@ public class DatasheetBroker : IDatasheetBroker
                     new() { Value = ds.DatasheetString },
                     new() { Value = ds.Comments },
                     new() { Value = ds.RegionsString },
+                    new() { Value = ds.MaterialType },
                     new() { Value = ds.Id },
 
                 }

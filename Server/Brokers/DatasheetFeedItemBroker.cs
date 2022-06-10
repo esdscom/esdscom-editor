@@ -11,14 +11,10 @@ public interface IDatasheetFeedItemBroker
 public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
 {
     private static string ConnectionString;
-    public DatasheetFeedItemBroker() 
-    {
-        ConnectionString = DBUtils.GetConnectionString();    
-    }
 
-    public DatasheetFeedItemBroker(string testConnectionString)
+    public DatasheetFeedItemBroker(string connString)
     {
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<DatasheetFeedItem> Get(Guid datasheetFeedId, Guid datasheetId)
@@ -48,6 +44,7 @@ public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
                 dsfi = DBUtils.GetDatasheetFeedItemFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -82,6 +79,7 @@ public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
                 dsfiList.Add(DBUtils.GetDatasheetFeedItemFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

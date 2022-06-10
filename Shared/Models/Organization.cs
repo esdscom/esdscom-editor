@@ -13,7 +13,7 @@ public class Organization : BaseModel
 
     public string Address { get; set; }
 
-    public string InfoExSys { get; set; }
+    public string InfoExSysString { get; set; }
 
     public XmlDocument InfoExSysXDoc { get; set; }
 

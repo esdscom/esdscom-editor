@@ -34,14 +34,14 @@
 
 
     @*    <span>Phrase Id: @strPhraseIdAttr</span>
-        <span>Phrase Cat Id: @strPhraseCatalogueIdAttr</span>
+    <span>Phrase Cat Id: @strPhraseCatalogueIdAttr</span>
 
-        <span>Merge Phrase(s):</span>
-        <span>Phrase Id: @strMergePhraseIdAttr</span>
-        <span>Delimiter: @strDelimiterNode</span>
-        <span>Phrase Cat Id: @strMergePhraseCatalogueIdAttr</span>
-        <span>Phrase No: @strMergePhraseNoAttr</span>
-        <span>List Item No:@strMergeListItemNoAttr</span>*@
+    <span>Merge Phrase(s):</span>
+    <span>Phrase Id: @strMergePhraseIdAttr</span>
+    <span>Delimiter: @strDelimiterNode</span>
+    <span>Phrase Cat Id: @strMergePhraseCatalogueIdAttr</span>
+    <span>Phrase No: @strMergePhraseNoAttr</span>
+    <span>List Item No:@strMergeListItemNoAttr</span>*@
 
 </div>
 
@@ -55,7 +55,7 @@
 </style>
 
 <div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
 @code
@@ -66,44 +66,37 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private ResizeDirection[] dialogResizeDirections { get; set; } = new ResizeDirection[] { ResizeDirection.All };
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
-    private string comments;
-    private string occurs;
-    private string displayname;
+    ResizeDirection[] dialogResizeDirections { get; set; } = new ResizeDirection[] { ResizeDirection.All };
 
-    private bool bHideHelp = true;
-    private bool Visibility = false;
 
-    private XmlNode PhraseCodeNode;
-    private XmlNode FullTextNode;
-    private XmlNode MergePhraseNode;
-    private XmlNode NewLineNode;
-    private XmlAttribute PhraseIdAttr;
-    private XmlAttribute PhraseCatalogueIdAttr;
+    XmlNode PhraseCodeNode;
+    XmlNode FullTextNode;
+    XmlNode MergePhraseNode;
+    XmlNode NewLineNode;
+    XmlAttribute PhraseIdAttr;
+    XmlAttribute PhraseCatalogueIdAttr;
+    XmlNode MergeTextNode;
+    XmlNode DelimiterNode;
+    XmlAttribute MergePhraseIdAttr;
+    XmlAttribute MergePhraseCatalogueIdAttr;
+    XmlAttribute MergePhraseNoAttr;
+    XmlAttribute MergeListItemNoAttr;
 
-    private XmlNode MergeTextNode;
-    private XmlNode DelimiterNode;
 
-    private XmlAttribute MergePhraseIdAttr;
-    private XmlAttribute MergePhraseCatalogueIdAttr;
-    private XmlAttribute MergePhraseNoAttr;
-    private XmlAttribute MergeListItemNoAttr;
-
-    private string strPhraseCodeNode;
-    private string strFullTextNode;
-   // private string strMergePhraseNode;
-   // private string strNewLineNode;
-    private string strPhraseIdAttr;
-    private string strPhraseCatalogueIdAttr;
-
- //   private string strMergeTextNode;
-    private string strDelimiterNode;
-
-    private string strMergePhraseIdAttr;
-    private string strMergePhraseCatalogueIdAttr;
-    private string strMergePhraseNoAttr;
-    private string strMergeListItemNoAttr;
+    string displayname;
+    bool bHideHelp = true;
+    bool Visibility = false;
+    string strPhraseCodeNode;
+    string strFullTextNode;
+    string strPhraseIdAttr;
+    string strPhraseCatalogueIdAttr;
+    string strDelimiterNode;
+    string strMergePhraseIdAttr;
+    string strMergePhraseCatalogueIdAttr;
+    string strMergePhraseNoAttr;
+    string strMergeListItemNoAttr;
 
     protected override void OnInitialized()
     {
@@ -111,8 +104,8 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
         }
         else
         {
@@ -149,6 +142,7 @@
             strMergeListItemNoAttr = MergeListItemNoAttr.Value;
         }
 
+       
     }
 
     private void DisplayPhraseSelector()

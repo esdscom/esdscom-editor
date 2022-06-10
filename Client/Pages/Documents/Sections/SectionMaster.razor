@@ -6,10 +6,24 @@
 <EditForm EditContext="CurrentEditContext" OnValidSubmit="SaveAsync">
 
     <div class="container-fluid">
+         <div class="row border border-primary mb-3">
+            <div class="col align-self-start">
+                <span>@itemName</span>
+            </div>
+             <div class="col align-self-end">
+                <span>@sectionName</span>
+            </div>
+        </div>
+        <div class="row d-flex mb-3">
+            <div class="col align-self-start">
+                <button type="submit" class="btn btn-success">Save All Changes</button>
+            </div>
+             <div class="col align-self-end">
+                <button type="button" class="btn btn-secondary" @onclick="GoSectionHome">Back</button>
+            </div>
+        </div>
 
-        <ComplexTypeComponent Node="@activeNode" Entity="@entity" />
-
-        <button type="submit" class="btn btn-primary">Save</button>
+         <ComplexTypeComponent Node="@activeNode" Entity="@entity" />  
 
     </div>
 
@@ -22,11 +36,13 @@
     [Parameter] public string NodeName { get; set; }
     [Parameter] public string EntityType { get; set; }
 
-
     public EditContext CurrentEditContext { get; set; }
 
-    private XmlNode activeNode;
-    private BaseEntity entity;
+    XmlNode activeNode;
+    BaseEntity entity;
+    bool IsInfoExpSys;
+    string itemName;
+    string sectionName;
 
     protected override void OnInitialized()
     {
@@ -35,29 +51,66 @@
 
     protected override void OnParametersSet()
     {
-        base.OnParametersSet();
-
-        if (NodeName.Contains(@"/"))  //this hack is needed because blazor router strips // from front of xpath for some reason
+        try
         {
-            NodeName = @$"//{NodeName}";
+            base.OnParametersSet();
+
+            if (NodeName.Contains(@"/"))  //this hack is needed because blazor router(?) strips // from front of xpath for some reason
+            {
+                NodeName = NodeName.Replace(@"DatasheetFeed", @"/");
+            }
+
+            IsInfoExpSys = nav.Uri.Contains("InformationFromExportingSystem");
+
+            if (!IsInfoExpSys)
+            {   
+                activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);
+                itemName = $"Datasheet {AppState.ActiveDatasheet.Name}";
+                sectionName = $"Section: {Utils.SplitCamelCase(AppState.ActiveSectionName)}"; 
+            }
+            else
+            {
+                activeNode = AppState.Organization.InfoExSysXDoc.DocumentElement.SelectSingleNode(NodeName);
+                itemName = $"Info From Exp System for {AppState.Organization.Name}";
+                sectionName = "Information from Exporting System";
+            }
+
+
+            entity = AppState.SchemaElements.Where(s => s.NodeName == activeNode.Name).FirstOrDefault();
+
+            CurrentEditContext = new EditContext(activeNode);
         }
-
-        activeNode = AppState.ActiveDatasheet.DatasheetXDoc.DocumentElement.SelectSingleNode(NodeName);
-
-        entity = AppState.SchemaElements.Where(s => s.NodeName == activeNode.Name).FirstOrDefault();
-
-        CurrentEditContext = new EditContext(activeNode);
-
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.StackTrace);
+        }
     }
 
-    private async Task SaveAsync()
+    async Task SaveAsync()
     {
         AppDataService dMgr = new(api);
 
-        AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(AppState.ActiveDatasheet);
+        if (!IsInfoExpSys)
+        {
+            AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(AppState.ActiveDatasheet);
+        }
+        else
+        {
+            AppState.Organization   = await dMgr.UpdateOrganizationAsync(AppState.Organization);
+        }
 
-        AppState.StatusBarMessage = "Datasheet saved";
+        AppState.StatusBarMessage = "Data saved";
+    }
 
-        nav.NavigateTo("/Documents/Sections/SectionHome");
+    void GoSectionHome()
+    {
+        if (!IsInfoExpSys)
+        {
+            nav.NavigateTo("/Documents/Sections/SectionHome");
+        }
+        else
+        {
+            nav.NavigateTo("/Documents/EditDocumentSet/false");
+        }
     }
 }

@@ -14,14 +14,10 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
 {
     private static string ConnectionString;
 
-    public DatasheetFeedBroker() 
+    public DatasheetFeedBroker(string connString) 
     {
-        ConnectionString = DBUtils.GetConnectionString();
-    }
-    public DatasheetFeedBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
-    }
+        ConnectionString = connString;
+    }   
 
     public async Task<DatasheetFeed> Get(Guid organizationId, Guid dsfId)
     {
@@ -54,6 +50,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
             }
 
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -93,6 +90,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
                 dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -133,6 +131,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
                 dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

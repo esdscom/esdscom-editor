@@ -4,11 +4,14 @@
 [Route("[controller]")]
 public class SubstanceController : Controller
 {
-    private readonly SubstanceBroker sBkr;
+    readonly SubstanceBroker sBkr;
+    IConfiguration Configuration;
 
-    public SubstanceController(IMemoryCache cache)
+    public SubstanceController(IMemoryCache cache, IConfiguration _configuration)
     {
-        sBkr = new(cache);
+        Configuration = _configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        sBkr = new(cache, connString);
     }
 
     [HttpGet]

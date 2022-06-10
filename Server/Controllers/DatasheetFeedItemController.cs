@@ -5,10 +5,14 @@
 public class DatasheetFeedItemController : Controller
 {
     private readonly DatasheetFeedItemBroker dBkr;
+    private IConfiguration Configuration;
 
-    public DatasheetFeedItemController()
+    public DatasheetFeedItemController(IConfiguration configuration)
     {
-        dBkr = new DatasheetFeedItemBroker();
+        Configuration = configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        dBkr = new DatasheetFeedItemBroker(connString);
+        
     }
 
     [HttpGet]

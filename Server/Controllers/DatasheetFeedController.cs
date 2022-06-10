@@ -4,15 +4,19 @@
 [Route("[controller]")]
 public class DatasheetFeedController : Controller
 {
-    private readonly DatasheetFeedBroker dsfBkr;
-    private readonly DatasheetFeedItemBroker dsfiBkr;
-    private readonly DatasheetBroker dsBkr;
+   readonly DatasheetFeedBroker dsfBkr;
+   readonly DatasheetFeedItemBroker dsfiBkr;
+   readonly DatasheetBroker dsBkr;
 
-    public DatasheetFeedController()
+   IConfiguration Configuration;
+
+    public DatasheetFeedController(IConfiguration _configuration)
     {
-        dsfBkr = new();
-        dsfiBkr = new();
-        dsBkr = new();
+        Configuration = _configuration;
+        string connString = Configuration.GetConnectionString("LocalConnectionString");
+        dsfBkr = new(connString);
+        dsfiBkr = new(connString);
+        dsBkr = new(connString);
     }
 
     [HttpGet]

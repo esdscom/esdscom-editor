@@ -2,6 +2,7 @@
 
 @inject NavigationManager nav
 @inject HttpClient api
+@inject IJSRuntime js
 
 <EditForm Model="datasheet" OnValidSubmit="HandleValidSubmit" role="form">
     <DataAnnotationsValidator />
@@ -9,44 +10,46 @@
 
     <div class="container-fluid">
 
-        <PageHeader Title="@title"/>   
-        
-         <div class="row">          
-            <div class="col d-flex float-right">
-                <button type="button" class="btn btn-link" @onclick="GoToSections">Edit Sections</button>
-            </div>         
-        </div>
+        <PageHeader Title="@title" BackToURL="@backtoURL" />
 
-      @*  <div class="form-group">
-            <label for="ddLanguage">Language</label>
-            <InputSelect id="ddLanguage" class="form-control col-sm-2" @bind-Value="@languageName">
-                @foreach (string langName in languageList)
-                {
-                    <option value="@langName">@langName</option>
-                }
-            </InputSelect>
+        @*  <div class="form-group">
+        <label for="ddLanguage">Language</label>
+        <InputSelect id="ddLanguage" class="form-control col-sm-2" @bind-Value="@languageName">
+        @foreach (string langName in languageList)
+        {
+        <option value="@langName">@langName</option>
+        }
+        </InputSelect>
         </div>*@
 
-        <div class="form-group">
-            <label for="isName">Document Name</label>
-            <InputText id="isName" class="form-control" @bind-Value="@datasheet.Name" />
+        <div class="row">
+            <div class="col form-group">
+                <label for="isName">Document Name</label>
+                <InputText id="isName" class="form-control" @bind-Value="@datasheet.Name" />
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="ddMaterialType">Material Type</label>
-            <InputSelect class="form-control col-sm-1" id="ddMaterialType" @bind-Value="@materialType" width="50">
-                @foreach (string materialTypeName in materialTypeList)
-                {
-                    <option value="@materialTypeName">@materialTypeName</option>
-                }
-            </InputSelect>
+        <div class="row">
+            <div class="col-3 form-group">
+                    <label for="ddMaterialType">Material Type</label>
+                    <InputSelect class="form-control" id="ddMaterialType" @bind-Value="@materialType">
+                        @foreach (string materialTypeName in materialTypeList)
+                        {
+                            <option value="@materialTypeName">@materialTypeName</option>
+                        }
+                    </InputSelect>
+            </div>
+            <div class="col-9">
+                <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler" />
+            </div>
         </div>
 
-          <div class="row pb-3">
+        <div class="row pb-3">
             <div class="col">
                 <span>Region(s) included:</span>
             </div>
         </div>
+
         <div class="row">
             <div class="col-9">
                 <div class="form-group">
@@ -73,17 +76,22 @@
             </div>
         </div>
 
-         <DocStatus Status="@datasheet.Status" OnStatusSelected="StatusSelectionHandler"/>
-
-        <div class="form-group">
-            <label for="comments">Comments:</label>
-            <InputTextArea id="comments" class="form-control" @bind-Value="@datasheet.Comments" rows="5" cols="30"/>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <InputTextArea id="comments" class="form-control" @bind-Value="@datasheet.Comments" rows="3" cols="30" />
+                </div>
+            </div>
         </div>
 
-        <div class="row">          
-            <div class="col">
+        <div class="row">
+            <div class="col-2">
                 <button type="submit" class="btn btn-primary">Save</button>
-            </div>      
+            </div>
+            <div class="col-10">
+                <button type="button" class="btn btn-primary" @onclick="Cancel">Cancel</button>
+            </div>
         </div>
 
     </div>
@@ -92,7 +100,7 @@
 <style>
 
     ul {
-        column-count: 3;
+        column-count: 4;
         column-gap: 2rem;
         list-style: none;
     }
@@ -107,7 +115,7 @@
 
     Datasheet datasheet;
     AppDataService dMgr;
-
+    string backtoURL;
     string title;
     string materialType = "Mixture";
     List<Region> allRegions = new();
@@ -119,11 +127,13 @@
             "Substance"
         };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
 
-        allRegions = Utils.GetRegions();       
+        allRegions = Utils.GetRegions();
+
+        backtoURL = "/Documents/ListDocuments";
 
         dMgr = new(api);
 
@@ -159,6 +169,8 @@
             datasheet.DatasheetXDoc = new();
             datasheet.DatasheetXDoc.LoadXml(datasheet.DatasheetString);
 
+            materialType = datasheet.MaterialType;
+
             title = $"Editing Datasheet {datasheet.Name}";
             AppState.StatusBarMessage = $"editing the Datasheet {datasheet.Name}";
         }
@@ -167,10 +179,11 @@
 
     private async Task HandleValidSubmit()
     {
+        datasheet.MaterialType = materialType;
+        datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
+
         if (IsNew)
         {
-            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
-
             AppState.ActiveDatasheet = await dMgr.AddDatasheetAsync(datasheet);
 
             DatasheetFeedItem dsfi = new()
@@ -183,22 +196,20 @@
 
             //refresh the collection
             AppState.ActiveDatasheetFeed = await dMgr.GetDatasheetFeedAsync(AppState.ActiveDatasheet.OrganizationId, AppState.ActiveDatasheetFeed.Id);
-
-            AppState.StatusBarMessage = $"added Datasheet and linked to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
-            nav.NavigateTo("/Documents/ListDocumentsInSet");
+            AppState.StatusBarMessage = $"added Datasheet and linked it to the active Document set: {AppState.ActiveDatasheetFeed.Name}";
         }
         else
         {
-            datasheet.RegionsString = string.Join(",", selectedRegions.ToArray());
             AppState.ActiveDatasheet = await dMgr.UpdateDatasheetAsync(datasheet);
             AppState.StatusBarMessage = "updated Datasheet";
-            nav.NavigateTo("/Documents/ListDocuments");
         }
+
+        nav.NavigateTo(backtoURL);
     }
 
-    void GoToSections()
+    void Cancel()
     {
-        nav.NavigateTo("/Documents/Sections/SectionHome");
+        nav.NavigateTo(backtoURL);
     }
 
     void StatusSelectionHandler(int status)

@@ -1,21 +1,22 @@
 ﻿<div class="row">
-    <div class="col border border-info text-info">
-        <span>@comments</span>
-        <span>@occurs</span>
+    <div class="col border border-info text-info m-3">
+        @foreach (var item in HelpItems)
+        {
+            if (item.Key == "Occurs" && item.Value.ToString().ToLower().StartsWith("required"))
+            {
+                <span class="text-danger">@item.Key: @item.Value</span>
+                <br />
+            }
+            else
+            {
+                <span>@item.Key: @item.Value</span>
+                <br />
+            }
+        }
     </div>
 </div>
 
 @code
 {
-    [Parameter] public string Comments { get; set; }
-    [Parameter] public string Occurs { get; set; }
-
-    MarkupString comments;
-    MarkupString occurs;
-
-    protected override void OnInitialized()
-    {
-        comments = (MarkupString)Comments;
-        occurs = (MarkupString)Occurs;
-    }
+    [Parameter] public Dictionary<string, object> HelpItems { get; set; }
 }

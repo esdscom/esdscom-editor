@@ -280,11 +280,11 @@ public static class Utils
     {
         string occurs = occursValue switch
         {
-            Enums.DataPointOccurence.RequiredExactlyOnce => "<p class='text-danger'> Required - exactly one value </p>",
-            Enums.DataPointOccurence.OptionalZeroOrOne => "<p class='text-info'> Optional -  zero or one values </p>",
-            Enums.DataPointOccurence.RequiredOnceOrMore => "<p class='text-danger'> Required - one or more values </p>",
-            Enums.DataPointOccurence.OptionalZeroOrMore => "<p class='text-info'> Optional -  zero or more values </p>",
-            _ => "<p class='text-danger'> *** No occur setting has been defined *** </p>",
+            Enums.DataPointOccurence.RequiredExactlyOnce => "Required - exactly one value",
+            Enums.DataPointOccurence.OptionalZeroOrOne => "Optional -  zero or one values",
+            Enums.DataPointOccurence.RequiredOnceOrMore => "Required - one or more values",
+            Enums.DataPointOccurence.OptionalZeroOrMore => "Optional -  zero or more values",
+            _ => "*** No occur setting has been defined *** ",
         };
 
         if (IsPhrase)
@@ -404,6 +404,67 @@ public static class Utils
             3 => "Archived",
             _ => "Not Specified",
         };
+    }
+
+    public static string GetSectionNumber(string sectionName)
+    {
+        string retVal = "";
+
+        switch (sectionName)
+        {
+            case "IdentificationSubstPrep":
+                retVal = "01";
+                break;
+            case "HazardIdentification":
+                retVal = "02";
+                break;
+            case "Composition":
+                retVal = "03";
+                break;
+            case "FirstAidMeasures":
+                retVal = "04";
+                break;
+            case "FireFightingMeasures":
+                retVal = "05";
+                break;
+            case "AccidentalReleaseMeasures":
+                retVal = "06";
+                break;
+            case "HandlingAndStorage":
+                retVal = "07";
+                break;
+            case "ExposureControlPersonalProtection":
+                retVal = "08";
+                break;
+            case "PhysicalChemicalProperties":
+                retVal = "09";
+                break;
+            case "StabilityReactivity":
+                retVal = "10";
+                break;
+            case "ToxicologicalInformation":
+                retVal = "11";
+                break;
+            case "EcologicalInformation":
+                retVal = "12";
+                break;
+            case "DisposalConsiderations":
+                retVal = "13";
+                break;
+            case "TransportInformation":
+                retVal = "14";
+                break;
+            case "RegulatoryInformation":
+                retVal = "15";
+                break;
+            case "OtherInformation":
+                retVal = "16";
+                break;
+        }
+
+
+
+        return retVal;
     }
 }
 

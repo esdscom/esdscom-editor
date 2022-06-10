@@ -28,5 +28,7 @@ public class Datasheet : BaseModel
    
     public List<Region> Regions { get; set; }
 
+    public string MaterialType { get; set; }
+
 }
 

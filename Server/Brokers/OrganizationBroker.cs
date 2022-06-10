@@ -12,14 +12,9 @@ public class OrganizationBroker : IOrganizationBroker
 {
     private readonly string ConnectionString;
 
-    public OrganizationBroker() 
+    public OrganizationBroker(string connString)
     {
-        ConnectionString = DBUtils.GetConnectionString();
-    }
-
-    public OrganizationBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<Organization> Get(Guid orgId)
@@ -47,6 +42,7 @@ public class OrganizationBroker : IOrganizationBroker
                 org = DBUtils.GetOrgFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -80,7 +76,7 @@ public class OrganizationBroker : IOrganizationBroker
                     new() { Value = org.OrganizationType },
                     new() { Value = org.Name },
                     new() { Value = org.Address },
-                    new() { Value = org.InfoExSys },
+                    new() { Value = org.InfoExSysString },
                 }
             };
 
@@ -124,7 +120,7 @@ public class OrganizationBroker : IOrganizationBroker
                     new() { Value = org.OrganizationType },
                     new() { Value = org.Name },
                     new() { Value = org.Address },
-                    new() { Value = org.InfoExSys },
+                    new() { Value = org.InfoExSysString },
                     new() { Value = org.Id }
                 }
             };

@@ -12,14 +12,10 @@ public interface IUserBroker
 public class UserBroker : IUserBroker
 {
     private static string ConnectionString;
-    public UserBroker() 
+    
+    public UserBroker(string connString)
     {
-       ConnectionString = DBUtils.GetConnectionString();
-    }
-
-    public UserBroker(string testConnectionString)
-    {
-        ConnectionString = testConnectionString;
+        ConnectionString = connString;
     }
 
     public async Task<User> Get(Guid id)
@@ -47,6 +43,7 @@ public class UserBroker : IUserBroker
                 user = DBUtils.GetUserFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -86,6 +83,7 @@ public class UserBroker : IUserBroker
                 userList.Add(DBUtils.GetUserFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

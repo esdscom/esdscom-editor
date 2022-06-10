@@ -1,4 +1,4 @@
-﻿<h5>@Node.LocalName</h5>
+﻿<h5>@Utils.SplitCamelCase(Node.LocalName)</h5>
 
 @if (Entity.Type is not null)
 {
@@ -48,7 +48,7 @@
                 }
                 else if (node.HasChildNodes)
                 {
-                    // show a Go button insted of recursing through the nodes - the recursion levels are so many
+                    // show an Edit button insted of recursing through the nodes - the recursion levels are so many
                     // that it causes performance problems (and huge pages)
                     <DrillDownComponent Node="@node" Entity="@entity" />
                 }
@@ -80,12 +80,13 @@
                 <hr />
             }
         }
-        else
+       @* else
         {
-            <span> BaseEntity is null </span>
+            Console.Write($"Bad Entity: {node.Name}");
+            <span> BaseEntity is null for: @node.Name </span>
             <br />
             <hr />
-        }
+        }*@
     }
 }
 
@@ -104,12 +105,9 @@
 
         try
         {
-            //Console.WriteLine($"first loop: name: {Node.Name}");
-
             if (Node.HasChildNodes)
             {
                 nodes = Node.ChildNodes;
-                //  Console.WriteLine($"child node count: {nodes.Count}");
             }
         }
         catch (Exception ex)
@@ -117,5 +115,4 @@
             Console.Write(ex.Message);
         }
     }
-
 }

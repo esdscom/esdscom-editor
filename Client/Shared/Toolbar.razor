@@ -3,9 +3,9 @@
 <div class="container-fluid">
     <div class="row d-flex align-items-center bg-secondary">
         <div class="col-2">
-            <button type="button" class="btn btn-link text-white float-left" @onclick="GoHome">eSDSCom editor</button>
-        </div>   
-        <div class="col-10 border-dark">
+            <button type="button" class="btn btn-link text-white float-left" @onclick="GoHome">eSDSxml editor</button>
+        </div>  
+        <div class="col-10">
             <span class="float-right text-white">@AppState.StatusBarMessage </span>
         </div>
     </div>
@@ -13,7 +13,12 @@
 
 @code
 {
-    [CascadingParameter] public AppState AppState { get; set; }
+    [CascadingParameter] public AppState AppState { get; set; }  
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
 
     private void GoHome()
     {

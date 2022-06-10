@@ -1,40 +1,42 @@
 ﻿<div class="row">
-    <div class="col">        
-        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+    <div class="col">
+        <DataRequiredComponent Entity="@Entity"/>
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@Utils.SplitCamelCase(displayname)</button>
         <br />
         <InputDate class="form-control" @bind-Value="selectedDate" @oninput="@((e) => DateTimeChanged(e))" DisplayName="@displayname" style="width:25%" />
     </div>
 </div>
 
 <div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments = "@comments" Occurs = "@occurs"/>
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
-@code 
+@code
 {
     [CascadingParameter] public AppState AppState { get; set; }
 
     [Parameter] public XmlNode Node { get; set; }
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private string comments;
-    private string occurs;
-    private string displayname;
-    private bool bHideHelp;
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
-    private DateTime selectedDate;   
+    string displayname;
+    bool bHideHelp;
+
+    private DateTime selectedDate;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        bHideHelp = true;      
+        bHideHelp = true;
 
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments =  $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
+
+            HelpItems.Add("Comments",  $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
 
             bool ok = DateTime.TryParse(Node.InnerText, out selectedDate);
             if (!ok) selectedDate = DateTime.UtcNow;
@@ -43,6 +45,9 @@
         {
             displayname = "entity Not found!!!";
         }
+
+       
+       
     }
 
     public void ToggleHelp()

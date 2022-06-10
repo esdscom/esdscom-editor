@@ -1,17 +1,18 @@
 ﻿<div class="row">
     <div class="col">
-        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@displayname</button>
+         <DataRequiredComponent Entity="@Entity"/>
+        <button type="button" class="btn btn-link" @onclick="ToggleHelp">@Utils.SplitCamelCase(displayname)</button>
     </div>
 </div>
 
 <div class="row">
     <div class="col">
-        <InputText class="form-control" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
+        <InputText class="form-control" style="@widthStyle" maxlength="@maxLength" @bind-Value="@Node.InnerText" DisplayName="@displayname" />
     </div>
 </div>
 
-<div hidden="@bHideHelp">
-    <DataPointCommentsComponent Comments="@comments" Occurs="@occurs" />
+<div hidden="@bHideHelp">    
+    <DataPointCommentsComponent HelpItems="@HelpItems" />
 </div>
 
 @code
@@ -22,11 +23,12 @@
 
     [Parameter] public BaseEntity Entity { get; set; }
 
-    private string comments;
-    private string occurs;
-    private string displayname;
-    private bool bHideHelp;
-    private int maxLength = 128;
+    string displayname;
+    bool bHideHelp;
+    int maxLength;
+    string widthStyle;
+
+    public Dictionary<string, object> HelpItems { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -37,19 +39,58 @@
         if (Entity is not null)
         {
             displayname = Entity.DisplayName;
-            comments = $"{Entity.Comments} {Entity.TypeComments}";
-            occurs = Utils.GetOccursText(Entity.Occurs);
-            maxLength = 128;   //get length from type
-                               // add regex pattern property of Node
+            maxLength = GetLength(Entity.Type);
+
+            HelpItems.Add("Comments", $"{Entity.Comments} {Entity.TypeComments}");
+            HelpItems.Add("Occurs", Utils.GetOccursText(Entity.Occurs));
+            HelpItems.Add("Maximum Length", maxLength);
         }
         else
         {
             displayname = "entity Not found!!!";
         }
+
+        switch (maxLength)
+        {
+            case int m when (m <= 50):
+                widthStyle = "width: 40%";
+                break;
+            case int m when (m > 50 && m <= 200):
+                widthStyle = "width: 70%";
+                break;
+            default:
+                widthStyle = "width: 100%";
+                break;
+        }       
     }
 
-    public void ToggleHelp()
+    void ToggleHelp()
     {
         bHideHelp = !bHideHelp;
+    }
+
+    int GetLength(string entityType)
+    {
+        int retVal = 0;
+
+        if (entityType.ToLower().Contains("string"))
+        {
+            string tmp = entityType.Replace("string", "");
+            bool ok = int.TryParse(tmp, out int elemLength);
+            if (ok)
+            {
+                retVal = elemLength;
+            }
+            else
+            {
+                retVal = 50;
+            }
+        }
+        else
+        {
+            retVal = 50;
+        }
+
+        return retVal;
     }
 }
