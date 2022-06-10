@@ -58,6 +58,7 @@ public class DatasheetBroker : IDatasheetBroker
                 ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -100,6 +101,7 @@ public class DatasheetBroker : IDatasheetBroker
                 ds = DBUtils.GetDatasheetFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -139,6 +141,7 @@ public class DatasheetBroker : IDatasheetBroker
             }
 
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

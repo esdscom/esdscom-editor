@@ -178,6 +178,7 @@ public class SubstanceBroker : ISubstanceBroker
                 subsList.Add(DBUtils.GetSubstanceFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
 
             cache.Set("AllSubstances", subsList);
         }

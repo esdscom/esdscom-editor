@@ -42,6 +42,7 @@ public class OrganizationBroker : IOrganizationBroker
                 org = DBUtils.GetOrgFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

@@ -44,6 +44,7 @@ public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
                 dsfi = DBUtils.GetDatasheetFeedItemFromReader(reader);
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -78,6 +79,7 @@ public class DatasheetFeedItemBroker : IDatasheetFeedItemBroker
                 dsfiList.Add(DBUtils.GetDatasheetFeedItemFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {

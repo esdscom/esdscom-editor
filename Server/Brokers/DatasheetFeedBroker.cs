@@ -50,6 +50,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
             }
 
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -89,6 +90,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
                 dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
@@ -129,6 +131,7 @@ public class DatasheetFeedBroker :  IDatasheetFeedBroker
                 dsfList.Add(DBUtils.GetDatasheetFeedFromReader(reader));
             }
             await reader.CloseAsync();
+            await dbConn.CloseAsync();
         }
         catch (Exception ex)
         {
